@@ -159,7 +159,7 @@ Each agent phase has a budget cap (`maxBudgetUsd`). The total pipeline typically
 
 ## Premium Features
 
-The open-source edition uses the 105-tool MCP server. With the [premium edition](mailto:info@bricksmcp.com) (260+ tools), additional pipeline features are available:
+The open-source edition uses the 105-tool MCP server. With the [premium edition](mailto:me@carstensachse.de) (260+ tools), additional pipeline features are available:
 
 - **Learning System** — Historian agent loads/saves learnings across builds
 - **Visual QA** — Puppeteer screenshots, pixel comparison, design scoring

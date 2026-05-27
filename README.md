@@ -265,7 +265,7 @@ Looking for more? The premium edition includes **260+ tools** with:
 - **WooCommerce, ACF, Gravity Forms** integrations
 - **Bio-inspired animations** — Levy stagger, density-intensity, quorum sensing
 
-[Contact us for premium access](mailto:info@bricksmcp.com)
+[Contact us for premium access](mailto:me@carstensachse.de)
 
 ---
 
