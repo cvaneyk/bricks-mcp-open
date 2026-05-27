@@ -1,5 +1,5 @@
 {
-	"description": "Contact form section with heading, subtext, and 3-field form (name, email, message)",
+	"description": "Contact form section with heading, subtext, and 3-field form (name, email, message). Uses Bricks native form element with fields[] array.",
 	"variables": ["heading", "subtext", "button_text", "email_to"],
 	"elements": [
 		{
@@ -66,76 +66,38 @@
 			"id": "frm030",
 			"name": "form",
 			"parent": "cnt030",
-			"children": ["ff030a", "ff030b", "ff030c", "fs030"],
+			"children": [],
 			"settings": {
+				"fields": [
+					{
+						"type": "text",
+						"label": "Name",
+						"placeholder": "Your name",
+						"required": true,
+						"id": "name"
+					},
+					{
+						"type": "email",
+						"label": "Email",
+						"placeholder": "your@email.com",
+						"required": true,
+						"id": "email"
+					},
+					{
+						"type": "textarea",
+						"label": "Message",
+						"placeholder": "Tell us about your project...",
+						"required": true,
+						"id": "message"
+					}
+				],
 				"submitButtonText": "{{button_text}}",
+				"formAction": "email",
 				"emailTo": "{{email_to}}",
+				"emailSubject": "New contact form submission",
 				"successMessage": "Thank you! We will be in touch soon.",
 				"_width": "100%",
-				"_cssCustom": "%root% { display: flex; flex-direction: column; gap: 20px; } %root% .form-group { width: 100%; } %root% input, %root% textarea { width: 100%; padding: 14px 18px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 16px; font-family: inherit; transition: border-color 0.2s; } %root% input:focus, %root% textarea:focus { outline: none; border-color: #0a0a0a; } %root% textarea { min-height: 140px; resize: vertical; }"
-			}
-		},
-		{
-			"id": "ff030a",
-			"name": "form-field",
-			"parent": "frm030",
-			"children": [],
-			"settings": {
-				"type": "text",
-				"label": "Name",
-				"placeholder": "Your name",
-				"required": true
-			}
-		},
-		{
-			"id": "ff030b",
-			"name": "form-field",
-			"parent": "frm030",
-			"children": [],
-			"settings": {
-				"type": "email",
-				"label": "Email",
-				"placeholder": "your@email.com",
-				"required": true
-			}
-		},
-		{
-			"id": "ff030c",
-			"name": "form-field",
-			"parent": "frm030",
-			"children": [],
-			"settings": {
-				"type": "textarea",
-				"label": "Message",
-				"placeholder": "Tell us about your project...",
-				"required": true
-			}
-		},
-		{
-			"id": "fs030",
-			"name": "form-submit",
-			"parent": "frm030",
-			"children": [],
-			"settings": {
-				"text": "{{button_text}}",
-				"_background": {
-					"color": { "raw": "#0a0a0a" }
-				},
-				"_typography": {
-					"color": { "raw": "#ffffff" },
-					"font-weight": "600",
-					"font-size": "16"
-				},
-				"_padding": {
-					"top": "16",
-					"right": "40",
-					"bottom": "16",
-					"left": "40"
-				},
-				"_border": {
-					"radius": { "top": "8", "right": "8", "bottom": "8", "left": "8" }
-				},
-				"_cssCustom": "%root% { cursor: pointer; transition: background 0.2s; } %root%:hover { background-color: #333 !important; }"
+				"_cssCustom": "%root% { width: 100%; } %root% .form-group { margin-bottom: 20px; } %root% label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: #333; } %root% input, %root% textarea { width: 100%; padding: 14px 18px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 16px; font-family: inherit; transition: border-color 0.2s; box-sizing: border-box; } %root% input:focus, %root% textarea:focus { outline: none; border-color: #0a0a0a; } %root% textarea { min-height: 140px; resize: vertical; } %root% button[type=submit] { background: #0a0a0a; color: #fff; border: none; padding: 16px 40px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; } %root% button[type=submit]:hover { background: #333; }"
 			}
 		}
 	]
