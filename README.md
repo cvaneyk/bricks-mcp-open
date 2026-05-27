@@ -124,6 +124,19 @@ Or with Bun (faster startup):
 
 **Cursor / Windsurf** — add the same config to `.cursor/mcp.json` in your project.
 
+**[Hermes Agent](https://github.com/NousResearch/hermes-agent)** (Nous Research) — add to `config.yaml`:
+```yaml
+mcp_servers:
+  bricks:
+    command: node
+    args: ["/path/to/bricks-mcp-open/index.js"]
+    env:
+      WORDPRESS_URL: https://your-site.com
+      WORDPRESS_USER: your-username
+      WORDPRESS_APP_PASSWORD: "xxxx xxxx xxxx xxxx xxxx xxxx"
+```
+Hermes has native MCP client support since v0.2.0 — all 105 tools appear in its tool list automatically. Works with any model (Hermes 3, Llama, OpenRouter, etc.).
+
 ---
 
 ### Manage Your WordPress Site from Your Phone
