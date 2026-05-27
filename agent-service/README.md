@@ -123,6 +123,18 @@ docker run -e ANTHROPIC_API_KEY=sk-ant-... \
            bricks-agent
 ```
 
+### Railway (Recommended)
+
+The agent service is production-tested on [Railway](https://railway.com). Deploy in one click:
+
+1. Push this repo to GitHub
+2. Create a new Railway project → **Deploy from GitHub repo**
+3. Set the **Root Directory** to `agent-service`
+4. Add environment variables (`ANTHROPIC_API_KEY`, `WORDPRESS_URL`, `WORDPRESS_USER`, `WORDPRESS_APP_PASSWORD`, `TELEGRAM_BOT_TOKEN`)
+5. Railway auto-detects the Dockerfile and deploys
+
+The health endpoint on port 8080 serves as Railway's health check. The Telegram bot connects via long polling — no webhook URL needed.
+
 ## Industry Briefs
 
 Briefs are JSON files in `briefs/` that describe what to build:
