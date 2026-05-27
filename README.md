@@ -4,11 +4,11 @@
 
 100+ tools to manage pages, templates, styles, SEO, content, and more — directly from Claude Code, Cursor, Windsurf, or any MCP-compatible AI assistant.
 
-![Tools](https://img.shields.io/badge/tools-100%2B-blue)
+![Tools](https://img.shields.io/badge/tools-105-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Bricks](https://img.shields.io/badge/Bricks_Builder-2.0%2B-orange)
 ![MCP](https://img.shields.io/badge/MCP-1.8-purple)
-![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
+![Runtime](https://img.shields.io/badge/Node_%7C_Bun-green)
 
 ---
 
@@ -52,7 +52,7 @@ In WordPress Admin → Users → Your Profile → Application Passwords:
 ```bash
 git clone https://github.com/developer2013/bricks-mcp-open.git
 cd bricks-mcp-open
-npm install
+npm install   # or: bun install
 ```
 
 ### 4. Configure Credentials
@@ -77,13 +77,25 @@ WORDPRESS_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
   "mcpServers": {
     "bricks": {
       "command": "node",
-      "args": ["/path/to/bricks-mcp/index.js"]
+      "args": ["/path/to/bricks-mcp-open/index.js"]
     }
   }
 }
 ```
 
-**Cursor** — add to `.cursor/mcp.json` in your project.
+Or with Bun (faster startup):
+```json
+{
+  "mcpServers": {
+    "bricks": {
+      "command": "bun",
+      "args": ["/path/to/bricks-mcp-open/index.js"]
+    }
+  }
+}
+```
+
+**Cursor / Windsurf** — add the same config to `.cursor/mcp.json` in your project.
 
 ### 6. Test the Connection
 
@@ -196,10 +208,10 @@ The included WordPress plugin (`bricks-api-bridge`) provides:
 
 ## Requirements
 
-- **Node.js** >= 18.0.0
-- **WordPress** >= 5.6
+- **Node.js** >= 18 or **Bun** >= 1.0
+- **WordPress** >= 6.0
 - **Bricks Builder** >= 2.0
-- **PHP** >= 7.4
+- **PHP** >= 8.0
 
 ---
 
