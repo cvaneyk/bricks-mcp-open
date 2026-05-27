@@ -35,11 +35,10 @@ The MCP server communicates with your WordPress site through the included REST A
 The `plugin/` folder in this repo contains the **Bricks API Bridge** WordPress plugin. Choose one of these install methods:
 
 **Option A: ZIP Upload (easiest)**
-1. [Download the latest release ZIP](https://github.com/developer2013/bricks-mcp-open/releases) or download this repo as ZIP
-2. Extract and create a ZIP of just the `plugin/` folder, renamed to `bricks-api-bridge/`
-3. Go to WordPress Admin → Plugins → Add New → Upload Plugin
-4. Upload the ZIP and click "Install Now"
-5. Click "Activate"
+1. Download **[bricks-api-bridge.zip](https://github.com/developer2013/bricks-mcp-open/releases/latest/download/bricks-api-bridge.zip)** from the latest release
+2. Go to WordPress Admin → Plugins → Add New → Upload Plugin
+3. Upload the ZIP and click "Install Now"
+4. Click "Activate"
 
 **Option B: Manual Upload via FTP/SSH**
 1. Clone this repo or download it
