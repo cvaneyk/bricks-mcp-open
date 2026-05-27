@@ -95,6 +95,20 @@ Or with Bun (faster startup):
 }
 ```
 
+**Claude Code iOS / Android App** — open Settings → MCP Servers → Add Server:
+
+1. **Name:** `bricks`
+2. **Command:** `node` (or `bun`)
+3. **Arguments:** `/path/to/bricks-mcp-open/index.js`
+4. **Environment Variables:**
+   - `WORDPRESS_URL` = `https://your-site.com`
+   - `WORDPRESS_USER` = `your-username`
+   - `WORDPRESS_APP_PASSWORD` = `xxxx xxxx xxxx xxxx xxxx xxxx`
+
+This gives you full MCP access from your phone — manage pages, update styles, run SEO audits, all from the Claude Code app.
+
+> **Tip:** On iOS, the MCP server runs on your Mac via Claude Code's remote connection. Make sure Claude Code desktop is running and paired with the mobile app.
+
 **Cursor / Windsurf** — add the same config to `.cursor/mcp.json` in your project.
 
 ### 6. Test the Connection
