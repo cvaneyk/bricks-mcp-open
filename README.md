@@ -244,7 +244,7 @@ The `agent-service/` directory contains an autonomous agent that builds entire W
 Industry Brief → Historian → Design → Code → Update → QA → Fix Loop
 ```
 
-- **Build from your iPhone** — Telegram bot as mobile control center: trigger builds, QA, fixes, and screenshots from anywhere
+- **Build from your iPhone or Android** — Use the Telegram bot or the [Claude Code mobile app](https://claude.ai/download) as your control center: trigger builds, QA, fixes, and screenshots from anywhere
 - **CLI Mode** — Single builds or overnight batch processing
 - **Budget Control** — Per-phase cost caps, total cost tracking
 - **Docker Ready** — Deploys to Railway, Fly.io, or any container host
