@@ -122,11 +122,41 @@ Or with Bun (faster startup):
    - `WORDPRESS_USER` = `your-username`
    - `WORDPRESS_APP_PASSWORD` = `xxxx xxxx xxxx xxxx xxxx xxxx`
 
-This gives you full MCP access from your phone — manage pages, update styles, run SEO audits, all from the Claude Code app.
-
 > **Tip:** On iOS, the MCP server runs on your Mac via Claude Code's remote connection. Make sure Claude Code desktop is running and paired with the mobile app.
 
 **Cursor / Windsurf** — add the same config to `.cursor/mcp.json` in your project.
+
+---
+
+### Manage Your WordPress Site from Your Phone
+
+Once the MCP server is connected to the Claude Code mobile app, you can do everything from your iPhone or Android — no laptop needed:
+
+```
+You:  "List all my pages and their SEO scores"
+You:  "Create a new landing page for my dental practice"
+You:  "Update the hero headline on page 42 to 'Welcome to Our Practice'"
+You:  "Run an SEO audit and fix all missing meta descriptions"
+You:  "Take a screenshot of page 42"
+You:  "Add a testimonials section to page 42 using the testimonials-slider preset"
+You:  "Create a snapshot of page 42, then change the color palette to blue"
+```
+
+The Claude Code app connects to your Mac in the background, which runs the MCP server and communicates with your WordPress site. All 105 tools are available — pages, templates, styles, SEO, backups, presets, media, and more.
+
+**What you can do from your phone:**
+
+| Action | Example Prompt |
+|--------|---------------|
+| Build pages | *"Create a hero section with dark gradient background"* |
+| Edit content | *"Change the button text on page 42 to 'Book Now'"* |
+| SEO management | *"Set meta description and OG image for all pages"* |
+| Style updates | *"Update the primary color to #2563EB across the palette"* |
+| Backup & restore | *"Create a snapshot called 'before-redesign'"* |
+| QA checks | *"Check all links on page 42 for broken URLs"* |
+| Template management | *"Clone the header template and modify the navigation"* |
+
+This turns your phone into a full WordPress control center — powered by AI.
 
 ### 6. Test the Connection
 
