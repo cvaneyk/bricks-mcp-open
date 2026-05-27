@@ -34,8 +34,8 @@
 			"name": "container",
 			"parent": "sec004",
 			"children": [
-				"hd004",
-				"gr004"
+				"hd0040",
+				"gr0040"
 			],
 			"settings": {
 				"_direction": "column",
@@ -43,7 +43,7 @@
 			}
 		},
 		{
-			"id": "hd004",
+			"id": "hd0040",
 			"name": "heading",
 			"parent": "cnt004",
 			"children": [],
@@ -65,13 +65,13 @@
 			}
 		},
 		{
-			"id": "gr004",
+			"id": "gr0040",
 			"name": "block",
 			"parent": "cnt004",
 			"children": [
-				"f004a",
-				"f004b",
-				"f004c"
+				"f004a0",
+				"f004b0",
+				"f004c0"
 			],
 			"settings": {
 				"_display": "grid",
@@ -81,13 +81,13 @@
 			}
 		},
 		{
-			"id": "f004a",
+			"id": "f004a0",
 			"name": "block",
-			"parent": "gr004",
+			"parent": "gr0040",
 			"children": [
-				"ic04a",
-				"ht04a",
-				"tt04a"
+				"ic04a0",
+				"ht04a0",
+				"tt04a0"
 			],
 			"settings": {
 				"_padding": {
@@ -112,9 +112,9 @@
 			}
 		},
 		{
-			"id": "ic04a",
+			"id": "ic04a0",
 			"name": "icon",
-			"parent": "f004a",
+			"parent": "f004a0",
 			"children": [],
 			"settings": {
 				"icon": {
@@ -133,9 +133,9 @@
 			}
 		},
 		{
-			"id": "ht04a",
+			"id": "ht04a0",
 			"name": "heading",
-			"parent": "f004a",
+			"parent": "f004a0",
 			"children": [],
 			"settings": {
 				"text": "{{feature1_title}}",
@@ -153,9 +153,9 @@
 			}
 		},
 		{
-			"id": "tt04a",
+			"id": "tt04a0",
 			"name": "text-basic",
-			"parent": "f004a",
+			"parent": "f004a0",
 			"children": [],
 			"settings": {
 				"text": "{{feature1_text}}",
@@ -169,13 +169,13 @@
 			}
 		},
 		{
-			"id": "f004b",
+			"id": "f004b0",
 			"name": "block",
-			"parent": "gr004",
+			"parent": "gr0040",
 			"children": [
-				"ic04b",
-				"ht04b",
-				"tt04b"
+				"ic04b0",
+				"ht04b0",
+				"tt04b0"
 			],
 			"settings": {
 				"_padding": {
@@ -200,9 +200,9 @@
 			}
 		},
 		{
-			"id": "ic04b",
+			"id": "ic04b0",
 			"name": "icon",
-			"parent": "f004b",
+			"parent": "f004b0",
 			"children": [],
 			"settings": {
 				"icon": {
@@ -221,9 +221,9 @@
 			}
 		},
 		{
-			"id": "ht04b",
+			"id": "ht04b0",
 			"name": "heading",
-			"parent": "f004b",
+			"parent": "f004b0",
 			"children": [],
 			"settings": {
 				"text": "{{feature2_title}}",
@@ -241,9 +241,9 @@
 			}
 		},
 		{
-			"id": "tt04b",
+			"id": "tt04b0",
 			"name": "text-basic",
-			"parent": "f004b",
+			"parent": "f004b0",
 			"children": [],
 			"settings": {
 				"text": "{{feature2_text}}",
@@ -257,13 +257,13 @@
 			}
 		},
 		{
-			"id": "f004c",
+			"id": "f004c0",
 			"name": "block",
-			"parent": "gr004",
+			"parent": "gr0040",
 			"children": [
-				"ic04c",
-				"ht04c",
-				"tt04c"
+				"ic04c0",
+				"ht04c0",
+				"tt04c0"
 			],
 			"settings": {
 				"_padding": {
@@ -288,9 +288,9 @@
 			}
 		},
 		{
-			"id": "ic04c",
+			"id": "ic04c0",
 			"name": "icon",
-			"parent": "f004c",
+			"parent": "f004c0",
 			"children": [],
 			"settings": {
 				"icon": {
@@ -309,9 +309,9 @@
 			}
 		},
 		{
-			"id": "ht04c",
+			"id": "ht04c0",
 			"name": "heading",
-			"parent": "f004c",
+			"parent": "f004c0",
 			"children": [],
 			"settings": {
 				"text": "{{feature3_title}}",
@@ -329,9 +329,9 @@
 			}
 		},
 		{
-			"id": "tt04c",
+			"id": "tt04c0",
 			"name": "text-basic",
-			"parent": "f004c",
+			"parent": "f004c0",
 			"children": [],
 			"settings": {
 				"text": "{{feature3_text}}",

@@ -37,8 +37,8 @@
 			"name": "container",
 			"parent": "sec008",
 			"children": [
-				"hd008",
-				"gr008"
+				"hd0080",
+				"gr0080"
 			],
 			"settings": {
 				"_direction": "column",
@@ -46,7 +46,7 @@
 			}
 		},
 		{
-			"id": "hd008",
+			"id": "hd0080",
 			"name": "heading",
 			"parent": "cnt008",
 			"children": [],
@@ -68,13 +68,13 @@
 			}
 		},
 		{
-			"id": "gr008",
+			"id": "gr0080",
 			"name": "block",
 			"parent": "cnt008",
 			"children": [
-				"p008a",
-				"p008b",
-				"p008c"
+				"p008a0",
+				"p008b0",
+				"p008c0"
 			],
 			"settings": {
 				"_display": "grid",
@@ -83,13 +83,13 @@
 			}
 		},
 		{
-			"id": "p008a",
+			"id": "p008a0",
 			"name": "block",
-			"parent": "gr008",
+			"parent": "gr0080",
 			"children": [
-				"pn08a",
-				"pp08a",
-				"pf08a"
+				"pn08a0",
+				"pp08a0",
+				"pf08a0"
 			],
 			"settings": {
 				"_padding": {
@@ -115,9 +115,9 @@
 			}
 		},
 		{
-			"id": "pn08a",
+			"id": "pn08a0",
 			"name": "heading",
-			"parent": "p008a",
+			"parent": "p008a0",
 			"children": [],
 			"settings": {
 				"text": "{{plan1_name}}",
@@ -132,9 +132,9 @@
 			}
 		},
 		{
-			"id": "pp08a",
+			"id": "pp08a0",
 			"name": "heading",
-			"parent": "p008a",
+			"parent": "p008a0",
 			"children": [],
 			"settings": {
 				"text": "{{plan1_price}}",
@@ -153,9 +153,9 @@
 			}
 		},
 		{
-			"id": "pf08a",
+			"id": "pf08a0",
 			"name": "text-basic",
-			"parent": "p008a",
+			"parent": "p008a0",
 			"children": [],
 			"settings": {
 				"text": "{{plan1_features}}",
@@ -169,13 +169,13 @@
 			}
 		},
 		{
-			"id": "p008b",
+			"id": "p008b0",
 			"name": "block",
-			"parent": "gr008",
+			"parent": "gr0080",
 			"children": [
-				"pn08b",
-				"pp08b",
-				"pf08b"
+				"pn08b0",
+				"pp08b0",
+				"pf08b0"
 			],
 			"settings": {
 				"_padding": {
@@ -206,9 +206,9 @@
 			}
 		},
 		{
-			"id": "pn08b",
+			"id": "pn08b0",
 			"name": "heading",
-			"parent": "p008b",
+			"parent": "p008b0",
 			"children": [],
 			"settings": {
 				"text": "{{plan2_name}}",
@@ -223,9 +223,9 @@
 			}
 		},
 		{
-			"id": "pp08b",
+			"id": "pp08b0",
 			"name": "heading",
-			"parent": "p008b",
+			"parent": "p008b0",
 			"children": [],
 			"settings": {
 				"text": "{{plan2_price}}",
@@ -244,9 +244,9 @@
 			}
 		},
 		{
-			"id": "pf08b",
+			"id": "pf08b0",
 			"name": "text-basic",
-			"parent": "p008b",
+			"parent": "p008b0",
 			"children": [],
 			"settings": {
 				"text": "{{plan2_features}}",
@@ -260,13 +260,13 @@
 			}
 		},
 		{
-			"id": "p008c",
+			"id": "p008c0",
 			"name": "block",
-			"parent": "gr008",
+			"parent": "gr0080",
 			"children": [
-				"pn08c",
-				"pp08c",
-				"pf08c"
+				"pn08c0",
+				"pp08c0",
+				"pf08c0"
 			],
 			"settings": {
 				"_padding": {
@@ -292,9 +292,9 @@
 			}
 		},
 		{
-			"id": "pn08c",
+			"id": "pn08c0",
 			"name": "heading",
-			"parent": "p008c",
+			"parent": "p008c0",
 			"children": [],
 			"settings": {
 				"text": "{{plan3_name}}",
@@ -309,9 +309,9 @@
 			}
 		},
 		{
-			"id": "pp08c",
+			"id": "pp08c0",
 			"name": "heading",
-			"parent": "p008c",
+			"parent": "p008c0",
 			"children": [],
 			"settings": {
 				"text": "{{plan3_price}}",
@@ -330,9 +330,9 @@
 			}
 		},
 		{
-			"id": "pf08c",
+			"id": "pf08c0",
 			"name": "text-basic",
-			"parent": "p008c",
+			"parent": "p008c0",
 			"children": [],
 			"settings": {
 				"text": "{{plan3_features}}",

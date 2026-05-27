@@ -123,15 +123,15 @@
 			"name": "block",
 			"parent": "pc0001",
 			"children": [
-				"ptt0001",
-				"pct0001"
+				"ptt000",
+				"pct000"
 			],
 			"settings": {
 				"_cssCustom": "%root% { position:absolute; bottom:0; left:0; right:0; padding:32px; background:linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%); opacity:0; transition:opacity 0.3s ease; } .brxe-block:hover > %root% { opacity:1; }"
 			}
 		},
 		{
-			"id": "ptt0001",
+			"id": "ptt000",
 			"name": "heading",
 			"parent": "po0001",
 			"children": [],
@@ -148,7 +148,7 @@
 			}
 		},
 		{
-			"id": "pct0001",
+			"id": "pct000",
 			"name": "text-basic",
 			"parent": "po0001",
 			"children": [],
@@ -203,15 +203,15 @@
 			"name": "block",
 			"parent": "pc0002",
 			"children": [
-				"ptt0002",
-				"pct0002"
+				"ptt002",
+				"pct003"
 			],
 			"settings": {
 				"_cssCustom": "%root% { position:absolute; bottom:0; left:0; right:0; padding:32px; background:linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%); opacity:0; transition:opacity 0.3s ease; } .brxe-block:hover > %root% { opacity:1; }"
 			}
 		},
 		{
-			"id": "ptt0002",
+			"id": "ptt002",
 			"name": "heading",
 			"parent": "po0002",
 			"children": [],
@@ -228,7 +228,7 @@
 			}
 		},
 		{
-			"id": "pct0002",
+			"id": "pct003",
 			"name": "text-basic",
 			"parent": "po0002",
 			"children": [],
@@ -283,15 +283,15 @@
 			"name": "block",
 			"parent": "pc0003",
 			"children": [
-				"ptt0003",
-				"pct0003"
+				"ptt004",
+				"pct005"
 			],
 			"settings": {
 				"_cssCustom": "%root% { position:absolute; bottom:0; left:0; right:0; padding:32px; background:linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%); opacity:0; transition:opacity 0.3s ease; } .brxe-block:hover > %root% { opacity:1; }"
 			}
 		},
 		{
-			"id": "ptt0003",
+			"id": "ptt004",
 			"name": "heading",
 			"parent": "po0003",
 			"children": [],
@@ -308,7 +308,7 @@
 			}
 		},
 		{
-			"id": "pct0003",
+			"id": "pct005",
 			"name": "text-basic",
 			"parent": "po0003",
 			"children": [],
@@ -363,15 +363,15 @@
 			"name": "block",
 			"parent": "pc0004",
 			"children": [
-				"ptt0004",
-				"pct0004"
+				"ptt006",
+				"pct007"
 			],
 			"settings": {
 				"_cssCustom": "%root% { position:absolute; bottom:0; left:0; right:0; padding:32px; background:linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%); opacity:0; transition:opacity 0.3s ease; } .brxe-block:hover > %root% { opacity:1; }"
 			}
 		},
 		{
-			"id": "ptt0004",
+			"id": "ptt006",
 			"name": "heading",
 			"parent": "po0004",
 			"children": [],
@@ -388,7 +388,7 @@
 			}
 		},
 		{
-			"id": "pct0004",
+			"id": "pct007",
 			"name": "text-basic",
 			"parent": "po0004",
 			"children": [],

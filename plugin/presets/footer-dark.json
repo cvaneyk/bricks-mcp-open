@@ -31,9 +31,9 @@
 			"name": "container",
 			"parent": "sec009",
 			"children": [
-				"fc09a",
-				"fc09b",
-				"fc09c"
+				"fc09a0",
+				"fc09b0",
+				"fc09c0"
 			],
 			"settings": {
 				"_display": "grid",
@@ -42,19 +42,19 @@
 			}
 		},
 		{
-			"id": "fc09a",
+			"id": "fc09a0",
 			"name": "block",
 			"parent": "cnt009",
 			"children": [
-				"fl09a",
-				"ft09a"
+				"fl09a0",
+				"ft09a0"
 			],
 			"settings": {}
 		},
 		{
-			"id": "fl09a",
+			"id": "fl09a0",
 			"name": "heading",
-			"parent": "fc09a",
+			"parent": "fc09a0",
 			"children": [],
 			"settings": {
 				"text": "{{logo_text}}",
@@ -69,9 +69,9 @@
 			}
 		},
 		{
-			"id": "ft09a",
+			"id": "ft09a0",
 			"name": "text-basic",
-			"parent": "fc09a",
+			"parent": "fc09a0",
 			"children": [],
 			"settings": {
 				"text": "{{tagline}}",
@@ -88,19 +88,19 @@
 			}
 		},
 		{
-			"id": "fc09b",
+			"id": "fc09b0",
 			"name": "block",
 			"parent": "cnt009",
 			"children": [
-				"fh09b",
-				"fl09b"
+				"fh09b0",
+				"fl09b0"
 			],
 			"settings": {}
 		},
 		{
-			"id": "fh09b",
+			"id": "fh09b0",
 			"name": "heading",
-			"parent": "fc09b",
+			"parent": "fc09b0",
 			"children": [],
 			"settings": {
 				"text": "Links",
@@ -118,9 +118,9 @@
 			}
 		},
 		{
-			"id": "fl09b",
+			"id": "fl09b0",
 			"name": "text-basic",
-			"parent": "fc09b",
+			"parent": "fc09b0",
 			"children": [],
 			"settings": {
 				"text": "{{links_html}}",
@@ -134,19 +134,19 @@
 			}
 		},
 		{
-			"id": "fc09c",
+			"id": "fc09c0",
 			"name": "block",
 			"parent": "cnt009",
 			"children": [
-				"fh09c",
-				"fl09c"
+				"fh09c0",
+				"fl09c0"
 			],
 			"settings": {}
 		},
 		{
-			"id": "fh09c",
+			"id": "fh09c0",
 			"name": "heading",
-			"parent": "fc09c",
+			"parent": "fc09c0",
 			"children": [],
 			"settings": {
 				"text": "Social",
@@ -164,9 +164,9 @@
 			}
 		},
 		{
-			"id": "fl09c",
+			"id": "fl09c0",
 			"name": "text-basic",
-			"parent": "fc09c",
+			"parent": "fc09c0",
 			"children": [],
 			"settings": {
 				"text": "{{social_html}}",

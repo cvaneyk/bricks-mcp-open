@@ -31,9 +31,9 @@
 			"name": "container",
 			"parent": "sec005",
 			"children": [
-				"hd005",
-				"tx005",
-				"bt005"
+				"hd0050",
+				"tx0050",
+				"bt0050"
 			],
 			"settings": {
 				"_direction": "column",
@@ -42,7 +42,7 @@
 			}
 		},
 		{
-			"id": "hd005",
+			"id": "hd0050",
 			"name": "heading",
 			"parent": "cnt005",
 			"children": [],
@@ -60,7 +60,7 @@
 			}
 		},
 		{
-			"id": "tx005",
+			"id": "tx0050",
 			"name": "text-basic",
 			"parent": "cnt005",
 			"children": [],
@@ -79,7 +79,7 @@
 			}
 		},
 		{
-			"id": "bt005",
+			"id": "bt0050",
 			"name": "button",
 			"parent": "cnt005",
 			"children": [],

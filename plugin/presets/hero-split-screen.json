@@ -32,8 +32,8 @@
 			"name": "container",
 			"parent": "sec002",
 			"children": [
-				"blk002a",
-				"blk002b"
+				"blk002",
+				"blk001"
 			],
 			"settings": {
 				"_direction": "row",
@@ -47,13 +47,13 @@
 			}
 		},
 		{
-			"id": "blk002a",
+			"id": "blk002",
 			"name": "container",
 			"parent": "cnt002",
 			"children": [
-				"hd002",
-				"tx002",
-				"bt002"
+				"hd0020",
+				"tx0020",
+				"bt0020"
 			],
 			"settings": {
 				"_display": "flex",
@@ -69,9 +69,9 @@
 			}
 		},
 		{
-			"id": "hd002",
+			"id": "hd0020",
 			"name": "heading",
-			"parent": "blk002a",
+			"parent": "blk002",
 			"children": [],
 			"settings": {
 				"text": "{{heading}}",
@@ -88,9 +88,9 @@
 			}
 		},
 		{
-			"id": "tx002",
+			"id": "tx0020",
 			"name": "text-basic",
-			"parent": "blk002a",
+			"parent": "blk002",
 			"children": [],
 			"settings": {
 				"text": "{{subtext}}",
@@ -107,9 +107,9 @@
 			}
 		},
 		{
-			"id": "bt002",
+			"id": "bt0020",
 			"name": "button",
-			"parent": "blk002a",
+			"parent": "blk002",
 			"children": [],
 			"settings": {
 				"text": "{{button_text}}",
@@ -140,7 +140,7 @@
 			}
 		},
 		{
-			"id": "blk002b",
+			"id": "blk001",
 			"name": "block",
 			"parent": "cnt002",
 			"children": [
@@ -154,7 +154,7 @@
 		{
 			"id": "img002",
 			"name": "image",
-			"parent": "blk002b",
+			"parent": "blk001",
 			"children": [],
 			"settings": {
 				"image": {

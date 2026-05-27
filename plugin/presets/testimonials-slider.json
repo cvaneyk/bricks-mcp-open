@@ -34,8 +34,8 @@
 			"name": "container",
 			"parent": "sec007",
 			"children": [
-				"hd007",
-				"sl007"
+				"hd0070",
+				"sl0070"
 			],
 			"settings": {
 				"_direction": "column",
@@ -43,7 +43,7 @@
 			}
 		},
 		{
-			"id": "hd007",
+			"id": "hd0070",
 			"name": "heading",
 			"parent": "cnt007",
 			"children": [],
@@ -65,25 +65,25 @@
 			}
 		},
 		{
-			"id": "sl007",
+			"id": "sl0070",
 			"name": "slider-nested",
 			"parent": "cnt007",
 			"children": [
-				"sd07a",
-				"sd07b",
-				"sd07c"
+				"sd07a0",
+				"sd07b0",
+				"sd07c0"
 			],
 			"settings": {
 				"height": "auto"
 			}
 		},
 		{
-			"id": "sd07a",
+			"id": "sd07a0",
 			"name": "block",
-			"parent": "sl007",
+			"parent": "sl0070",
 			"children": [
-				"qt07a",
-				"au07a"
+				"qt07a0",
+				"au07a0"
 			],
 			"settings": {
 				"_padding": {
@@ -96,9 +96,9 @@
 			}
 		},
 		{
-			"id": "qt07a",
+			"id": "qt07a0",
 			"name": "text-basic",
-			"parent": "sd07a",
+			"parent": "sd07a0",
 			"children": [],
 			"settings": {
 				"text": "{{quote1}}",
@@ -113,9 +113,9 @@
 			}
 		},
 		{
-			"id": "au07a",
+			"id": "au07a0",
 			"name": "text-basic",
-			"parent": "sd07a",
+			"parent": "sd07a0",
 			"children": [],
 			"settings": {
 				"text": "{{author1}}",
@@ -132,12 +132,12 @@
 			}
 		},
 		{
-			"id": "sd07b",
+			"id": "sd07b0",
 			"name": "block",
-			"parent": "sl007",
+			"parent": "sl0070",
 			"children": [
-				"qt07b",
-				"au07b"
+				"qt07b0",
+				"au07b0"
 			],
 			"settings": {
 				"_padding": {
@@ -150,9 +150,9 @@
 			}
 		},
 		{
-			"id": "qt07b",
+			"id": "qt07b0",
 			"name": "text-basic",
-			"parent": "sd07b",
+			"parent": "sd07b0",
 			"children": [],
 			"settings": {
 				"text": "{{quote2}}",
@@ -167,9 +167,9 @@
 			}
 		},
 		{
-			"id": "au07b",
+			"id": "au07b0",
 			"name": "text-basic",
-			"parent": "sd07b",
+			"parent": "sd07b0",
 			"children": [],
 			"settings": {
 				"text": "{{author2}}",
@@ -186,12 +186,12 @@
 			}
 		},
 		{
-			"id": "sd07c",
+			"id": "sd07c0",
 			"name": "block",
-			"parent": "sl007",
+			"parent": "sl0070",
 			"children": [
-				"qt07c",
-				"au07c"
+				"qt07c0",
+				"au07c0"
 			],
 			"settings": {
 				"_padding": {
@@ -204,9 +204,9 @@
 			}
 		},
 		{
-			"id": "qt07c",
+			"id": "qt07c0",
 			"name": "text-basic",
-			"parent": "sd07c",
+			"parent": "sd07c0",
 			"children": [],
 			"settings": {
 				"text": "{{quote3}}",
@@ -221,9 +221,9 @@
 			}
 		},
 		{
-			"id": "au07c",
+			"id": "au07c0",
 			"name": "text-basic",
-			"parent": "sd07c",
+			"parent": "sd07c0",
 			"children": [],
 			"settings": {
 				"text": "{{author3}}",

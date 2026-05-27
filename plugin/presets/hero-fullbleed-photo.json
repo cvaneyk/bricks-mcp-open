@@ -32,7 +32,7 @@
 			"name": "container",
 			"parent": "sec003",
 			"children": [
-				"hd003"
+				"hd0030"
 			],
 			"settings": {
 				"_direction": "column",
@@ -42,7 +42,7 @@
 			}
 		},
 		{
-			"id": "hd003",
+			"id": "hd0030",
 			"name": "heading",
 			"parent": "cnt003",
 			"children": [],

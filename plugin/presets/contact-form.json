@@ -1,15 +1,24 @@
 {
 	"description": "Contact form section with heading, subtext, and 3-field form (name, email, message). Uses Bricks native form element with fields[] array.",
-	"variables": ["heading", "subtext", "button_text", "email_to"],
+	"variables": [
+		"heading",
+		"subtext",
+		"button_text",
+		"email_to"
+	],
 	"elements": [
 		{
 			"id": "sec030",
 			"name": "section",
 			"parent": 0,
-			"children": ["cnt030"],
+			"children": [
+				"cnt030"
+			],
 			"settings": {
 				"_background": {
-					"color": { "raw": "#ffffff" }
+					"color": {
+						"raw": "#ffffff"
+					}
 				},
 				"_padding": {
 					"top": "100",
@@ -21,7 +30,11 @@
 			"id": "cnt030",
 			"name": "container",
 			"parent": "sec030",
-			"children": ["hd030", "tx030", "frm030"],
+			"children": [
+				"hd0300",
+				"tx0300",
+				"frm030"
+			],
 			"settings": {
 				"_direction": "column",
 				"_alignItems": "center",
@@ -29,7 +42,7 @@
 			}
 		},
 		{
-			"id": "hd030",
+			"id": "hd0300",
 			"name": "heading",
 			"parent": "cnt030",
 			"children": [],
@@ -40,14 +53,18 @@
 					"font-size": "48",
 					"font-weight": "700",
 					"letter-spacing": "-0.03em",
-					"color": { "raw": "#0a0a0a" }
+					"color": {
+						"raw": "#0a0a0a"
+					}
 				},
 				"_textAlign": "center",
-				"_margin": { "bottom": "16" }
+				"_margin": {
+					"bottom": "16"
+				}
 			}
 		},
 		{
-			"id": "tx030",
+			"id": "tx0300",
 			"name": "text-basic",
 			"parent": "cnt030",
 			"children": [],
@@ -56,10 +73,14 @@
 				"_typography": {
 					"font-size": "18",
 					"line-height": "1.6",
-					"color": { "raw": "#666666" }
+					"color": {
+						"raw": "#666666"
+					}
 				},
 				"_textAlign": "center",
-				"_margin": { "bottom": "48" }
+				"_margin": {
+					"bottom": "48"
+				}
 			}
 		},
 		{
