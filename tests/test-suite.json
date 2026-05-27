@@ -1,0 +1,1892 @@
+{
+  "_meta": {
+    "title": "Bricks MCP Open — Full Test Suite",
+    "version": "1.0.0",
+    "description": "Comprehensive test plan for bricks-mcp-open (105 tools). Run against a test WordPress site with Bricks Builder + bricks-api-bridge plugin installed. Tests are ordered by dependency: connection → read → write → cleanup.",
+    "prerequisites": [
+      "WordPress site with Bricks Builder active",
+      "bricks-api-bridge plugin installed and activated",
+      "Application Password configured in .env or sites.json",
+      "At least one published page with Bricks data",
+      "Node.js >= 18 installed"
+    ],
+    "usage": "Use this file as a test checklist. Each test has: tool name, input args, expected behavior, and pass criteria. Run tests in order within each phase. Phase 1 (read-only) is safe to run on production. Phases 2-4 create/modify/delete data — use a test site.",
+    "test_page_id": "REPLACE_WITH_YOUR_TEST_PAGE_ID",
+    "notes": [
+      "Replace all {{PAGE_ID}} with a real page ID on your test site",
+      "Replace all {{TEMPLATE_ID}} with a real template ID",
+      "Replace all {{POST_ID}} with a real post ID",
+      "Replace all {{MENU_ID}} with a menu ID created during tests",
+      "Tests marked 'destructive: true' modify or delete data"
+    ]
+  },
+
+  "phase_1_connection_and_read": {
+    "description": "Read-only tests — verify connection, list resources, read data. Safe to run on any site.",
+    "tests": [
+      {
+        "id": "T001",
+        "tool": "bricks_connection_test",
+        "description": "Verify WordPress connection and plugin status",
+        "args": {},
+        "expected": "Returns site URL, WordPress version, Bricks version, plugin version, PHP version, user role",
+        "pass_criteria": [
+          "No error returned",
+          "WordPress version >= 5.6",
+          "Bricks Builder version present",
+          "Plugin version = 1.0.0 or higher",
+          "User role = administrator"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T002",
+        "tool": "bricks_active_site",
+        "description": "Check which site is currently active",
+        "args": {},
+        "expected": "Returns active site key, label, and URL",
+        "pass_criteria": [
+          "Site key matches .env or sites.json config",
+          "URL matches configured WordPress URL"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T003",
+        "tool": "bricks_list_sites",
+        "description": "List all configured sites",
+        "args": {},
+        "expected": "Returns list of configured sites with keys and labels",
+        "pass_criteria": [
+          "At least 1 site listed",
+          "Active site marked"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T004",
+        "tool": "bricks_list_pages",
+        "description": "List all Bricks pages",
+        "args": { "status": "any" },
+        "expected": "Returns list of pages with ID, title, slug, status, element count, URL",
+        "pass_criteria": [
+          "At least 1 page returned",
+          "Each page has ID, title, slug",
+          "Element count is a number >= 0"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T005",
+        "tool": "bricks_list_pages",
+        "description": "List only published pages",
+        "args": { "status": "publish" },
+        "expected": "Returns only published pages",
+        "pass_criteria": [
+          "All returned pages have status PUBLISH"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T006",
+        "tool": "bricks_get_page",
+        "description": "Get full Bricks data for a specific page",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns page header (ID, title, status, URL, element count) + full bricks_data JSON array",
+        "pass_criteria": [
+          "Page ID matches request",
+          "bricks_data is an array",
+          "Each element has id, name, parent fields",
+          "Element IDs are 6 chars alphanumeric with at least 1 digit"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T007",
+        "tool": "bricks_get_page",
+        "description": "Get page summary (tree view)",
+        "args": { "page_id": "{{PAGE_ID}}", "summary": true },
+        "expected": "Returns indented element tree instead of raw JSON",
+        "pass_criteria": [
+          "Output contains element tree with indentation",
+          "Elements show name, label (if set), and ID",
+          "No raw JSON array in output"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T008",
+        "tool": "bricks_search_pages",
+        "description": "Search pages by title",
+        "args": { "query": "Home" },
+        "expected": "Returns pages matching the search query",
+        "pass_criteria": [
+          "Results contain pages with 'Home' in title (or empty if none exist)",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T009",
+        "tool": "bricks_search_elements",
+        "description": "Search elements by type across all pages",
+        "args": { "element_type": "heading" },
+        "expected": "Returns heading elements from all pages",
+        "pass_criteria": [
+          "Results list page ID, page title, element name, element ID",
+          "All results have element_name = heading"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T010",
+        "tool": "bricks_search_elements",
+        "description": "Search elements by text content",
+        "args": { "query": "Welcome" },
+        "expected": "Returns elements containing 'Welcome' in text/content/label/title",
+        "pass_criteria": [
+          "Each result shows matched_field and matched_value",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T011",
+        "tool": "bricks_get_scripts",
+        "description": "Get per-page scripts",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns script content or '(none)' if no scripts set",
+        "pass_criteria": [
+          "Response includes page ID reference",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T012",
+        "tool": "bricks_get_page_assets",
+        "description": "Get structured page assets (CSS/JS)",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns structured assets (css, js, js_deps, raw_footer) or legacy fallback info",
+        "pass_criteria": [
+          "GSAP flag status shown",
+          "Asset sizes reported (or legacy message shown)",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T013",
+        "tool": "bricks_get_page_seo",
+        "description": "Get SEO metadata for a page",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns SEO title, description, OG tags, canonical, robots, keywords",
+        "pass_criteria": [
+          "All SEO fields listed (even if '(not set)')",
+          "noindex/nofollow shown as yes/no",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T014",
+        "tool": "bricks_get_page_schema",
+        "description": "Get JSON-LD structured data for a page",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns schema objects or 'No JSON-LD schema set' message",
+        "pass_criteria": [
+          "Schema count shown",
+          "If schemas exist, @type is present in each"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T015",
+        "tool": "bricks_get_page_settings",
+        "description": "Get page-level Bricks settings",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns page settings or 'using defaults' message",
+        "pass_criteria": [
+          "No error thrown",
+          "Settings displayed as JSON or defaults message shown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T016",
+        "tool": "bricks_list_templates",
+        "description": "List all Bricks templates",
+        "args": {},
+        "expected": "Returns template list with ID, title, type",
+        "pass_criteria": [
+          "Templates listed or 'no templates' message",
+          "Each template shows ID, title, template_type"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T017",
+        "tool": "bricks_list_templates",
+        "description": "Filter templates by type",
+        "args": { "template_type": "header" },
+        "expected": "Returns only header templates",
+        "pass_criteria": [
+          "All returned templates are type 'header'",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T018",
+        "tool": "bricks_search_templates",
+        "description": "Search templates by name",
+        "args": { "query": "footer" },
+        "expected": "Returns templates matching search",
+        "pass_criteria": [
+          "Results match query or empty result set",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T019",
+        "tool": "bricks_list_global_classes",
+        "description": "List all global CSS classes",
+        "args": {},
+        "expected": "Returns list of global classes with names and settings",
+        "pass_criteria": [
+          "Classes listed or 'no classes' message",
+          "Each class has ID and name"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T020",
+        "tool": "bricks_get_global_class_usage",
+        "description": "Show where global classes are used",
+        "args": {},
+        "expected": "Returns usage map: which pages/elements use which classes",
+        "pass_criteria": [
+          "Usage data returned or empty set",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T021",
+        "tool": "bricks_get_color_palette",
+        "description": "Get the site color palette",
+        "args": {},
+        "expected": "Returns array of color definitions with id, name, raw values",
+        "pass_criteria": [
+          "Colors listed with names and hex/rgb values",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T022",
+        "tool": "bricks_list_fonts",
+        "description": "List registered fonts",
+        "args": {},
+        "expected": "Returns list of custom fonts or 'default fonts' message",
+        "pass_criteria": [
+          "Font list or default message shown",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T023",
+        "tool": "bricks_get_global_css",
+        "description": "Get global CSS",
+        "args": {},
+        "expected": "Returns global CSS content",
+        "pass_criteria": [
+          "CSS content returned (may be empty)",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T024",
+        "tool": "bricks_get_css_variables",
+        "description": "Get CSS custom properties",
+        "args": {},
+        "expected": "Returns CSS variables defined in Bricks",
+        "pass_criteria": [
+          "Variables listed or empty set",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T025",
+        "tool": "bricks_get_breakpoints",
+        "description": "Get responsive breakpoints",
+        "args": {},
+        "expected": "Returns breakpoint definitions (tablet, mobile, etc.)",
+        "pass_criteria": [
+          "At least tablet and mobile breakpoints listed",
+          "Each breakpoint has width value"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T026",
+        "tool": "bricks_get_theme_styles",
+        "description": "Get all theme styles",
+        "args": {},
+        "expected": "Returns theme style settings (typography, colors, spacing)",
+        "pass_criteria": [
+          "Theme styles returned or 'no theme styles' message",
+          "JSON format with style settings"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T027",
+        "tool": "bricks_get_settings",
+        "description": "Get Bricks Builder site settings",
+        "args": {},
+        "expected": "Returns global Bricks settings",
+        "pass_criteria": [
+          "Settings object returned",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T028",
+        "tool": "bricks_get_stats",
+        "description": "Get site statistics",
+        "args": {},
+        "expected": "Returns page count, element count, template count, etc.",
+        "pass_criteria": [
+          "Statistics with numeric values returned",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T029",
+        "tool": "bricks_get_post_types",
+        "description": "List available post types",
+        "args": {},
+        "expected": "Returns registered post types (page, post, etc.)",
+        "pass_criteria": [
+          "'page' and 'post' types present",
+          "Each type has name and label"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T030",
+        "tool": "bricks_list_presets",
+        "description": "List available section presets",
+        "args": {},
+        "expected": "Returns list of presets with names and descriptions",
+        "pass_criteria": [
+          "At least 1 preset listed (25 shipped by default)",
+          "Each preset has name and element count"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T031",
+        "tool": "bricks_list_presets",
+        "description": "Filter presets by category",
+        "args": { "category": "hero" },
+        "expected": "Returns only hero presets",
+        "pass_criteria": [
+          "All returned presets are hero category",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T032",
+        "tool": "bricks_list_backups",
+        "description": "List backups for a page",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns backup slots with timestamps",
+        "pass_criteria": [
+          "Backup list or 'no backups' message",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T033",
+        "tool": "bricks_list_snapshots",
+        "description": "List named snapshots for a page",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns snapshot list with names and timestamps",
+        "pass_criteria": [
+          "Snapshot list or 'no snapshots' message",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T034",
+        "tool": "bricks_list_media",
+        "description": "List media library items",
+        "args": { "per_page": 5 },
+        "expected": "Returns media items with ID, title, URL, mime type",
+        "pass_criteria": [
+          "Up to 5 items returned",
+          "Each item has ID and URL"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T035",
+        "tool": "bricks_seo_audit",
+        "description": "Run bulk SEO audit across all published pages",
+        "args": {},
+        "expected": "Returns scores for each page (0-100), sorted worst first",
+        "pass_criteria": [
+          "Pages scanned count shown",
+          "Average score shown",
+          "Each page has score, ID, slug",
+          "Issues listed per page"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T036",
+        "tool": "bricks_seo_analyze",
+        "description": "Deep SEO analysis for a single page",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns detailed score breakdown with checks, headings, images, links, keyword analysis",
+        "pass_criteria": [
+          "Overall score shown",
+          "Individual check items with pass/warn/fail status",
+          "Word count, heading count, image count present"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T037",
+        "tool": "bricks_readability",
+        "description": "Analyze page readability",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns readability metrics (Flesch score, sentence length, etc.)",
+        "pass_criteria": [
+          "Readability data returned",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T038",
+        "tool": "bricks_social_preview",
+        "description": "Preview social media appearance",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns OG/Twitter preview data (title, description, image)",
+        "pass_criteria": [
+          "Preview data returned",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T039",
+        "tool": "bricks_seo_plugin_info",
+        "description": "Detect installed SEO plugins",
+        "args": {},
+        "expected": "Returns info about active SEO plugins (Yoast, RankMath, etc.) or 'none detected'",
+        "pass_criteria": [
+          "Plugin detection result returned",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T040",
+        "tool": "bricks_check_links",
+        "description": "Check for broken links on a page",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns link check results (status codes, broken links)",
+        "pass_criteria": [
+          "Links checked with status codes",
+          "Broken links highlighted if any"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T041",
+        "tool": "bricks_sitemap_analyze",
+        "description": "Analyze sitemap.xml",
+        "args": {},
+        "expected": "Returns sitemap analysis (URL count, issues)",
+        "pass_criteria": [
+          "Sitemap data returned or 'not found' message",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T042",
+        "tool": "bricks_internal_links",
+        "description": "Analyze internal linking structure",
+        "args": { "page_id": "{{PAGE_ID}}" },
+        "expected": "Returns internal link analysis",
+        "pass_criteria": [
+          "Link data returned",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T043",
+        "tool": "bricks_list_redirects",
+        "description": "List URL redirects",
+        "args": {},
+        "expected": "Returns redirect rules or empty list",
+        "pass_criteria": [
+          "Redirect list or 'no redirects' message",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T044",
+        "tool": "bricks_wp_list_posts",
+        "description": "List WordPress posts",
+        "args": { "per_page": 5 },
+        "expected": "Returns post list with ID, title, status, date",
+        "pass_criteria": [
+          "Posts listed or empty message",
+          "Up to 5 results"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T045",
+        "tool": "bricks_wp_list_categories",
+        "description": "List WordPress categories",
+        "args": {},
+        "expected": "Returns category list",
+        "pass_criteria": [
+          "At least 'Uncategorized' present",
+          "Each category has ID and name"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T046",
+        "tool": "bricks_wp_list_tags",
+        "description": "List WordPress tags",
+        "args": {},
+        "expected": "Returns tag list or empty set",
+        "pass_criteria": [
+          "Tag list or empty message",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T047",
+        "tool": "bricks_get_menu_locations",
+        "description": "List available menu locations",
+        "args": {},
+        "expected": "Returns registered theme menu locations",
+        "pass_criteria": [
+          "Menu locations listed",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T048",
+        "tool": "bricks_get_breakpoints",
+        "description": "Verify breakpoint configuration",
+        "args": {},
+        "expected": "Returns breakpoint widths matching Bricks defaults",
+        "pass_criteria": [
+          "Desktop > 991px implied",
+          "Tablet breakpoint around 991px",
+          "Mobile breakpoint around 767px"
+        ],
+        "destructive": false
+      }
+    ]
+  },
+
+  "phase_2_write_and_create": {
+    "description": "Write tests — create pages, templates, classes, snapshots. Run on a TEST SITE only.",
+    "tests": [
+      {
+        "id": "T100",
+        "tool": "bricks_create_snapshot",
+        "description": "Create a safety snapshot before write tests",
+        "args": { "page_id": "{{PAGE_ID}}", "name": "pre-test-snapshot", "description": "Safety snapshot before running MCP test suite" },
+        "expected": "Snapshot created with ID and timestamp",
+        "pass_criteria": [
+          "Snapshot ID returned",
+          "Name = 'pre-test-snapshot'",
+          "Element count matches page"
+        ],
+        "destructive": false,
+        "note": "MUST run this before any write tests"
+      },
+      {
+        "id": "T101",
+        "tool": "bricks_create_page",
+        "description": "Create a new test page",
+        "args": { "title": "MCP Test Page", "slug": "mcp-test-page", "status": "draft" },
+        "expected": "New page created with returned ID",
+        "pass_criteria": [
+          "New page ID returned",
+          "Title = 'MCP Test Page'",
+          "Status = draft"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_PAGE_ID}} — save this ID for subsequent tests"
+      },
+      {
+        "id": "T102",
+        "tool": "bricks_update_page",
+        "description": "Write Bricks elements to the test page",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "bricks_data": [
+            {
+              "id": "sec001",
+              "name": "section",
+              "parent": 0,
+              "children": ["con001"],
+              "settings": {
+                "_background": { "color": { "raw": "#1a1a2e" } }
+              }
+            },
+            {
+              "id": "con001",
+              "name": "container",
+              "parent": "sec001",
+              "children": ["hdr001", "txt001", "btn001"],
+              "settings": {
+                "_direction": "column",
+                "_alignItems": "center",
+                "_padding": { "top": "80", "right": "40", "bottom": "80", "left": "40" }
+              }
+            },
+            {
+              "id": "hdr001",
+              "name": "heading",
+              "parent": "con001",
+              "children": [],
+              "settings": {
+                "text": "Test Heading",
+                "tag": "h1",
+                "_typography": {
+                  "font-size": "48",
+                  "font-weight": "700",
+                  "line-height": "1.2",
+                  "color": { "raw": "#ffffff" }
+                }
+              }
+            },
+            {
+              "id": "txt001",
+              "name": "text-basic",
+              "parent": "con001",
+              "children": [],
+              "settings": {
+                "text": "<p>This is a test paragraph created by the MCP test suite.</p>",
+                "_typography": {
+                  "font-size": "18",
+                  "line-height": "1.6",
+                  "color": { "raw": "#cccccc" }
+                }
+              }
+            },
+            {
+              "id": "btn001",
+              "name": "button",
+              "parent": "con001",
+              "children": [],
+              "settings": {
+                "text": "Click Me",
+                "link": { "url": "#" },
+                "_background": { "color": { "raw": "#e63946" } },
+                "_typography": {
+                  "font-size": "16",
+                  "font-weight": "600",
+                  "color": { "raw": "#ffffff" }
+                }
+              }
+            }
+          ]
+        },
+        "expected": "Page updated with 5 elements, backup auto-created",
+        "pass_criteria": [
+          "Success message",
+          "Elements saved: 5",
+          "Backup created: yes",
+          "No validation errors"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T103",
+        "tool": "bricks_get_page",
+        "description": "Verify the elements were saved correctly",
+        "args": { "page_id": "{{TEST_PAGE_ID}}", "summary": true },
+        "expected": "Element tree shows section > container > heading + text-basic + button",
+        "pass_criteria": [
+          "5 elements total",
+          "Correct parent-child hierarchy",
+          "IDs match: sec001, con001, hdr001, txt001, btn001"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T104",
+        "tool": "bricks_patch_page",
+        "description": "Patch: update heading text + add new element",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "update": [
+            {
+              "id": "hdr001",
+              "settings": { "text": "Updated Heading" }
+            }
+          ],
+          "add": [
+            {
+              "id": "img001",
+              "name": "image",
+              "parent": "con001",
+              "children": [],
+              "settings": {
+                "_width": "200px"
+              }
+            }
+          ]
+        },
+        "expected": "Heading updated, image element added",
+        "pass_criteria": [
+          "Updated 1 element (hdr001)",
+          "Added 1 element (img001)",
+          "Total element count = 6"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T105",
+        "tool": "bricks_patch_page",
+        "description": "Patch: remove an element",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "remove": ["img001"]
+        },
+        "expected": "Image element removed",
+        "pass_criteria": [
+          "Removed 1 element (img001)",
+          "Total element count = 5"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T106",
+        "tool": "bricks_append_elements",
+        "description": "Append a new section to the page",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "elements": [
+            {
+              "id": "sec002",
+              "name": "section",
+              "parent": 0,
+              "children": ["con002"],
+              "settings": {
+                "_background": { "color": { "raw": "#f8f9fa" } }
+              }
+            },
+            {
+              "id": "con002",
+              "name": "container",
+              "parent": "sec002",
+              "children": ["hdr002"],
+              "settings": { "_direction": "column" }
+            },
+            {
+              "id": "hdr002",
+              "name": "heading",
+              "parent": "con002",
+              "children": [],
+              "settings": {
+                "text": "Appended Section",
+                "tag": "h2",
+                "_typography": { "font-size": "36", "line-height": "1.3", "color": { "raw": "#1a1a2e" } }
+              }
+            }
+          ]
+        },
+        "expected": "3 elements appended to the page",
+        "pass_criteria": [
+          "Appended 3 elements",
+          "Total element count = 8"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T107",
+        "tool": "bricks_update_page_seo",
+        "description": "Set SEO metadata on test page",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "seo_title": "MCP Test Page | My Site",
+          "description": "This page was created by the bricks-mcp test suite to verify all 105 tools work correctly.",
+          "noindex": true,
+          "focus_keyword": "mcp test"
+        },
+        "expected": "SEO fields updated",
+        "pass_criteria": [
+          "Fields updated: seo_title, description, noindex, focus_keyword",
+          "No error thrown"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T108",
+        "tool": "bricks_get_page_seo",
+        "description": "Verify SEO metadata was saved",
+        "args": { "page_id": "{{TEST_PAGE_ID}}" },
+        "expected": "Returns the SEO data set in T107",
+        "pass_criteria": [
+          "Title = 'MCP Test Page | My Site'",
+          "Description matches",
+          "Noindex = YES",
+          "Focus Keyword = 'mcp test'"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T109",
+        "tool": "bricks_update_page_schema",
+        "description": "Set JSON-LD schema on test page",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "schema": {
+            "@type": "WebPage",
+            "name": "MCP Test Page",
+            "description": "Test page for MCP validation"
+          }
+        },
+        "expected": "Schema saved with @context auto-added",
+        "pass_criteria": [
+          "Schema count = 1",
+          "Type = WebPage"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T110",
+        "tool": "bricks_update_scripts",
+        "description": "Set per-page scripts",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "scripts": "<style>.test-class { color: red; }</style>\n<script>console.log('MCP test');</script>"
+        },
+        "expected": "Scripts saved with character count",
+        "pass_criteria": [
+          "Scripts updated confirmation",
+          "Length > 0 reported"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T111",
+        "tool": "bricks_update_page_assets",
+        "description": "Set structured page assets",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "css": ".hero-section { min-height: 100vh; }",
+          "js_deps": ["gsap", "scrolltrigger"],
+          "js": "gsap.registerPlugin(ScrollTrigger); console.log('GSAP ready');"
+        },
+        "expected": "Structured assets saved (CSS in head, JS deps enqueued, JS in footer)",
+        "pass_criteria": [
+          "CSS char count reported",
+          "Deps listed: gsap, scrolltrigger",
+          "JS char count reported"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T112",
+        "tool": "bricks_set_gsap_flag",
+        "description": "Enable GSAP flag",
+        "args": { "page_id": "{{TEST_PAGE_ID}}", "enabled": true },
+        "expected": "GSAP flag enabled",
+        "pass_criteria": [
+          "GSAP flag ENABLED confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T113",
+        "tool": "bricks_update_page_settings",
+        "description": "Update page-level settings",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "settings": { "defaultPadding": false }
+        },
+        "expected": "Page settings updated",
+        "pass_criteria": [
+          "Settings update confirmation",
+          "No error thrown"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T114",
+        "tool": "bricks_clone_page",
+        "description": "Clone the test page",
+        "args": { "page_id": "{{TEST_PAGE_ID}}", "new_title": "MCP Test Page Clone" },
+        "expected": "Clone created with new ID",
+        "pass_criteria": [
+          "New page ID returned",
+          "Title = 'MCP Test Page Clone'"
+        ],
+        "destructive": true,
+        "creates": "{{CLONE_PAGE_ID}} — save for cleanup"
+      },
+      {
+        "id": "T115",
+        "tool": "bricks_create_template",
+        "description": "Create a section template",
+        "args": {
+          "title": "MCP Test Template",
+          "template_type": "section",
+          "content": [
+            {
+              "id": "tsec01",
+              "name": "section",
+              "parent": 0,
+              "children": ["tcon01"],
+              "settings": {}
+            },
+            {
+              "id": "tcon01",
+              "name": "container",
+              "parent": "tsec01",
+              "children": ["thdr01"],
+              "settings": {}
+            },
+            {
+              "id": "thdr01",
+              "name": "heading",
+              "parent": "tcon01",
+              "children": [],
+              "settings": { "text": "Template Heading", "tag": "h2" }
+            }
+          ]
+        },
+        "expected": "Template created with ID",
+        "pass_criteria": [
+          "Template ID returned",
+          "Type = section"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_TEMPLATE_ID}} — save for cleanup"
+      },
+      {
+        "id": "T116",
+        "tool": "bricks_get_template",
+        "description": "Verify created template",
+        "args": { "template_id": "{{TEST_TEMPLATE_ID}}" },
+        "expected": "Returns template data with 3 elements",
+        "pass_criteria": [
+          "Title = 'MCP Test Template'",
+          "3 elements present",
+          "Type = section"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T117",
+        "tool": "bricks_clone_template",
+        "description": "Clone the test template",
+        "args": { "template_id": "{{TEST_TEMPLATE_ID}}" },
+        "expected": "Template cloned with new ID",
+        "pass_criteria": [
+          "New template ID returned"
+        ],
+        "destructive": true,
+        "creates": "{{CLONE_TEMPLATE_ID}} — save for cleanup"
+      },
+      {
+        "id": "T118",
+        "tool": "bricks_create_global_class",
+        "description": "Create a global CSS class",
+        "args": {
+          "name": "mcp-test-btn",
+          "settings": {
+            "_background": { "color": { "raw": "#2563eb" } },
+            "_padding": { "top": "12", "right": "24", "bottom": "12", "left": "24" },
+            "_typography": { "font-size": "16", "font-weight": "600", "color": { "raw": "#ffffff" } }
+          }
+        },
+        "expected": "Global class created",
+        "pass_criteria": [
+          "Class ID returned",
+          "Name = 'mcp-test-btn'"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_CLASS_ID}} — save for cleanup"
+      },
+      {
+        "id": "T119",
+        "tool": "bricks_update_global_class",
+        "description": "Update the global class",
+        "args": {
+          "class_id": "{{TEST_CLASS_ID}}",
+          "settings": {
+            "_background": { "color": { "raw": "#7c3aed" } }
+          }
+        },
+        "expected": "Class updated with new background color",
+        "pass_criteria": [
+          "Update confirmation",
+          "No error thrown"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T120",
+        "tool": "bricks_generate_bem_component",
+        "description": "Generate BEM class set",
+        "args": {
+          "block": "card",
+          "elements": ["image", "title", "text", "link"],
+          "modifiers": ["featured", "dark"]
+        },
+        "expected": "Returns BEM class definitions for card component",
+        "pass_criteria": [
+          "Block: card",
+          "Elements: card__image, card__title, card__text, card__link",
+          "Modifiers: card--featured, card--dark"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T121",
+        "tool": "bricks_validate_elements",
+        "description": "Validate the test page elements",
+        "args": { "page_id": "{{TEST_PAGE_ID}}" },
+        "expected": "Returns validation results",
+        "pass_criteria": [
+          "Validation passed or issues listed",
+          "No fatal errors"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T122",
+        "tool": "bricks_wp_create_post",
+        "description": "Create a WordPress post",
+        "args": {
+          "title": "MCP Test Post",
+          "content": "<p>This post was created by the MCP test suite.</p>",
+          "status": "draft"
+        },
+        "expected": "Post created with ID",
+        "pass_criteria": [
+          "Post ID returned",
+          "Title = 'MCP Test Post'",
+          "Status = draft"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_POST_ID}} — save for cleanup"
+      },
+      {
+        "id": "T123",
+        "tool": "bricks_wp_get_post",
+        "description": "Verify created post",
+        "args": { "post_id": "{{TEST_POST_ID}}" },
+        "expected": "Returns post data",
+        "pass_criteria": [
+          "Title = 'MCP Test Post'",
+          "Content includes test text",
+          "Status = draft"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T124",
+        "tool": "bricks_wp_update_post",
+        "description": "Update the test post",
+        "args": {
+          "post_id": "{{TEST_POST_ID}}",
+          "title": "MCP Test Post — Updated"
+        },
+        "expected": "Post title updated",
+        "pass_criteria": [
+          "Update confirmation",
+          "Title changed"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T125",
+        "tool": "bricks_wp_create_category",
+        "description": "Create a test category",
+        "args": { "name": "MCP Test Category" },
+        "expected": "Category created with ID",
+        "pass_criteria": [
+          "Category ID returned",
+          "Name = 'MCP Test Category'"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_CATEGORY_ID}}"
+      },
+      {
+        "id": "T126",
+        "tool": "bricks_wp_create_tag",
+        "description": "Create a test tag",
+        "args": { "name": "mcp-test-tag" },
+        "expected": "Tag created with ID",
+        "pass_criteria": [
+          "Tag ID returned",
+          "Name = 'mcp-test-tag'"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_TAG_ID}}"
+      },
+      {
+        "id": "T127",
+        "tool": "bricks_create_menu",
+        "description": "Create a test navigation menu",
+        "args": { "name": "MCP Test Menu" },
+        "expected": "Menu created with ID",
+        "pass_criteria": [
+          "Menu ID returned"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_MENU_ID}}"
+      },
+      {
+        "id": "T128",
+        "tool": "bricks_add_menu_item",
+        "description": "Add items to the test menu",
+        "args": {
+          "menu_id": "{{TEST_MENU_ID}}",
+          "title": "Home",
+          "url": "/",
+          "type": "custom"
+        },
+        "expected": "Menu item added",
+        "pass_criteria": [
+          "Menu item ID returned"
+        ],
+        "destructive": true,
+        "creates": "{{TEST_MENU_ITEM_ID}}"
+      },
+      {
+        "id": "T129",
+        "tool": "bricks_add_menu_item",
+        "description": "Add a submenu item",
+        "args": {
+          "menu_id": "{{TEST_MENU_ID}}",
+          "title": "About",
+          "url": "/about/",
+          "type": "custom",
+          "parent": "{{TEST_MENU_ITEM_ID}}"
+        },
+        "expected": "Submenu item added under Home",
+        "pass_criteria": [
+          "Submenu item ID returned"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T130",
+        "tool": "bricks_save_preset",
+        "description": "Save a custom preset",
+        "args": {
+          "name": "mcp-test-hero",
+          "category": "hero",
+          "description": "Test hero preset created by MCP test suite",
+          "elements": [
+            {
+              "id": "psc001",
+              "name": "section",
+              "parent": 0,
+              "children": ["pcc001"],
+              "settings": { "_background": { "color": { "raw": "#0f172a" } } }
+            },
+            {
+              "id": "pcc001",
+              "name": "container",
+              "parent": "psc001",
+              "children": ["phd001"],
+              "settings": { "_direction": "column", "_alignItems": "center" }
+            },
+            {
+              "id": "phd001",
+              "name": "heading",
+              "parent": "pcc001",
+              "children": [],
+              "settings": { "text": "{{heading}}", "tag": "h1" }
+            }
+          ]
+        },
+        "expected": "Preset saved",
+        "pass_criteria": [
+          "Preset name = 'mcp-test-hero'",
+          "Save confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T131",
+        "tool": "bricks_instantiate_section",
+        "description": "Instantiate the saved preset",
+        "args": {
+          "preset_name": "mcp-test-hero",
+          "variables": { "heading": "Hello World" }
+        },
+        "expected": "Returns instantiated elements with variables replaced",
+        "pass_criteria": [
+          "Elements returned with new IDs",
+          "Heading text = 'Hello World' (variable substituted)"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T132",
+        "tool": "bricks_build_page",
+        "description": "Build a page from preset + raw elements",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "sections": [
+            {
+              "preset": "hero-gradient-dark"
+            },
+            {
+              "elements": [
+                {
+                  "id": "bld001",
+                  "name": "section",
+                  "parent": 0,
+                  "children": ["bld002"],
+                  "settings": {}
+                },
+                {
+                  "id": "bld002",
+                  "name": "container",
+                  "parent": "bld001",
+                  "children": ["bld003"],
+                  "settings": {}
+                },
+                {
+                  "id": "bld003",
+                  "name": "heading",
+                  "parent": "bld002",
+                  "children": [],
+                  "settings": { "text": "Custom Section", "tag": "h2" }
+                }
+              ]
+            }
+          ]
+        },
+        "expected": "Page built with 2 sections (1 preset + 1 raw)",
+        "pass_criteria": [
+          "2 sections built",
+          "Total element count reported",
+          "No validation errors"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T133",
+        "tool": "bricks_html_to_bricks",
+        "description": "Convert HTML to Bricks elements",
+        "args": {
+          "html": "<section><div><h1>Hello</h1><p>World</p><a href='#'>Link</a></div></section>",
+          "css": "h1 { font-size: 48px; color: #333; } p { font-size: 18px; }"
+        },
+        "expected": "Returns Bricks element array from HTML",
+        "pass_criteria": [
+          "Elements array returned",
+          "Section, container, heading, text, button/link elements present",
+          "CSS styles mapped to settings"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T134",
+        "tool": "bricks_create_redirect",
+        "description": "Create a URL redirect",
+        "args": { "from": "/old-test-page/", "to": "/mcp-test-page/", "type": 301 },
+        "expected": "Redirect created",
+        "pass_criteria": [
+          "Redirect confirmation",
+          "301 type confirmed"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T135",
+        "tool": "bricks_sitemap_ping",
+        "description": "Ping search engines with sitemap",
+        "args": {},
+        "expected": "Sitemap ping results for Google/Bing",
+        "pass_criteria": [
+          "Ping results returned",
+          "No fatal error"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T136",
+        "tool": "bricks_seo_auto_fix",
+        "description": "Auto-fix SEO issues (dry run)",
+        "args": { "page_ids": ["{{TEST_PAGE_ID}}"], "dry_run": true },
+        "expected": "Returns proposed fixes without applying",
+        "pass_criteria": [
+          "Fix proposals listed",
+          "No changes applied (dry run)"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T137",
+        "tool": "bricks_bulk_media_seo",
+        "description": "Preview media SEO improvements",
+        "args": { "apply": false, "per_page": 5 },
+        "expected": "Returns media items with suggested alt text/title improvements",
+        "pass_criteria": [
+          "Media items scanned",
+          "Suggestions listed (preview only)"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T138",
+        "tool": "bricks_batch",
+        "description": "Execute batch operations",
+        "args": {
+          "operations": [
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/global-classes" },
+            { "method": "GET", "endpoint": "/color-palette" }
+          ]
+        },
+        "expected": "All 3 operations return results",
+        "pass_criteria": [
+          "3 results returned",
+          "Each result has status code",
+          "No errors in any operation"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T139",
+        "tool": "bricks_competitor_extract",
+        "description": "Extract competitor site info",
+        "args": { "url": "https://example.com" },
+        "expected": "Returns site metadata (title, description, tech stack)",
+        "pass_criteria": [
+          "Site data returned",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T140",
+        "tool": "bricks_purge_cache",
+        "description": "Purge site cache",
+        "args": {},
+        "expected": "Cache purged confirmation",
+        "pass_criteria": [
+          "Purge confirmation",
+          "No error thrown"
+        ],
+        "destructive": true
+      }
+    ]
+  },
+
+  "phase_3_validation_and_edge_cases": {
+    "description": "Edge case and validation tests — invalid inputs, boundary conditions, error handling.",
+    "tests": [
+      {
+        "id": "T200",
+        "tool": "bricks_get_page",
+        "description": "Request non-existent page",
+        "args": { "page_id": 999999 },
+        "expected": "Error message about page not found",
+        "pass_criteria": [
+          "Error returned (not crash)",
+          "Meaningful error message"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T201",
+        "tool": "bricks_update_page",
+        "description": "Submit invalid element IDs (7 chars)",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "bricks_data": [
+            {
+              "id": "toolong1",
+              "name": "section",
+              "parent": 0,
+              "children": [],
+              "settings": {}
+            }
+          ]
+        },
+        "expected": "Validation error about invalid ID format",
+        "pass_criteria": [
+          "Validation failed message",
+          "Mentions ID format requirement (6 chars)"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T202",
+        "tool": "bricks_update_page",
+        "description": "Submit element with no digits in ID",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "bricks_data": [
+            {
+              "id": "abcdef",
+              "name": "section",
+              "parent": 0,
+              "children": [],
+              "settings": {}
+            }
+          ]
+        },
+        "expected": "Validation error — IDs must contain at least 1 digit",
+        "pass_criteria": [
+          "Validation failed",
+          "Mentions digit requirement"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T203",
+        "tool": "bricks_update_page",
+        "description": "Submit empty bricks_data array",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "bricks_data": []
+        },
+        "expected": "Either accepted (clears page) or validation warning",
+        "pass_criteria": [
+          "No crash",
+          "Meaningful response"
+        ],
+        "destructive": true,
+        "note": "May clear the page — restore from snapshot after"
+      },
+      {
+        "id": "T204",
+        "tool": "bricks_patch_page",
+        "description": "Patch with invalid element ID in update",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "update": [{ "id": "INVALID!", "settings": { "text": "x" } }]
+        },
+        "expected": "Validation error about invalid element ID",
+        "pass_criteria": [
+          "Error message about invalid ID",
+          "No crash"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T205",
+        "tool": "bricks_update_page",
+        "description": "Test auto-fix: line-height with units",
+        "args": {
+          "page_id": "{{TEST_PAGE_ID}}",
+          "bricks_data": [
+            {
+              "id": "fix001",
+              "name": "section",
+              "parent": 0,
+              "children": ["fix002"],
+              "settings": {}
+            },
+            {
+              "id": "fix002",
+              "name": "heading",
+              "parent": "fix001",
+              "children": [],
+              "settings": {
+                "text": "Auto-fix Test",
+                "_typography": {
+                  "font-size": "48",
+                  "line-height": "64px"
+                }
+              }
+            }
+          ]
+        },
+        "expected": "Auto-fix strips 'px' from line-height, converts to unitless",
+        "pass_criteria": [
+          "Auto-fixed 1 issue message",
+          "Line-height fix mentioned in log",
+          "Page saved successfully"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T206",
+        "tool": "bricks_search_elements",
+        "description": "Search with no parameters",
+        "args": {},
+        "expected": "Error: at least one search parameter required",
+        "pass_criteria": [
+          "Error message returned",
+          "Mentions required parameters"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T207",
+        "tool": "bricks_create_global_class",
+        "description": "Create class with empty name",
+        "args": { "name": "", "settings": {} },
+        "expected": "Error: name is required",
+        "pass_criteria": [
+          "Error message about missing name",
+          "No class created"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T208",
+        "tool": "bricks_batch",
+        "description": "Batch with too many operations (>20)",
+        "args": {
+          "operations": [
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" },
+            { "method": "GET", "endpoint": "/pages" }
+          ]
+        },
+        "expected": "Error: max 20 operations per batch",
+        "pass_criteria": [
+          "Error or truncation to 20",
+          "No crash"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T209",
+        "tool": "bricks_switch_site",
+        "description": "Switch to non-existent site",
+        "args": { "key": "this-site-does-not-exist" },
+        "expected": "Error: site key not found",
+        "pass_criteria": [
+          "Error message about unknown site key",
+          "Active site unchanged"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T210",
+        "tool": "bricks_update_theme_styles",
+        "description": "Update with invalid type",
+        "args": { "theme_styles": "not-an-object" },
+        "expected": "Error: theme_styles must be an object",
+        "pass_criteria": [
+          "Validation error",
+          "No crash"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T211",
+        "tool": "bricks_seo_bulk_update",
+        "description": "Bulk update with empty page_ids",
+        "args": { "page_ids": [], "fields": { "description": "test" } },
+        "expected": "Error or 0 pages updated",
+        "pass_criteria": [
+          "Meaningful response",
+          "No crash"
+        ],
+        "destructive": false
+      }
+    ]
+  },
+
+  "phase_4_cleanup": {
+    "description": "Clean up all test data. Run after all other phases. Restores original state.",
+    "tests": [
+      {
+        "id": "T300",
+        "tool": "bricks_restore_snapshot",
+        "description": "Restore original page from pre-test snapshot",
+        "args": { "page_id": "{{PAGE_ID}}", "snapshot_id": "{{PRE_TEST_SNAPSHOT_ID}}" },
+        "expected": "Page restored to original state",
+        "pass_criteria": [
+          "Restore confirmation",
+          "Element count matches original"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T301",
+        "tool": "bricks_delete_snapshot",
+        "description": "Delete the pre-test snapshot",
+        "args": { "page_id": "{{PAGE_ID}}", "snapshot_id": "{{PRE_TEST_SNAPSHOT_ID}}" },
+        "expected": "Snapshot deleted",
+        "pass_criteria": [
+          "Delete confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T302",
+        "tool": "bricks_delete_preset",
+        "description": "Delete test preset",
+        "args": { "name": "mcp-test-hero" },
+        "expected": "Preset deleted",
+        "pass_criteria": [
+          "Delete confirmation",
+          "No error"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T303",
+        "tool": "bricks_delete_global_class",
+        "description": "Delete test global class",
+        "args": { "class_id": "{{TEST_CLASS_ID}}" },
+        "expected": "Global class deleted",
+        "pass_criteria": [
+          "Delete confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T304",
+        "tool": "bricks_delete_template",
+        "description": "Delete test template",
+        "args": { "template_id": "{{TEST_TEMPLATE_ID}}", "force": true },
+        "expected": "Template permanently deleted",
+        "pass_criteria": [
+          "Delete confirmation (permanently)"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T305",
+        "tool": "bricks_delete_template",
+        "description": "Delete cloned template",
+        "args": { "template_id": "{{CLONE_TEMPLATE_ID}}", "force": true },
+        "expected": "Template permanently deleted",
+        "pass_criteria": [
+          "Delete confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T306",
+        "tool": "bricks_delete_redirect",
+        "description": "Delete test redirect",
+        "args": { "from": "/old-test-page/" },
+        "expected": "Redirect deleted",
+        "pass_criteria": [
+          "Delete confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T307",
+        "tool": "bricks_delete_menu_item",
+        "description": "Delete test menu items (submenu first)",
+        "args": { "item_id": "{{TEST_SUBMENU_ITEM_ID}}" },
+        "expected": "Menu item deleted",
+        "pass_criteria": [
+          "Delete confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T308",
+        "tool": "bricks_delete_menu_item",
+        "description": "Delete parent menu item",
+        "args": { "item_id": "{{TEST_MENU_ITEM_ID}}" },
+        "expected": "Menu item deleted",
+        "pass_criteria": [
+          "Delete confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T309",
+        "tool": "bricks_delete_menu",
+        "description": "Delete test menu",
+        "args": { "menu_id": "{{TEST_MENU_ID}}" },
+        "expected": "Menu deleted",
+        "pass_criteria": [
+          "Delete confirmation"
+        ],
+        "destructive": true
+      },
+      {
+        "id": "T310",
+        "tool": "bricks_purge_cache",
+        "description": "Final cache purge after cleanup",
+        "args": {},
+        "expected": "Cache purged",
+        "pass_criteria": [
+          "Purge confirmation"
+        ],
+        "destructive": true
+      }
+    ],
+    "manual_cleanup_notes": [
+      "Delete test page ({{TEST_PAGE_ID}}) via WordPress Admin → Pages → Trash → Delete Permanently",
+      "Delete cloned page ({{CLONE_PAGE_ID}}) via WordPress Admin → Pages → Trash → Delete Permanently",
+      "Delete test post ({{TEST_POST_ID}}) via WordPress Admin → Posts → Trash → Delete Permanently",
+      "Delete test category ({{TEST_CATEGORY_ID}}) via WordPress Admin → Posts → Categories",
+      "Delete test tag ({{TEST_TAG_ID}}) via WordPress Admin → Posts → Tags",
+      "These cannot be deleted via MCP tools (no bricks_delete_page / bricks_wp_delete_post in the open-source edition)"
+    ]
+  },
+
+  "phase_5_multi_site": {
+    "description": "Multi-site switching tests. Requires sites.json with at least 2 sites configured.",
+    "prerequisites": ["sites.json configured with at least 2 sites (e.g., 'production' and 'staging')"],
+    "tests": [
+      {
+        "id": "T400",
+        "tool": "bricks_active_site",
+        "description": "Note current active site before switching",
+        "args": {},
+        "expected": "Returns current site key",
+        "pass_criteria": [
+          "Site key noted for restoration"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T401",
+        "tool": "bricks_list_sites",
+        "description": "Confirm multiple sites available",
+        "args": {},
+        "expected": "At least 2 sites listed",
+        "pass_criteria": [
+          ">= 2 sites in list",
+          "Active site marked"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T402",
+        "tool": "bricks_switch_site",
+        "description": "Switch to second site",
+        "args": { "key": "{{SECOND_SITE_KEY}}" },
+        "expected": "Site switched, cache cleared",
+        "pass_criteria": [
+          "Switch confirmation",
+          "Cache cleared message",
+          "New site URL shown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T403",
+        "tool": "bricks_connection_test",
+        "description": "Verify connection to second site",
+        "args": {},
+        "expected": "Connection OK to second site",
+        "pass_criteria": [
+          "Different site URL than T400",
+          "Connection successful"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T404",
+        "tool": "bricks_list_pages",
+        "description": "List pages on second site",
+        "args": { "status": "any" },
+        "expected": "Returns pages from second site (different from first site)",
+        "pass_criteria": [
+          "Pages listed (may differ from first site)",
+          "No error thrown"
+        ],
+        "destructive": false
+      },
+      {
+        "id": "T405",
+        "tool": "bricks_switch_site",
+        "description": "Switch back to original site",
+        "args": { "key": "{{ORIGINAL_SITE_KEY}}" },
+        "expected": "Site switched back",
+        "pass_criteria": [
+          "Original site restored",
+          "URL matches original"
+        ],
+        "destructive": false
+      }
+    ]
+  },
+
+  "summary": {
+    "total_tests": 82,
+    "phase_1_read_only": 48,
+    "phase_2_write": 41,
+    "phase_3_validation": 12,
+    "phase_4_cleanup": 11,
+    "phase_5_multisite": 6,
+    "tools_covered": 101,
+    "tools_not_directly_tested": [
+      "bricks_upload_media — requires a local file path or URL; test manually",
+      "bricks_upload_font — requires a font file; test manually",
+      "bricks_register_font — requires font name and source; include in style system test",
+      "bricks_bulk_create_global_classes — variation of create; covered by single create test"
+    ],
+    "test_id_variables": {
+      "{{PAGE_ID}}": "An existing page on your test site (any page with Bricks data)",
+      "{{TEST_PAGE_ID}}": "Created in T101 — save the returned ID",
+      "{{CLONE_PAGE_ID}}": "Created in T114 — save the returned ID",
+      "{{TEST_TEMPLATE_ID}}": "Created in T115 — save the returned ID",
+      "{{CLONE_TEMPLATE_ID}}": "Created in T117 — save the returned ID",
+      "{{TEST_CLASS_ID}}": "Created in T118 — save the returned class ID",
+      "{{TEST_POST_ID}}": "Created in T122 — save the returned ID",
+      "{{TEST_CATEGORY_ID}}": "Created in T125 — save the returned ID",
+      "{{TEST_TAG_ID}}": "Created in T126 — save the returned ID",
+      "{{TEST_MENU_ID}}": "Created in T127 — save the returned ID",
+      "{{TEST_MENU_ITEM_ID}}": "Created in T128 — save the returned ID",
+      "{{TEST_SUBMENU_ITEM_ID}}": "Created in T129 — save the returned ID",
+      "{{PRE_TEST_SNAPSHOT_ID}}": "Created in T100 — save the returned snapshot ID",
+      "{{SECOND_SITE_KEY}}": "Key from sites.json for your second site",
+      "{{ORIGINAL_SITE_KEY}}": "Key of your primary site (noted in T400)"
+    }
+  }
+}
