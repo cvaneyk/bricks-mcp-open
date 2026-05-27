@@ -203,20 +203,27 @@ The included WordPress plugin (`bricks-api-bridge`) provides:
 
 ## Feature Comparison
 
-| Feature | bricks-mcp | cristianuibar/bricks-mcp | sabiertas/bricks-mcp-server |
-|---------|-----------|--------------------------|----------------------------|
-| **Tools** | **100+** | 11 | 10 |
-| **Multi-Site** | Runtime switching | - | Environment vars |
-| **BEM Support** | Generate + Apply + Validate | - | - |
-| **SEO Tools** | 19 (meta + audit + redirects) | - | - |
-| **Backup System** | Snapshots + Multi-slot | - | - |
-| **Security Hardening** | Rate limit + Headers | - | - |
-| **Responsive Inference** | Auto breakpoints | - | - |
-| **WordPress Content** | Posts + Categories + Tags | - | - |
-| **Batch Operations** | Up to 20 per request | - | - |
-| **Design Tokens** | Import/Export (JSON, ACSS) | - | - |
-| **Auto-Fix** | Overflow, grid, container | - | - |
-| **License** | MIT | GPL-2.0 | MIT |
+| Feature | bricks-mcp | Novamira | cristianuibar/bricks-mcp | sabiertas/bricks-mcp-server |
+|---------|-----------|----------|--------------------------|----------------------------|
+| **Focus** | **Bricks Builder** | Generic WordPress | Bricks Builder | Bricks Builder |
+| **Tools** | **105** | 22 (12 core + 10 Gutenberg) | 11 | 10 |
+| **Approach** | REST API (structured endpoints) | PHP execution + filesystem | REST API | REST API |
+| **Agent Service** | Autonomous 5-phase pipeline | - | - | - |
+| **Mobile Control** | Telegram bot (iPhone/Android) | - | - | - |
+| **Multi-Site** | Runtime switching | - | - | Environment vars |
+| **BEM Support** | Generate + Apply + Validate | - | - | - |
+| **SEO Tools** | 19 (meta + audit + redirects) | - | - | - |
+| **Backup System** | Snapshots + Multi-slot | - | - | - |
+| **Section Presets** | 25 ready-to-use | - | - | - |
+| **Security Hardening** | Rate limit + Headers | - | - | - |
+| **Responsive Inference** | Auto breakpoints | - | - | - |
+| **WordPress Content** | Posts + Categories + Tags + Menus | Via PHP execution | - | - |
+| **Batch Operations** | Up to 20 per request | - | - | - |
+| **Design Tokens** | Import/Export (JSON, ACSS) | - | - | - |
+| **Auto-Fix** | Overflow, grid, container | - | - | - |
+| **Gutenberg Support** | - | Block Editor Queue | - | - |
+| **PHP Execution** | - | Direct PHP eval | - | - |
+| **License** | MIT | AGPL-3.0 | GPL-2.0 | MIT |
 
 ---
 
