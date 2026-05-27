@@ -172,8 +172,8 @@ const BUILTIN_CSS_FIXES = {
       return css.includes('justify-content') && !css.includes('width: 100%');
     },
   },
-  // Learning from markuspalzer.de: Sections with absolute-positioned children
-  // (decorative blobs, aurora gradients) overflow without overflow:hidden.
+  // Sections with absolute-positioned children (decorative blobs, aurora
+  // gradients) overflow without overflow:hidden.
   'section:absolute_child_overflow': {
     css: 'overflow: hidden !important;',
     note: 'Section with absolute-positioned children needs overflow:hidden',
