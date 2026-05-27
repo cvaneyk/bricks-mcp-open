@@ -204,12 +204,16 @@ class Bricks_API_Bridge_Global_Classes {
 	public function save_class( $request ) {
 		$body = $request->get_json_params();
 
-		if ( empty( $body['id'] ) || empty( $body['name'] ) ) {
+		if ( empty( $body['name'] ) ) {
 			return new WP_Error(
 				'bricks_api_bridge_invalid_class',
-				__( 'Class id and name are required.', 'bricks-api-bridge' ),
+				__( 'Class name is required.', 'bricks-api-bridge' ),
 				array( 'status' => 400 )
 			);
+		}
+
+		if ( empty( $body['id'] ) ) {
+			$body['id'] = sanitize_title( $body['name'] );
 		}
 
 		$classes = get_option( self::OPTION_KEY, array() );

@@ -52,11 +52,24 @@ class Bricks_API_Bridge_Site_Controller {
 			),
 		));
 
-		// 4. WP Navigation Menus (GET/PUT).
+		// 4. WP Navigation Menus (GET/POST/DELETE).
 		register_rest_route( self::NAMESPACE, '/menus', array(
-			'methods'             => WP_REST_Server::READABLE,
-			'callback'            => array( $this, 'get_menus' ),
-			'permission_callback' => array( $this, 'can_edit' ),
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_menus' ),
+				'permission_callback' => array( $this, 'can_edit' ),
+			),
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'create_menu' ),
+				'permission_callback' => array( $this, 'can_manage' ),
+			),
+		));
+
+		register_rest_route( self::NAMESPACE, '/menus/(?P<id>\d+)', array(
+			'methods'             => 'DELETE',
+			'callback'            => array( $this, 'delete_menu' ),
+			'permission_callback' => array( $this, 'can_manage' ),
 		));
 
 		register_rest_route( self::NAMESPACE, '/menus/(?P<id>\d+)/items', array(
@@ -66,10 +79,21 @@ class Bricks_API_Bridge_Site_Controller {
 				'permission_callback' => array( $this, 'can_edit' ),
 			),
 			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'add_menu_item' ),
+				'permission_callback' => array( $this, 'can_manage' ),
+			),
+			array(
 				'methods'             => 'PUT',
 				'callback'            => array( $this, 'update_menu_items' ),
 				'permission_callback' => array( $this, 'can_manage' ),
 			),
+		));
+
+		register_rest_route( self::NAMESPACE, '/menus/items/(?P<item_id>\d+)', array(
+			'methods'             => 'DELETE',
+			'callback'            => array( $this, 'delete_menu_item' ),
+			'permission_callback' => array( $this, 'can_manage' ),
 		));
 
 		// 5. Cache Purge.
@@ -447,6 +471,99 @@ class Bricks_API_Bridge_Site_Controller {
 			'menu_id'      => $menu_id,
 			'items_count'  => count( $created ),
 		), 200 );
+	}
+
+	public function create_menu( $request ) {
+		$body = $request->get_json_params();
+		$name = sanitize_text_field( $body['name'] ?? '' );
+
+		if ( empty( $name ) ) {
+			return new WP_Error( 'missing_name', 'Menu name is required.', array( 'status' => 400 ) );
+		}
+
+		$menu_id = wp_create_nav_menu( $name );
+
+		if ( is_wp_error( $menu_id ) ) {
+			return $menu_id;
+		}
+
+		if ( ! empty( $body['locations'] ) && is_array( $body['locations'] ) ) {
+			$locations = get_theme_mod( 'nav_menu_locations', array() );
+			foreach ( $body['locations'] as $loc ) {
+				$locations[ sanitize_key( $loc ) ] = $menu_id;
+			}
+			set_theme_mod( 'nav_menu_locations', $locations );
+		}
+
+		return new WP_REST_Response( array(
+			'success' => true,
+			'menu_id' => $menu_id,
+			'name'    => $name,
+		), 201 );
+	}
+
+	public function delete_menu( $request ) {
+		$menu_id = (int) $request['id'];
+
+		if ( ! is_nav_menu( $menu_id ) ) {
+			return new WP_Error( 'menu_not_found', "Menu {$menu_id} not found.", array( 'status' => 404 ) );
+		}
+
+		$result = wp_delete_nav_menu( $menu_id );
+
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		return new WP_REST_Response( array( 'success' => true, 'deleted' => $menu_id ), 200 );
+	}
+
+	public function add_menu_item( $request ) {
+		$menu_id = (int) $request['id'];
+		$body    = $request->get_json_params();
+
+		if ( ! is_nav_menu( $menu_id ) ) {
+			return new WP_Error( 'menu_not_found', "Menu {$menu_id} not found.", array( 'status' => 404 ) );
+		}
+
+		$args = array(
+			'menu-item-title'     => sanitize_text_field( $body['title'] ?? '' ),
+			'menu-item-url'       => esc_url_raw( $body['url'] ?? '' ),
+			'menu-item-status'    => 'publish',
+			'menu-item-position'  => intval( $body['position'] ?? 0 ),
+			'menu-item-target'    => sanitize_text_field( $body['target'] ?? '' ),
+			'menu-item-classes'   => implode( ' ', array_map( 'sanitize_html_class', $body['classes'] ?? array() ) ),
+			'menu-item-parent-id' => intval( $body['parent'] ?? 0 ),
+			'menu-item-type'      => sanitize_text_field( $body['type'] ?? 'custom' ),
+		);
+
+		if ( isset( $body['object'] ) && isset( $body['object_id'] ) ) {
+			$args['menu-item-object']    = sanitize_text_field( $body['object'] );
+			$args['menu-item-object-id'] = intval( $body['object_id'] );
+		}
+
+		$item_id = wp_update_nav_menu_item( $menu_id, 0, $args );
+
+		if ( is_wp_error( $item_id ) ) {
+			return $item_id;
+		}
+
+		return new WP_REST_Response( array(
+			'success' => true,
+			'item_id' => $item_id,
+			'menu_id' => $menu_id,
+		), 201 );
+	}
+
+	public function delete_menu_item( $request ) {
+		$item_id = (int) $request['item_id'];
+		$result  = wp_delete_post( $item_id, true );
+
+		if ( ! $result ) {
+			return new WP_Error( 'delete_failed', "Could not delete menu item {$item_id}.", array( 'status' => 404 ) );
+		}
+
+		return new WP_REST_Response( array( 'success' => true, 'deleted' => $item_id ), 200 );
 	}
 
 	// ═══════════════════════════════════════════════════════════
