@@ -203,6 +203,23 @@ The included WordPress plugin (`bricks-api-bridge`) provides:
 
 ---
 
+## Agent Service (Autonomous Page Builder)
+
+The `agent-service/` directory contains an autonomous agent that builds entire WordPress pages from industry briefs — using Claude + the MCP server in a 5-phase pipeline:
+
+```
+Industry Brief → Historian → Design → Code → Update → QA → Fix Loop
+```
+
+- **Telegram Bot** — `/build zahnarzt` triggers a full page build via chat
+- **CLI Mode** — Single builds or overnight batch processing
+- **Budget Control** — Per-phase cost caps, total cost tracking
+- **Docker Ready** — Deploys to Railway, Fly.io, or any container host
+
+See [`agent-service/README.md`](agent-service/README.md) for setup instructions.
+
+---
+
 ## Premium
 
 Looking for more? The premium edition includes **260+ tools** with:

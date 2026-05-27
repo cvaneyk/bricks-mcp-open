@@ -1,0 +1,18 @@
+{
+  "industry": "zahnarzt",
+  "title": "Zahnarztpraxis Dr. Weber — Moderne Zahnmedizin",
+  "locale": "de",
+  "description": "Moderne Zahnarztpraxis in Hamburg. Schwerpunkte: Implantologie, Ästhetische Zahnheilkunde, Prophylaxe. Zielgruppe: 30-60 Jahre, gehobenes Einzugsgebiet.",
+  "sections": [
+    "hero",
+    "leistungen",
+    "ueber-uns",
+    "team",
+    "bewertungen",
+    "kontakt"
+  ],
+  "designProfile": "premium",
+  "colorHints": ["medical-blue", "clean-white", "trust-green-accent"],
+  "typography": "Modern Serif Headlines + Clean Sans Body",
+  "specialInstructions": "Vertrauenswürdiger, professioneller Look. Keine aggressive Werbung. Warme Farben die Angstpatienten beruhigen. CTA: Termin online buchen."
+}
