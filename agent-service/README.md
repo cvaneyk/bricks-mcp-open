@@ -2,11 +2,13 @@
 
 An autonomous page-building agent that uses the Bricks MCP server to design, build, deploy, and QA WordPress pages — all driven by Claude via the Anthropic SDK.
 
+**Build entire WordPress pages from your iPhone.** The Telegram bot lets you trigger builds, run QA checks, fix bugs, and take screenshots — all from your phone. No laptop needed.
+
 ## Architecture
 
 ```
-Telegram Bot / CLI
-      ↕
+iPhone / Android / Desktop
+      ↕ Telegram
 Agent Service (TypeScript)
       ↕ Anthropic SDK (Claude Sonnet/Opus)
       ↕ MCP Client (stdio)
@@ -42,20 +44,33 @@ npx tsx src/main.ts --batch
 ```
 Builds all briefs in `briefs/` sequentially, accumulating anti-patterns across builds.
 
-### Telegram Bot
+### Telegram Bot (Mobile Control)
 ```bash
 TELEGRAM_BOT_TOKEN=xxx npx tsx src/main.ts
 ```
 
-Commands:
+Control the entire pipeline from your phone — the Telegram app on iPhone or Android becomes your build dashboard:
+
+**Build commands:**
 - `/build zahnarzt` — Full 5-agent pipeline build
 - `/qa 42` — QA check on page 42
 - `/fix 42 overflow` — Fix a specific issue
 - `/screenshot 42` — Take desktop + mobile screenshots
 - `/score 42` — Design score + accessibility audit
+
+**Status & monitoring:**
 - `/status` — Current build status
 - `/budget` — Cost tracking
-- Free text — Chat with the agent (all tools available)
+- `/briefs` — Available industry templates
+- `/learnings` — Recent learnings from past builds
+
+**Free chat:**
+- Send any message to chat with the agent — all 105 MCP tools available
+- *"Bau mir eine Zahnarzt-Seite"* — triggers page creation
+- *"Fix den Overflow auf Page 42"* — snapshot + patch + cache purge
+- *"Zeig mir Page 42"* — fetches page data + screenshot
+
+The bot streams phase progress in real-time, sends screenshots as images, and tracks costs per build.
 
 ## Setup
 
