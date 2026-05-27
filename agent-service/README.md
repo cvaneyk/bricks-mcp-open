@@ -2,14 +2,16 @@
 
 An autonomous page-building agent that uses the Bricks MCP server to design, build, deploy, and QA WordPress pages — all driven by Claude via the Anthropic SDK.
 
-**Build entire WordPress pages from your iPhone.** The Telegram bot lets you trigger builds, run QA checks, fix bugs, and take screenshots — all from your phone. No laptop needed.
+**Build entire WordPress pages from your iPhone.** Use the Claude Code mobile app or the Telegram bot to trigger builds, run QA checks, fix bugs, and take screenshots — all from your phone. The agent runs 24/7 on Railway, no laptop needed.
 
 ## Architecture
 
+The agent service deploys to Railway as a self-hosted MCP environment. You control it from your phone via the Claude Code app or Telegram — the server is always on.
+
 ```
-iPhone / Android / Desktop
-      ↕ Telegram
-Agent Service (TypeScript)
+iPhone / Android (Claude Code App or Telegram)
+      ↕ Claude Self-Hosted MCP / Telegram API
+Railway (Agent Service — always on)
       ↕ Anthropic SDK (Claude Sonnet/Opus)
       ↕ MCP Client (stdio)
 Bricks MCP Server (105 tools)
@@ -123,17 +125,25 @@ docker run -e ANTHROPIC_API_KEY=sk-ant-... \
            bricks-agent
 ```
 
-### Railway (Recommended)
+### Railway + Claude Self-Hosted MCP (Recommended)
 
-The agent service is production-tested on [Railway](https://railway.com). Deploy in one click:
+The agent service is production-tested on [Railway](https://railway.com) as a Claude self-hosted MCP environment. This lets you control it from the Claude Code mobile app — no local machine running.
 
+**Deploy to Railway:**
 1. Push this repo to GitHub
 2. Create a new Railway project → **Deploy from GitHub repo**
 3. Set the **Root Directory** to `agent-service`
 4. Add environment variables (`ANTHROPIC_API_KEY`, `WORDPRESS_URL`, `WORDPRESS_USER`, `WORDPRESS_APP_PASSWORD`, `TELEGRAM_BOT_TOKEN`)
 5. Railway auto-detects the Dockerfile and deploys
 
-The health endpoint on port 8080 serves as Railway's health check. The Telegram bot connects via long polling — no webhook URL needed.
+**Connect to Claude Code mobile app:**
+1. Go to [Claude Console](https://console.anthropic.com) → MCP → Create Self-Hosted Environment
+2. Generate an environment key
+3. Add the key to your Railway deployment as `ANTHROPIC_ENVIRONMENT_KEY`
+4. Open the Claude Code app on your iPhone/Android — the environment appears automatically
+5. Start chatting: *"Build me a dental practice page"*
+
+The health endpoint on port 8080 serves as Railway's health check. The Telegram bot connects via long polling — no webhook URL needed. Both interfaces (Claude Code app + Telegram) work in parallel.
 
 ## Industry Briefs
 
