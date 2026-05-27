@@ -286,6 +286,17 @@ class Bricks_API_Bridge_Pages {
 
 		$body = $request->get_json_params();
 
+		// Determine which content area to write. Default: content.
+		$content_area = sanitize_text_field( $body['content_area'] ?? 'content' );
+		$valid_areas  = array( 'content', 'header', 'footer' );
+		if ( ! in_array( $content_area, $valid_areas, true ) ) {
+			return new WP_Error(
+				'bricks_api_bridge_invalid_area',
+				__( 'content_area must be one of: content, header, footer.', 'bricks-api-bridge' ),
+				array( 'status' => 400 )
+			);
+		}
+
 		if ( ! isset( $body['bricks_data'] ) ) {
 			return new WP_Error(
 				'bricks_api_bridge_missing_data',
@@ -341,14 +352,22 @@ class Bricks_API_Bridge_Pages {
 			}
 		}
 
-		// Determine which meta key to write to (use Bricks' preferred key).
-		$write_key  = '_bricks_page_content_2';
-		$meta_keys  = array( '_bricks_page_content_2', '_bricks_page_content', '_bricks_page_data' );
-		foreach ( $meta_keys as $key ) {
-			$existing = get_post_meta( $post_id, $key, true );
-			if ( ! empty( $existing ) ) {
-				$write_key = $key;
-				break;
+		// Determine which meta key to write to based on content_area.
+		$area_meta_map = array(
+			'content' => '_bricks_page_content_2',
+			'header'  => '_bricks_page_header_2',
+			'footer'  => '_bricks_page_footer_2',
+		);
+		$write_key = $area_meta_map[ $content_area ];
+
+		if ( 'content' === $content_area ) {
+			$meta_keys = array( '_bricks_page_content_2', '_bricks_page_content', '_bricks_page_data' );
+			foreach ( $meta_keys as $key ) {
+				$existing = get_post_meta( $post_id, $key, true );
+				if ( ! empty( $existing ) ) {
+					$write_key = $key;
+					break;
+				}
 			}
 		}
 
@@ -366,19 +385,15 @@ class Bricks_API_Bridge_Pages {
 
 		// Update using Bricks Database class if available, otherwise direct meta.
 		if ( class_exists( '\Bricks\Database' ) && method_exists( '\Bricks\Database', 'set_data' ) ) {
-			\Bricks\Database::set_data( $post_id, $content, 'content' );
+			\Bricks\Database::set_data( $post_id, $content, $content_area );
 		} else {
 			update_post_meta( $post_id, $write_key, $content );
 		}
 
-		// Read-after-write verification: confirm the data we sent actually persisted.
-		// Catches silent truncations from postmeta size limits, DB errors swallowed by
-		// update_post_meta returning false, or Bricks::set_data filters that drop elements.
-		// The cost is one postmeta read per update — negligible vs. the cost of a "200 OK
-		// but page is broken" debug session.
+		// Read-after-write verification.
 		$expected_count = is_array( $content ) ? count( $content ) : 0;
 		if ( class_exists( '\Bricks\Database' ) && method_exists( '\Bricks\Database', 'get_data' ) ) {
-			$saved = \Bricks\Database::get_data( $post_id, 'content' );
+			$saved = \Bricks\Database::get_data( $post_id, $content_area );
 		} else {
 			$saved = get_post_meta( $post_id, $write_key, true );
 		}
@@ -459,6 +474,17 @@ class Bricks_API_Bridge_Pages {
 
 		$body = $request->get_json_params();
 
+		// Determine content area for patch.
+		$content_area = sanitize_text_field( $body['content_area'] ?? 'content' );
+		$valid_areas  = array( 'content', 'header', 'footer' );
+		if ( ! in_array( $content_area, $valid_areas, true ) ) {
+			return new WP_Error(
+				'bricks_api_bridge_invalid_area',
+				__( 'content_area must be one of: content, header, footer.', 'bricks-api-bridge' ),
+				array( 'status' => 400 )
+			);
+		}
+
 		// Optimistic locking: check If-Match header against current content hash.
 		$if_match = $request->get_header( 'If-Match' );
 		if ( ! empty( $if_match ) ) {
@@ -473,7 +499,7 @@ class Bricks_API_Bridge_Pages {
 		$remove = isset( $body['remove'] ) ? $body['remove'] : array();
 
 		// Load current data BEFORE validation so we know existing IDs.
-		$current = $this->load_page_data( $post_id );
+		$current = $this->load_page_data( $post_id, $content_area );
 
 		// Extract existing element IDs for context-aware validation.
 		$existing_ids = array();
@@ -633,11 +659,16 @@ class Bricks_API_Bridge_Pages {
 			}
 		}
 
-		// Save.
+		// Save to the correct content area.
+		$patch_meta_map = array(
+			'content' => '_bricks_page_content_2',
+			'header'  => '_bricks_page_header_2',
+			'footer'  => '_bricks_page_footer_2',
+		);
 		if ( class_exists( '\Bricks\Database' ) && method_exists( '\Bricks\Database', 'set_data' ) ) {
-			\Bricks\Database::set_data( $post_id, $current, 'content' );
+			\Bricks\Database::set_data( $post_id, $current, $content_area );
 		} else {
-			update_post_meta( $post_id, '_bricks_page_content_2', $current );
+			update_post_meta( $post_id, $patch_meta_map[ $content_area ], $current );
 		}
 
 		// Purge caches (CSS regeneration + cache plugins).
@@ -887,13 +918,19 @@ class Bricks_API_Bridge_Pages {
 	 * @param int $post_id The post ID.
 	 * @return array The Bricks element array (empty array if no data).
 	 */
-	private function load_page_data( $post_id ) {
+	private function load_page_data( $post_id, $area = 'content' ) {
+		$area_meta_map = array(
+			'content' => '_bricks_page_content_2',
+			'header'  => '_bricks_page_header_2',
+			'footer'  => '_bricks_page_footer_2',
+		);
 		$data = null;
 		if ( class_exists( '\Bricks\Database' ) && method_exists( '\Bricks\Database', 'get_data' ) ) {
-			$data = \Bricks\Database::get_data( $post_id, 'content' );
+			$data = \Bricks\Database::get_data( $post_id, $area );
 		}
 		if ( empty( $data ) ) {
-			$data = get_post_meta( $post_id, '_bricks_page_content_2', true );
+			$meta_key = $area_meta_map[ $area ] ?? '_bricks_page_content_2';
+			$data = get_post_meta( $post_id, $meta_key, true );
 		}
 		return ! empty( $data ) && is_array( $data ) ? $data : array();
 	}

@@ -70,46 +70,57 @@ const pageTools = [
 
   {
     name: 'bricks_get_page',
-    description: 'Get the complete Bricks Builder JSON data for a specific page. Returns the full element tree with all settings, styles, and content.',
+    description: 'Get the complete Bricks Builder JSON data for a specific page. Returns the full element tree with all settings, styles, and content. Use content_area to read header or footer template data instead of main content.',
     inputSchema: {
       type: 'object',
       properties: {
         page_id: { type: 'number', description: 'WordPress page/post ID' },
         summary: { type: 'boolean', description: 'If true, show element tree overview instead of raw JSON (default: false)', default: false },
+        content_area: { type: 'string', enum: ['content', 'header', 'footer'], description: 'Which content area to return (default: content). Header/footer return their respective template elements.', default: 'content' },
       },
       required: ['page_id'],
     },
     handler: async (args) => {
       try {
-        const { page_id, summary } = args;
+        const { page_id, summary, content_area = 'content' } = args;
         if (!page_id) return { content: [{ type: 'text', text: 'Error: page_id is required' }] };
 
         const data = await wpGetCached(`/pages/${page_id}`, TTL.PAGE_DETAIL);
         if (!data) return { content: [{ type: 'text', text: `No data found for page ${page_id}` }] };
 
-        const header = [
-          `Page ID: ${data.id || page_id}`,
+        // Select elements based on content_area
+        const areaDataKey = { content: 'bricks_data', header: 'bricks_header_data', footer: 'bricks_footer_data' }[content_area];
+        const areaElements = data[areaDataKey] || (content_area === 'content' ? data.bricks_data : null);
+        const areaLabel = content_area !== 'content' ? ` [${content_area}]` : '';
+
+        if (!areaElements && content_area !== 'content') {
+          return { content: [{ type: 'text', text: `No ${content_area} data found for page ${page_id}. This page may use a template for its ${content_area}.` }] };
+        }
+
+        const headerInfo = [
+          `Page ID: ${data.id || page_id}${areaLabel}`,
           `Title: ${data.title || 'Untitled'}`,
           `Status: ${data.status || 'unknown'}`,
           `URL: ${data.url || 'N/A'}`,
-          `Elements: ${data.bricks_data ? data.bricks_data.length : 0}`,
+          `Elements (${content_area}): ${areaElements ? areaElements.length : 0}`,
           data.content_hash ? `Content Hash: ${data.content_hash}` : null,
+          data.bricks_header_data ? `Header: ${data.bricks_header_data.length} elements` : null,
+          data.bricks_footer_data ? `Footer: ${data.bricks_footer_data.length} elements` : null,
         ].filter(Boolean).join('\n');
 
-        if (summary && data.bricks_data) {
-          const tree = buildTreeSummary(data.bricks_data);
-          return { content: [{ type: 'text', text: `${header}\n\nElement Tree:\n${tree.join('\n')}` }] };
+        if (summary && areaElements) {
+          const tree = buildTreeSummary(areaElements);
+          return { content: [{ type: 'text', text: `${headerInfo}\n\nElement Tree (${content_area}):\n${tree.join('\n')}` }] };
         }
 
-        // Compact summary header before full JSON (helps Claude keep overview)
-        const elements = data.bricks_data || [];
+        const elements = areaElements || [];
         let summaryHeader = '';
         if (elements.length >= 10) {
           const sections = elements.filter(el => el.name === 'section');
           summaryHeader = `\n--- Overview: ${elements.length} elements in ${sections.length} section(s). ---\n`;
         }
 
-        return { content: [{ type: 'text', text: `${header}${summaryHeader}\nBricks Data:\n${JSON.stringify(elements, null, 2)}` }] };
+        return { content: [{ type: 'text', text: `${headerInfo}${summaryHeader}\nBricks Data (${content_area}):\n${JSON.stringify(elements, null, 2)}` }] };
       } catch (error) {
         return { content: [{ type: 'text', text: `Error getting page: ${error.message}` }] };
       }
@@ -118,19 +129,20 @@ const pageTools = [
 
   {
     name: 'bricks_update_page',
-    description: 'Update the Bricks Builder data for a page. Automatically creates a backup before writing. Validates the JSON structure before saving. Supports optimistic locking via content_hash.',
+    description: 'Update the Bricks Builder data for a page. Automatically creates a backup before writing. Validates the JSON structure before saving. Supports optimistic locking via content_hash. Use content_area to write header or footer template data.',
     inputSchema: {
       type: 'object',
       properties: {
         page_id: { type: 'number', description: 'WordPress page/post ID' },
         bricks_data: { type: 'array', description: 'Array of Bricks elements to save', items: { type: 'object' } },
         content_hash: { type: 'string', description: 'Content hash from bricks_get_page for optimistic locking. If provided, update fails with 409 if page was modified since read.' },
+        content_area: { type: 'string', enum: ['content', 'header', 'footer'], description: 'Which content area to write (default: content). Use header/footer to manage template elements.', default: 'content' },
       },
       required: ['page_id', 'bricks_data'],
     },
     handler: async (args) => {
       try {
-        const { page_id, bricks_data, content_hash } = args;
+        const { page_id, bricks_data, content_hash, content_area = 'content' } = args;
         if (!page_id) return { content: [{ type: 'text', text: 'Error: page_id is required' }] };
         if (!bricks_data || !Array.isArray(bricks_data)) return { content: [{ type: 'text', text: 'Error: bricks_data must be an array of elements' }] };
 
@@ -146,7 +158,9 @@ const pageTools = [
         }
 
         const putOptions = content_hash ? { contentHash: content_hash } : {};
-        const result = await wpPut(`/pages/${page_id}`, { bricks_data: fixedData }, putOptions);
+        const body = { bricks_data: fixedData };
+        if (content_area !== 'content') body.content_area = content_area;
+        const result = await wpPut(`/pages/${page_id}`, body, putOptions);
         cache.invalidatePrefix(`/pages/${page_id}`);
         cache.invalidatePrefix('/pages?');
 
@@ -163,7 +177,7 @@ const pageTools = [
 
   {
     name: 'bricks_patch_page',
-    description: 'Apply partial updates to a page. Only sends changed elements instead of full page data. More efficient than bricks_update_page for small changes. Supports optimistic locking via content_hash.',
+    description: 'Apply partial updates to a page. Only sends changed elements instead of full page data. More efficient than bricks_update_page for small changes. Supports optimistic locking via content_hash. Use content_area to patch header or footer.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -173,12 +187,13 @@ const pageTools = [
         remove: { type: 'array', items: { type: 'string' }, description: 'Element IDs to remove' },
         regenerate_css: { type: 'boolean', default: true, description: 'Whether to regenerate CSS after patching (default: true)' },
         content_hash: { type: 'string', description: 'Content hash from bricks_get_page for optimistic locking. If provided, patch fails with 409 if page was modified since read.' },
+        content_area: { type: 'string', enum: ['content', 'header', 'footer'], description: 'Which content area to patch (default: content).', default: 'content' },
       },
       required: ['page_id'],
     },
     handler: async (args) => {
       try {
-        const { page_id, add = [], update = [], remove = [], regenerate_css = true, content_hash } = args;
+        const { page_id, add = [], update = [], remove = [], regenerate_css = true, content_hash, content_area = 'content' } = args;
         if (!page_id) return { content: [{ type: 'text', text: 'Error: page_id is required' }] };
 
         // Validation Gate: validate 'add' elements
@@ -203,6 +218,7 @@ const pageTools = [
         }
 
         const body = { add: fixedAdd, update, remove };
+        if (content_area !== 'content') body.content_area = content_area;
         const endpoint = `/pages/${page_id}?regenerate_css=${regenerate_css}`;
         cache.invalidatePrefix(`/pages/${page_id}`);
         cache.invalidatePrefix('/pages?');
