@@ -32,13 +32,31 @@ The MCP server communicates with your WordPress site through the included REST A
 
 ### 1. Install the WordPress Plugin
 
-Download the `bricks-api-bridge` folder from `plugin/` in this repo and upload it to your WordPress site:
+The `plugin/` folder in this repo contains the **Bricks API Bridge** WordPress plugin. Choose one of these install methods:
 
-```
-wp-content/plugins/bricks-api-bridge/
+**Option A: ZIP Upload (easiest)**
+1. [Download the latest release ZIP](https://github.com/developer2013/bricks-mcp-open/releases) or download this repo as ZIP
+2. Extract and create a ZIP of just the `plugin/` folder, renamed to `bricks-api-bridge/`
+3. Go to WordPress Admin → Plugins → Add New → Upload Plugin
+4. Upload the ZIP and click "Install Now"
+5. Click "Activate"
+
+**Option B: Manual Upload via FTP/SSH**
+1. Clone this repo or download it
+2. Copy the `plugin/` folder to your WordPress installation:
+   ```bash
+   cp -r plugin/ /path/to/wordpress/wp-content/plugins/bricks-api-bridge/
+   ```
+3. Go to WordPress Admin → Plugins → Activate "Bricks API Bridge"
+
+**Option C: WP-CLI**
+```bash
+# From the repo root
+cd plugin && zip -r ../bricks-api-bridge.zip . && cd ..
+wp plugin install bricks-api-bridge.zip --activate
 ```
 
-Activate the plugin in WordPress Admin → Plugins.
+After activation, the plugin registers REST API endpoints under `/wp-json/bricks-bridge/v1/`. No configuration needed — it works out of the box with WordPress Application Passwords.
 
 ### 2. Create an Application Password
 
