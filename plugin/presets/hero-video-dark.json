@@ -1,0 +1,137 @@
+{
+	"description": "Full-screen video hero with dark overlay and centered content",
+	"variables": [
+		"heading",
+		"subtext",
+		"video_url",
+		"button_text",
+		"button_url"
+	],
+	"elements": [
+		{
+			"id": "sv2001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cv2001",
+				"vd2001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#000000"
+					}
+				},
+				"_padding": {
+					"top": "0",
+					"bottom": "0"
+				},
+				"_height": "100vh",
+				"_cssCustom": "%root% { position:relative; display:flex; align-items:center; justify-content:center; } %root% .brxe-video { position:absolute !important; inset:0; width:100%; height:100%; } %root% .brxe-video video, %root% .brxe-video iframe { width:100%; height:100%; object-fit:cover; }"
+			}
+		},
+		{
+			"id": "vd2001",
+			"name": "video",
+			"parent": "sv2001",
+			"children": [],
+			"settings": {
+				"videoType": "file",
+				"fileUrl": "{{video_url}}",
+				"autoplay": true,
+				"mute": true,
+				"loop": true,
+				"overlay": true,
+				"_cssCustom": "%root% { position:absolute; inset:0; z-index:0; } %root%::after { content:\"\"; position:absolute; inset:0; background:rgba(0,0,0,0.55); }"
+			}
+		},
+		{
+			"id": "cv2001",
+			"name": "container",
+			"parent": "sv2001",
+			"children": [
+				"hv2001",
+				"tv2001",
+				"bv2001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center",
+				"_textAlign": "center",
+				"_zIndex": "2"
+			}
+		},
+		{
+			"id": "hv2001",
+			"name": "heading",
+			"parent": "cv2001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h1",
+				"_typography": {
+					"font-size": "72",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"line-height": "1.1",
+					"color": {
+						"raw": "#ffffff"
+					},
+					"text-transform": "uppercase"
+				}
+			}
+		},
+		{
+			"id": "tv2001",
+			"name": "text-basic",
+			"parent": "cv2001",
+			"children": [],
+			"settings": {
+				"text": "{{subtext}}",
+				"_typography": {
+					"font-size": "20",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.8)"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		},
+		{
+			"id": "bv2001",
+			"name": "button",
+			"parent": "cv2001",
+			"children": [],
+			"settings": {
+				"text": "{{button_text}}",
+				"link": {
+					"type": "external",
+					"url": "{{button_url}}"
+				},
+				"_margin": {
+					"top": "36"
+				},
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_typography": {
+					"color": {
+						"raw": "#000000"
+					},
+					"font-weight": "600"
+				},
+				"_padding": {
+					"top": "16",
+					"right": "40",
+					"bottom": "16",
+					"left": "40"
+				}
+			}
+		}
+	]
+}

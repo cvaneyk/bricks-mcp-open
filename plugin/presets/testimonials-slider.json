@@ -1,0 +1,243 @@
+{
+	"description": "Testimonials slider with 3 quotes",
+	"variables": [
+		"heading",
+		"quote1",
+		"author1",
+		"quote2",
+		"author2",
+		"quote3",
+		"author3"
+	],
+	"elements": [
+		{
+			"id": "sec007",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cnt007"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cnt007",
+			"name": "container",
+			"parent": "sec007",
+			"children": [
+				"hd007",
+				"sl007"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center"
+			}
+		},
+		{
+			"id": "hd007",
+			"name": "heading",
+			"parent": "cnt007",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "48",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_textAlign": "center",
+				"_margin": {
+					"bottom": "60"
+				}
+			}
+		},
+		{
+			"id": "sl007",
+			"name": "slider-nested",
+			"parent": "cnt007",
+			"children": [
+				"sd07a",
+				"sd07b",
+				"sd07c"
+			],
+			"settings": {
+				"height": "auto"
+			}
+		},
+		{
+			"id": "sd07a",
+			"name": "block",
+			"parent": "sl007",
+			"children": [
+				"qt07a",
+				"au07a"
+			],
+			"settings": {
+				"_padding": {
+					"top": "40",
+					"right": "40",
+					"bottom": "40",
+					"left": "40"
+				},
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "qt07a",
+			"name": "text-basic",
+			"parent": "sd07a",
+			"children": [],
+			"settings": {
+				"text": "{{quote1}}",
+				"_typography": {
+					"font-size": "20",
+					"font-style": "italic",
+					"line-height": "1.6",
+					"color": {
+						"raw": "#333333"
+					}
+				}
+			}
+		},
+		{
+			"id": "au07a",
+			"name": "text-basic",
+			"parent": "sd07a",
+			"children": [],
+			"settings": {
+				"text": "{{author1}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "600",
+					"color": {
+						"raw": "#999999"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		},
+		{
+			"id": "sd07b",
+			"name": "block",
+			"parent": "sl007",
+			"children": [
+				"qt07b",
+				"au07b"
+			],
+			"settings": {
+				"_padding": {
+					"top": "40",
+					"right": "40",
+					"bottom": "40",
+					"left": "40"
+				},
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "qt07b",
+			"name": "text-basic",
+			"parent": "sd07b",
+			"children": [],
+			"settings": {
+				"text": "{{quote2}}",
+				"_typography": {
+					"font-size": "20",
+					"font-style": "italic",
+					"line-height": "1.6",
+					"color": {
+						"raw": "#333333"
+					}
+				}
+			}
+		},
+		{
+			"id": "au07b",
+			"name": "text-basic",
+			"parent": "sd07b",
+			"children": [],
+			"settings": {
+				"text": "{{author2}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "600",
+					"color": {
+						"raw": "#999999"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		},
+		{
+			"id": "sd07c",
+			"name": "block",
+			"parent": "sl007",
+			"children": [
+				"qt07c",
+				"au07c"
+			],
+			"settings": {
+				"_padding": {
+					"top": "40",
+					"right": "40",
+					"bottom": "40",
+					"left": "40"
+				},
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "qt07c",
+			"name": "text-basic",
+			"parent": "sd07c",
+			"children": [],
+			"settings": {
+				"text": "{{quote3}}",
+				"_typography": {
+					"font-size": "20",
+					"font-style": "italic",
+					"line-height": "1.6",
+					"color": {
+						"raw": "#333333"
+					}
+				}
+			}
+		},
+		{
+			"id": "au07c",
+			"name": "text-basic",
+			"parent": "sd07c",
+			"children": [],
+			"settings": {
+				"text": "{{author3}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "600",
+					"color": {
+						"raw": "#999999"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		}
+	]
+}

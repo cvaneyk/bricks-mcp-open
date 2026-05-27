@@ -1,0 +1,131 @@
+{
+	"description": "Dark gradient hero with heading, text, and CTA button",
+	"variables": [
+		"heading",
+		"subtext",
+		"button_text",
+		"button_url"
+	],
+	"elements": [
+		{
+			"id": "sec001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cnt001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_gradient": {
+					"colors": [
+						{
+							"color": "#0a0a0a",
+							"position": "0"
+						},
+						{
+							"color": "#1a1a2e",
+							"position": "100"
+						}
+					],
+					"type": "linear",
+					"angle": "135"
+				},
+				"_padding": {
+					"top": "120",
+					"bottom": "120"
+				}
+			}
+		},
+		{
+			"id": "cnt001",
+			"name": "container",
+			"parent": "sec001",
+			"children": [
+				"hd001",
+				"tx001",
+				"bt001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center",
+				"_justifyContent": "center",
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "hd001",
+			"name": "heading",
+			"parent": "cnt001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h1",
+				"_typography": {
+					"font-size": "72",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"line-height": "1.1",
+					"color": {
+						"raw": "#ffffff"
+					}
+				}
+			}
+		},
+		{
+			"id": "tx001",
+			"name": "text-basic",
+			"parent": "cnt001",
+			"children": [],
+			"settings": {
+				"text": "{{subtext}}",
+				"_typography": {
+					"font-size": "20",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.7)"
+					}
+				},
+				"_margin": {
+					"top": "24"
+				}
+			}
+		},
+		{
+			"id": "bt001",
+			"name": "button",
+			"parent": "cnt001",
+			"children": [],
+			"settings": {
+				"text": "{{button_text}}",
+				"link": {
+					"type": "external",
+					"url": "{{button_url}}"
+				},
+				"_margin": {
+					"top": "40"
+				},
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_typography": {
+					"color": {
+						"raw": "#0a0a0a"
+					},
+					"font-weight": "600"
+				},
+				"_padding": {
+					"top": "16",
+					"right": "40",
+					"bottom": "16",
+					"left": "40"
+				}
+			}
+		}
+	]
+}

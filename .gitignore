@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment & credentials
+.env
+sites.json
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

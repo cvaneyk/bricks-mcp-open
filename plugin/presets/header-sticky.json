@@ -1,0 +1,92 @@
+{
+	"description": "Sticky header with glassmorphism effect, logo, navigation, and CTA button",
+	"variables": ["logo_text", "nav_links_html", "button_text", "button_url"],
+	"elements": [
+		{
+			"id": "sec031",
+			"name": "section",
+			"parent": 0,
+			"children": ["cnt031"],
+			"settings": {
+				"_position": "fixed",
+				"_zIndex": "999",
+				"_width": "100%",
+				"_padding": {
+					"top": "16",
+					"bottom": "16"
+				},
+				"_cssCustom": "%root% { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(255,255,255,0.85) !important; border-bottom: 1px solid rgba(0,0,0,0.06); transition: background 0.3s, box-shadow 0.3s; }"
+			}
+		},
+		{
+			"id": "cnt031",
+			"name": "container",
+			"parent": "sec031",
+			"children": ["hd031", "tx031", "bt031"],
+			"settings": {
+				"_direction": "row",
+				"_justifyContent": "space-between",
+				"_alignItems": "center"
+			}
+		},
+		{
+			"id": "hd031",
+			"name": "heading",
+			"parent": "cnt031",
+			"children": [],
+			"settings": {
+				"text": "{{logo_text}}",
+				"tag": "span",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "700",
+					"letter-spacing": "-0.02em",
+					"color": { "raw": "#0a0a0a" }
+				}
+			}
+		},
+		{
+			"id": "tx031",
+			"name": "text-basic",
+			"parent": "cnt031",
+			"children": [],
+			"settings": {
+				"text": "{{nav_links_html}}",
+				"_typography": {
+					"font-size": "15",
+					"font-weight": "500",
+					"color": { "raw": "#444444" }
+				},
+				"_cssCustom": "%root% { display: flex; gap: 32px; } %root% a { color: #444; text-decoration: none; transition: color 0.2s; } %root% a:hover { color: #0a0a0a; }"
+			}
+		},
+		{
+			"id": "bt031",
+			"name": "button",
+			"parent": "cnt031",
+			"children": [],
+			"settings": {
+				"text": "{{button_text}}",
+				"link": { "type": "external", "url": "{{button_url}}" },
+				"_background": {
+					"color": { "raw": "#0a0a0a" }
+				},
+				"_typography": {
+					"color": { "raw": "#ffffff" },
+					"font-weight": "600",
+					"font-size": "14"
+				},
+				"_padding": {
+					"top": "10",
+					"right": "24",
+					"bottom": "10",
+					"left": "24"
+				},
+				"_border": {
+					"radius": { "top": "6", "right": "6", "bottom": "6", "left": "6" }
+				},
+				"_cssCustom": "%root% { transition: transform 0.2s, background 0.2s; } %root%:hover { transform: translateY(-1px); background-color: #333 !important; }"
+			}
+		}
+	]
+}

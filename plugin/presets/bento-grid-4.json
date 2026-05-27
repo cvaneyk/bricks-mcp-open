@@ -1,0 +1,358 @@
+{
+	"description": "Modern bento grid with 4 asymmetric cards (2x2 layout, first card spans 2 rows)",
+	"variables": [
+		"heading",
+		"card1_title",
+		"card1_text",
+		"card2_title",
+		"card2_text",
+		"card3_title",
+		"card3_text",
+		"card4_title",
+		"card4_text"
+	],
+	"elements": [
+		{
+			"id": "sb3001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cb3001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cb3001",
+			"name": "container",
+			"parent": "sb3001",
+			"children": [
+				"hb3001",
+				"gb3001"
+			],
+			"settings": {
+				"_direction": "column"
+			}
+		},
+		{
+			"id": "hb3001",
+			"name": "heading",
+			"parent": "cb3001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "48",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_margin": {
+					"bottom": "48"
+				}
+			}
+		},
+		{
+			"id": "gb3001",
+			"name": "block",
+			"parent": "cb3001",
+			"children": [
+				"bc3001",
+				"bc3002",
+				"bc3003",
+				"bc3004"
+			],
+			"settings": {
+				"_display": "grid",
+				"_gridTemplateColumns": "1fr 1fr",
+				"_gridTemplateRows": "auto auto",
+				"_columnGap": "20",
+				"_rowGap": "20",
+				"_cssCustom": "%root% > :first-child { grid-row: 1 / 3; }"
+			}
+		},
+		{
+			"id": "bc3001",
+			"name": "container",
+			"parent": "gb3001",
+			"children": [
+				"ht3001",
+				"tt3001"
+			],
+			"settings": {
+				"_padding": {
+					"top": "40",
+					"right": "40",
+					"bottom": "40",
+					"left": "40"
+				},
+				"_background": {
+					"color": {
+						"raw": "#141414"
+					}
+				},
+				"_border": {
+					"radius": {
+						"top": "16",
+						"right": "16",
+						"bottom": "16",
+						"left": "16"
+					}
+				},
+				"_display": "flex",
+				"_direction": "column",
+				"_justifyContent": "flex-end",
+				"_cssCustom": "%root% { transition:transform 0.3s ease, box-shadow 0.3s ease; } %root%:hover { transform:translateY(-4px); box-shadow:0 20px 60px rgba(99,102,241,0.15); }"
+			}
+		},
+		{
+			"id": "ht3001",
+			"name": "heading",
+			"parent": "bc3001",
+			"children": [],
+			"settings": {
+				"text": "{{card1_title}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "28",
+					"font-weight": "600",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_margin": {
+					"bottom": "12"
+				}
+			}
+		},
+		{
+			"id": "tt3001",
+			"name": "text-basic",
+			"parent": "bc3001",
+			"children": [],
+			"settings": {
+				"text": "{{card1_text}}",
+				"_typography": {
+					"font-size": "16",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				}
+			}
+		},
+		{
+			"id": "bc3002",
+			"name": "block",
+			"parent": "gb3001",
+			"children": [
+				"ht3002",
+				"tt3002"
+			],
+			"settings": {
+				"_padding": {
+					"top": "32",
+					"right": "32",
+					"bottom": "32",
+					"left": "32"
+				},
+				"_background": {
+					"color": {
+						"raw": "#141414"
+					}
+				},
+				"_border": {
+					"radius": {
+						"top": "16",
+						"right": "16",
+						"bottom": "16",
+						"left": "16"
+					}
+				},
+				"_cssCustom": "%root% { transition:transform 0.3s ease; } %root%:hover { transform:translateY(-4px); }"
+			}
+		},
+		{
+			"id": "ht3002",
+			"name": "heading",
+			"parent": "bc3002",
+			"children": [],
+			"settings": {
+				"text": "{{card2_title}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_margin": {
+					"bottom": "8"
+				}
+			}
+		},
+		{
+			"id": "tt3002",
+			"name": "text-basic",
+			"parent": "bc3002",
+			"children": [],
+			"settings": {
+				"text": "{{card2_text}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				}
+			}
+		},
+		{
+			"id": "bc3003",
+			"name": "block",
+			"parent": "gb3001",
+			"children": [
+				"ht3003",
+				"tt3003"
+			],
+			"settings": {
+				"_padding": {
+					"top": "32",
+					"right": "32",
+					"bottom": "32",
+					"left": "32"
+				},
+				"_background": {
+					"color": {
+						"raw": "#141414"
+					}
+				},
+				"_border": {
+					"radius": {
+						"top": "16",
+						"right": "16",
+						"bottom": "16",
+						"left": "16"
+					}
+				},
+				"_cssCustom": "%root% { transition:transform 0.3s ease; } %root%:hover { transform:translateY(-4px); }"
+			}
+		},
+		{
+			"id": "ht3003",
+			"name": "heading",
+			"parent": "bc3003",
+			"children": [],
+			"settings": {
+				"text": "{{card3_title}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_margin": {
+					"bottom": "8"
+				}
+			}
+		},
+		{
+			"id": "tt3003",
+			"name": "text-basic",
+			"parent": "bc3003",
+			"children": [],
+			"settings": {
+				"text": "{{card3_text}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				}
+			}
+		},
+		{
+			"id": "bc3004",
+			"name": "block",
+			"parent": "gb3001",
+			"children": [
+				"ht3004",
+				"tt3004"
+			],
+			"settings": {
+				"_padding": {
+					"top": "32",
+					"right": "32",
+					"bottom": "32",
+					"left": "32"
+				},
+				"_background": {
+					"color": {
+						"raw": "#6366f1"
+					}
+				},
+				"_border": {
+					"radius": {
+						"top": "16",
+						"right": "16",
+						"bottom": "16",
+						"left": "16"
+					}
+				},
+				"_cssCustom": "%root% { transition:transform 0.3s ease; } %root%:hover { transform:translateY(-4px); }"
+			}
+		},
+		{
+			"id": "ht3004",
+			"name": "heading",
+			"parent": "bc3004",
+			"children": [],
+			"settings": {
+				"text": "{{card4_title}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_margin": {
+					"bottom": "8"
+				}
+			}
+		},
+		{
+			"id": "tt3004",
+			"name": "text-basic",
+			"parent": "bc3004",
+			"children": [],
+			"settings": {
+				"text": "{{card4_text}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.9)"
+					}
+				}
+			}
+		}
+	]
+}

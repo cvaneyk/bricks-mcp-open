@@ -1,0 +1,114 @@
+{
+	"description": "Content section with text left and image right",
+	"variables": [
+		"heading",
+		"text",
+		"image_url"
+	],
+	"elements": [
+		{
+			"id": "sc010a",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cn010a"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cn010a",
+			"name": "container",
+			"parent": "sc010a",
+			"children": [
+				"bk010a",
+				"im010a"
+			],
+			"settings": {
+				"_direction": "row",
+				"_alignItems": "center",
+				"_columnGap": "60"
+			}
+		},
+		{
+			"id": "bk010a",
+			"name": "block",
+			"parent": "cn010a",
+			"children": [
+				"hd010a",
+				"tx010a"
+			],
+			"settings": {
+				"_width": "50%"
+			}
+		},
+		{
+			"id": "hd010a",
+			"name": "heading",
+			"parent": "bk010a",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "40",
+					"font-weight": "700",
+					"letter-spacing": "-0.02em",
+					"line-height": "1.2",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "tx010a",
+			"name": "text-basic",
+			"parent": "bk010a",
+			"children": [],
+			"settings": {
+				"text": "{{text}}",
+				"_typography": {
+					"font-size": "17",
+					"line-height": "1.7",
+					"color": {
+						"raw": "#555555"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		},
+		{
+			"id": "im010a",
+			"name": "image",
+			"parent": "cn010a",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{image_url}}",
+					"full": "{{image_url}}"
+				},
+				"_width": "50%",
+				"_border": {
+					"radius": {
+						"top": "12",
+						"right": "12",
+						"bottom": "12",
+						"left": "12"
+					}
+				}
+			}
+		}
+	]
+}

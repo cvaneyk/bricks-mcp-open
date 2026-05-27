@@ -1,0 +1,17 @@
+{
+  "default": "my-site",
+  "sites": {
+    "my-site": {
+      "label": "My Bricks Site",
+      "url": "https://your-site.com",
+      "username": "your-username",
+      "password": "xxxx xxxx xxxx xxxx xxxx xxxx"
+    },
+    "staging": {
+      "label": "Staging Environment",
+      "url": "https://staging.your-site.com",
+      "username": "your-username",
+      "password": "xxxx xxxx xxxx xxxx xxxx xxxx"
+    }
+  }
+}

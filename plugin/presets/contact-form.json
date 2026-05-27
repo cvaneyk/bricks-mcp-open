@@ -1,0 +1,142 @@
+{
+	"description": "Contact form section with heading, subtext, and 3-field form (name, email, message)",
+	"variables": ["heading", "subtext", "button_text", "email_to"],
+	"elements": [
+		{
+			"id": "sec030",
+			"name": "section",
+			"parent": 0,
+			"children": ["cnt030"],
+			"settings": {
+				"_background": {
+					"color": { "raw": "#ffffff" }
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cnt030",
+			"name": "container",
+			"parent": "sec030",
+			"children": ["hd030", "tx030", "frm030"],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center",
+				"_width": "680"
+			}
+		},
+		{
+			"id": "hd030",
+			"name": "heading",
+			"parent": "cnt030",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "48",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"color": { "raw": "#0a0a0a" }
+				},
+				"_textAlign": "center",
+				"_margin": { "bottom": "16" }
+			}
+		},
+		{
+			"id": "tx030",
+			"name": "text-basic",
+			"parent": "cnt030",
+			"children": [],
+			"settings": {
+				"text": "{{subtext}}",
+				"_typography": {
+					"font-size": "18",
+					"line-height": "1.6",
+					"color": { "raw": "#666666" }
+				},
+				"_textAlign": "center",
+				"_margin": { "bottom": "48" }
+			}
+		},
+		{
+			"id": "frm030",
+			"name": "form",
+			"parent": "cnt030",
+			"children": ["ff030a", "ff030b", "ff030c", "fs030"],
+			"settings": {
+				"submitButtonText": "{{button_text}}",
+				"emailTo": "{{email_to}}",
+				"successMessage": "Thank you! We will be in touch soon.",
+				"_width": "100%",
+				"_cssCustom": "%root% { display: flex; flex-direction: column; gap: 20px; } %root% .form-group { width: 100%; } %root% input, %root% textarea { width: 100%; padding: 14px 18px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 16px; font-family: inherit; transition: border-color 0.2s; } %root% input:focus, %root% textarea:focus { outline: none; border-color: #0a0a0a; } %root% textarea { min-height: 140px; resize: vertical; }"
+			}
+		},
+		{
+			"id": "ff030a",
+			"name": "form-field",
+			"parent": "frm030",
+			"children": [],
+			"settings": {
+				"type": "text",
+				"label": "Name",
+				"placeholder": "Your name",
+				"required": true
+			}
+		},
+		{
+			"id": "ff030b",
+			"name": "form-field",
+			"parent": "frm030",
+			"children": [],
+			"settings": {
+				"type": "email",
+				"label": "Email",
+				"placeholder": "your@email.com",
+				"required": true
+			}
+		},
+		{
+			"id": "ff030c",
+			"name": "form-field",
+			"parent": "frm030",
+			"children": [],
+			"settings": {
+				"type": "textarea",
+				"label": "Message",
+				"placeholder": "Tell us about your project...",
+				"required": true
+			}
+		},
+		{
+			"id": "fs030",
+			"name": "form-submit",
+			"parent": "frm030",
+			"children": [],
+			"settings": {
+				"text": "{{button_text}}",
+				"_background": {
+					"color": { "raw": "#0a0a0a" }
+				},
+				"_typography": {
+					"color": { "raw": "#ffffff" },
+					"font-weight": "600",
+					"font-size": "16"
+				},
+				"_padding": {
+					"top": "16",
+					"right": "40",
+					"bottom": "16",
+					"left": "40"
+				},
+				"_border": {
+					"radius": { "top": "8", "right": "8", "bottom": "8", "left": "8" }
+				},
+				"_cssCustom": "%root% { cursor: pointer; transition: background 0.2s; } %root%:hover { background-color: #333 !important; }"
+			}
+		}
+	]
+}

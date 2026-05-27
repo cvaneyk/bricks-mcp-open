@@ -1,0 +1,126 @@
+{
+	"description": "Hero with animated gradient text effect on heading",
+	"variables": [
+		"heading",
+		"subtext",
+		"button_text",
+		"button_url"
+	],
+	"elements": [
+		{
+			"id": "sg1001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cg1001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#050505"
+					}
+				},
+				"_padding": {
+					"top": "160",
+					"bottom": "160"
+				}
+			}
+		},
+		{
+			"id": "cg1001",
+			"name": "container",
+			"parent": "sg1001",
+			"children": [
+				"hg1001",
+				"tg1001",
+				"bg1001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center",
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "hg1001",
+			"name": "heading",
+			"parent": "cg1001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h1",
+				"_typography": {
+					"font-size": "88",
+					"font-weight": "800",
+					"letter-spacing": "-0.04em",
+					"line-height": "1.05",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_cssCustom": "%root% { background:linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #667eea 75%, #764ba2 100%); background-size:300% 300%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:gradientShift 5s ease infinite; } @keyframes gradientShift { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }"
+			}
+		},
+		{
+			"id": "tg1001",
+			"name": "text-basic",
+			"parent": "cg1001",
+			"children": [],
+			"settings": {
+				"text": "{{subtext}}",
+				"_typography": {
+					"font-size": "20",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.5)"
+					}
+				},
+				"_margin": {
+					"top": "24"
+				},
+				"_maxWidth": "560"
+			}
+		},
+		{
+			"id": "bg1001",
+			"name": "button",
+			"parent": "cg1001",
+			"children": [],
+			"settings": {
+				"text": "{{button_text}}",
+				"link": {
+					"type": "external",
+					"url": "{{button_url}}"
+				},
+				"_margin": {
+					"top": "40"
+				},
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_typography": {
+					"color": {
+						"raw": "#0a0a0a"
+					},
+					"font-weight": "600"
+				},
+				"_padding": {
+					"top": "16",
+					"right": "40",
+					"bottom": "16",
+					"left": "40"
+				},
+				"_border": {
+					"radius": {
+						"top": "50",
+						"right": "50",
+						"bottom": "50",
+						"left": "50"
+					}
+				}
+			}
+		}
+	]
+}

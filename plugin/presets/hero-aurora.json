@@ -1,0 +1,133 @@
+{
+	"description": "Hero with animated aurora gradient background effect",
+	"variables": [
+		"heading",
+		"subtext",
+		"button_text",
+		"button_url"
+	],
+	"elements": [
+		{
+			"id": "sa1001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"ca1001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#050510"
+					}
+				},
+				"_padding": {
+					"top": "160",
+					"bottom": "160"
+				},
+				"_cssCustom": "%root% { position:relative; overflow:hidden; } %root%::before { content:\"\"; position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:conic-gradient(from 0deg at 50% 50%, #0a0a2e 0deg, #1a0a3e 60deg, #0a2a4e 120deg, #0a0a2e 180deg, #2a0a3e 240deg, #0a1a4e 300deg, #0a0a2e 360deg); animation:auroraRotate 12s linear infinite; opacity:0.6; } %root%::after { content:\"\"; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%, transparent 0%, #050510 70%); } @keyframes auroraRotate { from { rotate:0deg; } to { rotate:360deg; } }"
+			}
+		},
+		{
+			"id": "ca1001",
+			"name": "container",
+			"parent": "sa1001",
+			"children": [
+				"ha1001",
+				"ta1001",
+				"ba1001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center",
+				"_textAlign": "center",
+				"_zIndex": "2"
+			}
+		},
+		{
+			"id": "ha1001",
+			"name": "heading",
+			"parent": "ca1001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h1",
+				"_typography": {
+					"font-size": "80",
+					"font-weight": "700",
+					"letter-spacing": "-0.04em",
+					"line-height": "1.05",
+					"color": {
+						"raw": "#ffffff"
+					}
+				}
+			}
+		},
+		{
+			"id": "ta1001",
+			"name": "text-basic",
+			"parent": "ca1001",
+			"children": [],
+			"settings": {
+				"text": "{{subtext}}",
+				"_typography": {
+					"font-size": "20",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				},
+				"_margin": {
+					"top": "24"
+				},
+				"_maxWidth": "600"
+			}
+		},
+		{
+			"id": "ba1001",
+			"name": "button",
+			"parent": "ca1001",
+			"children": [],
+			"settings": {
+				"text": "{{button_text}}",
+				"link": {
+					"type": "external",
+					"url": "{{button_url}}"
+				},
+				"_margin": {
+					"top": "40"
+				},
+				"_background": {
+					"color": {
+						"raw": "rgba(255,255,255,0.1)"
+					}
+				},
+				"_typography": {
+					"color": {
+						"raw": "#ffffff"
+					},
+					"font-weight": "500"
+				},
+				"_padding": {
+					"top": "16",
+					"right": "40",
+					"bottom": "16",
+					"left": "40"
+				},
+				"_border": {
+					"width": "1",
+					"color": {
+						"raw": "rgba(255,255,255,0.2)"
+					},
+					"style": "solid",
+					"radius": {
+						"top": "50",
+						"right": "50",
+						"bottom": "50",
+						"left": "50"
+					}
+				},
+				"_cssCustom": "%root% { backdrop-filter:blur(12px); transition:all 0.3s ease; } %root%:hover { background:rgba(255,255,255,0.2) !important; border-color:rgba(255,255,255,0.4) !important; }"
+			}
+		}
+	]
+}

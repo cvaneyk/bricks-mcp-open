@@ -1,0 +1,297 @@
+{
+	"description": "Team members grid with 3 cards, images, names, and roles",
+	"variables": [
+		"heading",
+		"member1_name",
+		"member1_role",
+		"member1_image",
+		"member2_name",
+		"member2_role",
+		"member2_image",
+		"member3_name",
+		"member3_role",
+		"member3_image"
+	],
+	"elements": [
+		{
+			"id": "st6001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"ct6001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "ct6001",
+			"name": "container",
+			"parent": "st6001",
+			"children": [
+				"ht6001",
+				"gt6001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center"
+			}
+		},
+		{
+			"id": "ht6001",
+			"name": "heading",
+			"parent": "ct6001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "48",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_textAlign": "center",
+				"_margin": {
+					"bottom": "60"
+				}
+			}
+		},
+		{
+			"id": "gt6001",
+			"name": "block",
+			"parent": "ct6001",
+			"children": [
+				"tm6001",
+				"tm6002",
+				"tm6003"
+			],
+			"settings": {
+				"_display": "grid",
+				"_gridTemplateColumns": "repeat(3, 1fr)",
+				"_columnGap": "32",
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "tm6001",
+			"name": "block",
+			"parent": "gt6001",
+			"children": [
+				"ti6001",
+				"tn6001",
+				"tr6001"
+			],
+			"settings": {}
+		},
+		{
+			"id": "ti6001",
+			"name": "image",
+			"parent": "tm6001",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{member1_image}}",
+					"full": "{{member1_image}}"
+				},
+				"_border": {
+					"radius": {
+						"top": "16",
+						"right": "16",
+						"bottom": "16",
+						"left": "16"
+					}
+				},
+				"_cssCustom": "%root% img { width:100%; aspect-ratio:3/4; object-fit:cover; }"
+			}
+		},
+		{
+			"id": "tn6001",
+			"name": "heading",
+			"parent": "tm6001",
+			"children": [],
+			"settings": {
+				"text": "{{member1_name}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		},
+		{
+			"id": "tr6001",
+			"name": "text-basic",
+			"parent": "tm6001",
+			"children": [],
+			"settings": {
+				"text": "{{member1_role}}",
+				"_typography": {
+					"font-size": "15",
+					"color": {
+						"raw": "#888888"
+					}
+				},
+				"_margin": {
+					"top": "4"
+				}
+			}
+		},
+		{
+			"id": "tm6002",
+			"name": "block",
+			"parent": "gt6001",
+			"children": [
+				"ti6002",
+				"tn6002",
+				"tr6002"
+			],
+			"settings": {}
+		},
+		{
+			"id": "ti6002",
+			"name": "image",
+			"parent": "tm6002",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{member2_image}}",
+					"full": "{{member2_image}}"
+				},
+				"_border": {
+					"radius": {
+						"top": "16",
+						"right": "16",
+						"bottom": "16",
+						"left": "16"
+					}
+				},
+				"_cssCustom": "%root% img { width:100%; aspect-ratio:3/4; object-fit:cover; }"
+			}
+		},
+		{
+			"id": "tn6002",
+			"name": "heading",
+			"parent": "tm6002",
+			"children": [],
+			"settings": {
+				"text": "{{member2_name}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		},
+		{
+			"id": "tr6002",
+			"name": "text-basic",
+			"parent": "tm6002",
+			"children": [],
+			"settings": {
+				"text": "{{member2_role}}",
+				"_typography": {
+					"font-size": "15",
+					"color": {
+						"raw": "#888888"
+					}
+				},
+				"_margin": {
+					"top": "4"
+				}
+			}
+		},
+		{
+			"id": "tm6003",
+			"name": "block",
+			"parent": "gt6001",
+			"children": [
+				"ti6003",
+				"tn6003",
+				"tr6003"
+			],
+			"settings": {}
+		},
+		{
+			"id": "ti6003",
+			"name": "image",
+			"parent": "tm6003",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{member3_image}}",
+					"full": "{{member3_image}}"
+				},
+				"_border": {
+					"radius": {
+						"top": "16",
+						"right": "16",
+						"bottom": "16",
+						"left": "16"
+					}
+				},
+				"_cssCustom": "%root% img { width:100%; aspect-ratio:3/4; object-fit:cover; }"
+			}
+		},
+		{
+			"id": "tn6003",
+			"name": "heading",
+			"parent": "tm6003",
+			"children": [],
+			"settings": {
+				"text": "{{member3_name}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_margin": {
+					"top": "20"
+				}
+			}
+		},
+		{
+			"id": "tr6003",
+			"name": "text-basic",
+			"parent": "tm6003",
+			"children": [],
+			"settings": {
+				"text": "{{member3_role}}",
+				"_typography": {
+					"font-size": "15",
+					"color": {
+						"raw": "#888888"
+					}
+				},
+				"_margin": {
+					"top": "4"
+				}
+			}
+		}
+	]
+}

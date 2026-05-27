@@ -1,0 +1,65 @@
+{
+	"description": "Full-bleed photo hero with overlay and centered heading",
+	"variables": [
+		"heading",
+		"image_url"
+	],
+	"elements": [
+		{
+			"id": "sec003",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cnt003"
+			],
+			"settings": {
+				"_background": {
+					"image": {
+						"url": "{{image_url}}",
+						"full": "{{image_url}}"
+					},
+					"size": "cover"
+				},
+				"_padding": {
+					"top": "200",
+					"bottom": "200"
+				},
+				"_cssCustom": "%root%::before { content:\"\"; position:absolute; inset:0; background:rgba(0,0,0,0.4); }"
+			}
+		},
+		{
+			"id": "cnt003",
+			"name": "container",
+			"parent": "sec003",
+			"children": [
+				"hd003"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center",
+				"_textAlign": "center",
+				"_zIndex": "1"
+			}
+		},
+		{
+			"id": "hd003",
+			"name": "heading",
+			"parent": "cnt003",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h1",
+				"_typography": {
+					"font-size": "80",
+					"font-weight": "700",
+					"letter-spacing": "-0.04em",
+					"line-height": "1.05",
+					"color": {
+						"raw": "#ffffff"
+					},
+					"text-transform": "uppercase"
+				}
+			}
+		}
+	]
+}

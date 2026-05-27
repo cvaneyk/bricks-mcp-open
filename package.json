@@ -1,0 +1,34 @@
+{
+  "name": "bricks-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The most comprehensive open-source MCP server for Bricks Builder — 100+ tools for pages, templates, styles, SEO, and more.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "inspect": "npx @modelcontextprotocol/inspector node index.js"
+  },
+  "keywords": [
+    "bricks-builder",
+    "wordpress",
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "page-builder"
+  ],
+  "author": "developer2013",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developer2013/bricks-mcp-open.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "cheerio": "^1.2.0",
+    "form-data": "^4.0.5"
+  }
+}

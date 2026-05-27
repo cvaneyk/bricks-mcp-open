@@ -1,0 +1,349 @@
+{
+	"description": "3-column pricing cards",
+	"variables": [
+		"heading",
+		"plan1_name",
+		"plan1_price",
+		"plan1_features",
+		"plan2_name",
+		"plan2_price",
+		"plan2_features",
+		"plan3_name",
+		"plan3_price",
+		"plan3_features"
+	],
+	"elements": [
+		{
+			"id": "sec008",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cnt008"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cnt008",
+			"name": "container",
+			"parent": "sec008",
+			"children": [
+				"hd008",
+				"gr008"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center"
+			}
+		},
+		{
+			"id": "hd008",
+			"name": "heading",
+			"parent": "cnt008",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "48",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_textAlign": "center",
+				"_margin": {
+					"bottom": "60"
+				}
+			}
+		},
+		{
+			"id": "gr008",
+			"name": "block",
+			"parent": "cnt008",
+			"children": [
+				"p008a",
+				"p008b",
+				"p008c"
+			],
+			"settings": {
+				"_display": "grid",
+				"_gridTemplateColumns": "repeat(3, 1fr)",
+				"_columnGap": "32"
+			}
+		},
+		{
+			"id": "p008a",
+			"name": "block",
+			"parent": "gr008",
+			"children": [
+				"pn08a",
+				"pp08a",
+				"pf08a"
+			],
+			"settings": {
+				"_padding": {
+					"top": "40",
+					"right": "32",
+					"bottom": "40",
+					"left": "32"
+				},
+				"_border": {
+					"width": "1",
+					"color": {
+						"raw": "#e0e0e0"
+					},
+					"style": "solid",
+					"radius": {
+						"top": "12",
+						"right": "12",
+						"bottom": "12",
+						"left": "12"
+					}
+				},
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "pn08a",
+			"name": "heading",
+			"parent": "p008a",
+			"children": [],
+			"settings": {
+				"text": "{{plan1_name}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "pp08a",
+			"name": "heading",
+			"parent": "p008a",
+			"children": [],
+			"settings": {
+				"text": "{{plan1_price}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "40",
+					"font-weight": "700",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_margin": {
+					"top": "16",
+					"bottom": "24"
+				}
+			}
+		},
+		{
+			"id": "pf08a",
+			"name": "text-basic",
+			"parent": "p008a",
+			"children": [],
+			"settings": {
+				"text": "{{plan1_features}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "2",
+					"color": {
+						"raw": "#666666"
+					}
+				}
+			}
+		},
+		{
+			"id": "p008b",
+			"name": "block",
+			"parent": "gr008",
+			"children": [
+				"pn08b",
+				"pp08b",
+				"pf08b"
+			],
+			"settings": {
+				"_padding": {
+					"top": "40",
+					"right": "32",
+					"bottom": "40",
+					"left": "32"
+				},
+				"_border": {
+					"width": "2",
+					"color": {
+						"raw": "#0a0a0a"
+					},
+					"style": "solid",
+					"radius": {
+						"top": "12",
+						"right": "12",
+						"bottom": "12",
+						"left": "12"
+					}
+				},
+				"_textAlign": "center",
+				"_background": {
+					"color": {
+						"raw": "#fafafa"
+					}
+				}
+			}
+		},
+		{
+			"id": "pn08b",
+			"name": "heading",
+			"parent": "p008b",
+			"children": [],
+			"settings": {
+				"text": "{{plan2_name}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "pp08b",
+			"name": "heading",
+			"parent": "p008b",
+			"children": [],
+			"settings": {
+				"text": "{{plan2_price}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "40",
+					"font-weight": "700",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_margin": {
+					"top": "16",
+					"bottom": "24"
+				}
+			}
+		},
+		{
+			"id": "pf08b",
+			"name": "text-basic",
+			"parent": "p008b",
+			"children": [],
+			"settings": {
+				"text": "{{plan2_features}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "2",
+					"color": {
+						"raw": "#666666"
+					}
+				}
+			}
+		},
+		{
+			"id": "p008c",
+			"name": "block",
+			"parent": "gr008",
+			"children": [
+				"pn08c",
+				"pp08c",
+				"pf08c"
+			],
+			"settings": {
+				"_padding": {
+					"top": "40",
+					"right": "32",
+					"bottom": "40",
+					"left": "32"
+				},
+				"_border": {
+					"width": "1",
+					"color": {
+						"raw": "#e0e0e0"
+					},
+					"style": "solid",
+					"radius": {
+						"top": "12",
+						"right": "12",
+						"bottom": "12",
+						"left": "12"
+					}
+				},
+				"_textAlign": "center"
+			}
+		},
+		{
+			"id": "pn08c",
+			"name": "heading",
+			"parent": "p008c",
+			"children": [],
+			"settings": {
+				"text": "{{plan3_name}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "22",
+					"font-weight": "600",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "pp08c",
+			"name": "heading",
+			"parent": "p008c",
+			"children": [],
+			"settings": {
+				"text": "{{plan3_price}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "40",
+					"font-weight": "700",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_margin": {
+					"top": "16",
+					"bottom": "24"
+				}
+			}
+		},
+		{
+			"id": "pf08c",
+			"name": "text-basic",
+			"parent": "p008c",
+			"children": [],
+			"settings": {
+				"text": "{{plan3_features}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "2",
+					"color": {
+						"raw": "#666666"
+					}
+				}
+			}
+		}
+	]
+}

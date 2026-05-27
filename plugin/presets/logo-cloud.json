@@ -1,0 +1,161 @@
+{
+	"description": "Logo cloud / partner section with 6 logo placeholders in a grid",
+	"variables": [
+		"heading",
+		"logo1_url",
+		"logo2_url",
+		"logo3_url",
+		"logo4_url",
+		"logo5_url",
+		"logo6_url"
+	],
+	"elements": [
+		{
+			"id": "sl5001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cl5001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#f8f8f8"
+					}
+				},
+				"_padding": {
+					"top": "80",
+					"bottom": "80"
+				}
+			}
+		},
+		{
+			"id": "cl5001",
+			"name": "container",
+			"parent": "sl5001",
+			"children": [
+				"hl5001",
+				"gl5001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center"
+			}
+		},
+		{
+			"id": "hl5001",
+			"name": "text-basic",
+			"parent": "cl5001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "500",
+					"letter-spacing": "0.1em",
+					"text-transform": "uppercase",
+					"color": {
+						"raw": "#999999"
+					}
+				},
+				"_margin": {
+					"bottom": "40"
+				}
+			}
+		},
+		{
+			"id": "gl5001",
+			"name": "container",
+			"parent": "cl5001",
+			"children": [
+				"lg5001",
+				"lg5002",
+				"lg5003",
+				"lg5004",
+				"lg5005",
+				"lg5006"
+			],
+			"settings": {
+				"_display": "grid",
+				"_gridTemplateColumns": "repeat(6, 1fr)",
+				"_columnGap": "40",
+				"_rowGap": "40",
+				"_alignItems": "center",
+				"_justifyItems": "center",
+				"_cssCustom": "%root% img { filter:grayscale(100%) opacity(0.5); transition:filter 0.3s ease; max-height:40px; width:auto; } %root% img:hover { filter:grayscale(0%) opacity(1); }"
+			}
+		},
+		{
+			"id": "lg5001",
+			"name": "image",
+			"parent": "gl5001",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{logo1_url}}",
+					"full": "{{logo1_url}}"
+				}
+			}
+		},
+		{
+			"id": "lg5002",
+			"name": "image",
+			"parent": "gl5001",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{logo2_url}}",
+					"full": "{{logo2_url}}"
+				}
+			}
+		},
+		{
+			"id": "lg5003",
+			"name": "image",
+			"parent": "gl5001",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{logo3_url}}",
+					"full": "{{logo3_url}}"
+				}
+			}
+		},
+		{
+			"id": "lg5004",
+			"name": "image",
+			"parent": "gl5001",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{logo4_url}}",
+					"full": "{{logo4_url}}"
+				}
+			}
+		},
+		{
+			"id": "lg5005",
+			"name": "image",
+			"parent": "gl5001",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{logo5_url}}",
+					"full": "{{logo5_url}}"
+				}
+			}
+		},
+		{
+			"id": "lg5006",
+			"name": "image",
+			"parent": "gl5001",
+			"children": [],
+			"settings": {
+				"image": {
+					"url": "{{logo6_url}}",
+					"full": "{{logo6_url}}"
+				}
+			}
+		}
+	]
+}

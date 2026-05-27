@@ -1,0 +1,189 @@
+{
+	"description": "FAQ section with accordion (5 items)",
+	"variables": [
+		"heading",
+		"q1",
+		"a1",
+		"q2",
+		"a2",
+		"q3",
+		"a3",
+		"q4",
+		"a4",
+		"q5",
+		"a5"
+	],
+	"elements": [
+		{
+			"id": "sf7001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cf7001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cf7001",
+			"name": "container",
+			"parent": "sf7001",
+			"children": [
+				"hf7001",
+				"af7001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center",
+				"_maxWidth": "800"
+			}
+		},
+		{
+			"id": "hf7001",
+			"name": "heading",
+			"parent": "cf7001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "48",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_textAlign": "center",
+				"_margin": {
+					"bottom": "48"
+				}
+			}
+		},
+		{
+			"id": "af7001",
+			"name": "accordion-nested",
+			"parent": "cf7001",
+			"children": [
+				"ai7001",
+				"ai7002",
+				"ai7003",
+				"ai7004",
+				"ai7005"
+			],
+			"settings": {
+				"_width": "100%",
+				"_cssCustom": "%root% .brxe-accordion-nested__title { font-size:18px; font-weight:600; padding:20px 0; border-bottom:1px solid #e5e5e5; color:#0a0a0a; } %root% .brxe-accordion-nested__content { padding:16px 0; color:#666; line-height:1.7; }"
+			}
+		},
+		{
+			"id": "ai7001",
+			"name": "block",
+			"parent": "af7001",
+			"children": [
+				"at7001"
+			],
+			"settings": {
+				"_accordionTitle": "{{q1}}"
+			}
+		},
+		{
+			"id": "at7001",
+			"name": "text-basic",
+			"parent": "ai7001",
+			"children": [],
+			"settings": {
+				"text": "{{a1}}"
+			}
+		},
+		{
+			"id": "ai7002",
+			"name": "block",
+			"parent": "af7001",
+			"children": [
+				"at7002"
+			],
+			"settings": {
+				"_accordionTitle": "{{q2}}"
+			}
+		},
+		{
+			"id": "at7002",
+			"name": "text-basic",
+			"parent": "ai7002",
+			"children": [],
+			"settings": {
+				"text": "{{a2}}"
+			}
+		},
+		{
+			"id": "ai7003",
+			"name": "block",
+			"parent": "af7001",
+			"children": [
+				"at7003"
+			],
+			"settings": {
+				"_accordionTitle": "{{q3}}"
+			}
+		},
+		{
+			"id": "at7003",
+			"name": "text-basic",
+			"parent": "ai7003",
+			"children": [],
+			"settings": {
+				"text": "{{a3}}"
+			}
+		},
+		{
+			"id": "ai7004",
+			"name": "block",
+			"parent": "af7001",
+			"children": [
+				"at7004"
+			],
+			"settings": {
+				"_accordionTitle": "{{q4}}"
+			}
+		},
+		{
+			"id": "at7004",
+			"name": "text-basic",
+			"parent": "ai7004",
+			"children": [],
+			"settings": {
+				"text": "{{a4}}"
+			}
+		},
+		{
+			"id": "ai7005",
+			"name": "block",
+			"parent": "af7001",
+			"children": [
+				"at7005"
+			],
+			"settings": {
+				"_accordionTitle": "{{q5}}"
+			}
+		},
+		{
+			"id": "at7005",
+			"name": "text-basic",
+			"parent": "ai7005",
+			"children": [],
+			"settings": {
+				"text": "{{a5}}"
+			}
+		}
+	]
+}

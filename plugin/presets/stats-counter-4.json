@@ -1,0 +1,285 @@
+{
+	"description": "Big numbers stats section with 4 counters and separator lines",
+	"variables": [
+		"stat1_number",
+		"stat1_label",
+		"stat2_number",
+		"stat2_label",
+		"stat3_number",
+		"stat3_label",
+		"stat4_number",
+		"stat4_label"
+	],
+	"elements": [
+		{
+			"id": "ss4001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cs4001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cs4001",
+			"name": "container",
+			"parent": "ss4001",
+			"children": [
+				"gs4001"
+			],
+			"settings": {}
+		},
+		{
+			"id": "gs4001",
+			"name": "block",
+			"parent": "cs4001",
+			"children": [
+				"st4001",
+				"st4002",
+				"st4003",
+				"st4004"
+			],
+			"settings": {
+				"_display": "grid",
+				"_gridTemplateColumns": "repeat(4, 1fr)",
+				"_columnGap": "0",
+				"_textAlign": "center",
+				"_cssCustom": "%root% > * + * { border-left:1px solid #e0e0e0; }"
+			}
+		},
+		{
+			"id": "st4001",
+			"name": "block",
+			"parent": "gs4001",
+			"children": [
+				"sn4001",
+				"sl4001"
+			],
+			"settings": {
+				"_padding": {
+					"top": "20",
+					"right": "20",
+					"bottom": "20",
+					"left": "20"
+				}
+			}
+		},
+		{
+			"id": "sn4001",
+			"name": "heading",
+			"parent": "st4001",
+			"children": [],
+			"settings": {
+				"text": "{{stat1_number}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "56",
+					"font-weight": "800",
+					"letter-spacing": "-0.04em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "sl4001",
+			"name": "text-basic",
+			"parent": "st4001",
+			"children": [],
+			"settings": {
+				"text": "{{stat1_label}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "500",
+					"letter-spacing": "0.05em",
+					"text-transform": "uppercase",
+					"color": {
+						"raw": "#888888"
+					}
+				},
+				"_margin": {
+					"top": "8"
+				}
+			}
+		},
+		{
+			"id": "st4002",
+			"name": "block",
+			"parent": "gs4001",
+			"children": [
+				"sn4002",
+				"sl4002"
+			],
+			"settings": {
+				"_padding": {
+					"top": "20",
+					"right": "20",
+					"bottom": "20",
+					"left": "20"
+				}
+			}
+		},
+		{
+			"id": "sn4002",
+			"name": "heading",
+			"parent": "st4002",
+			"children": [],
+			"settings": {
+				"text": "{{stat2_number}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "56",
+					"font-weight": "800",
+					"letter-spacing": "-0.04em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "sl4002",
+			"name": "text-basic",
+			"parent": "st4002",
+			"children": [],
+			"settings": {
+				"text": "{{stat2_label}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "500",
+					"letter-spacing": "0.05em",
+					"text-transform": "uppercase",
+					"color": {
+						"raw": "#888888"
+					}
+				},
+				"_margin": {
+					"top": "8"
+				}
+			}
+		},
+		{
+			"id": "st4003",
+			"name": "block",
+			"parent": "gs4001",
+			"children": [
+				"sn4003",
+				"sl4003"
+			],
+			"settings": {
+				"_padding": {
+					"top": "20",
+					"right": "20",
+					"bottom": "20",
+					"left": "20"
+				}
+			}
+		},
+		{
+			"id": "sn4003",
+			"name": "heading",
+			"parent": "st4003",
+			"children": [],
+			"settings": {
+				"text": "{{stat3_number}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "56",
+					"font-weight": "800",
+					"letter-spacing": "-0.04em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "sl4003",
+			"name": "text-basic",
+			"parent": "st4003",
+			"children": [],
+			"settings": {
+				"text": "{{stat3_label}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "500",
+					"letter-spacing": "0.05em",
+					"text-transform": "uppercase",
+					"color": {
+						"raw": "#888888"
+					}
+				},
+				"_margin": {
+					"top": "8"
+				}
+			}
+		},
+		{
+			"id": "st4004",
+			"name": "block",
+			"parent": "gs4001",
+			"children": [
+				"sn4004",
+				"sl4004"
+			],
+			"settings": {
+				"_padding": {
+					"top": "20",
+					"right": "20",
+					"bottom": "20",
+					"left": "20"
+				}
+			}
+		},
+		{
+			"id": "sn4004",
+			"name": "heading",
+			"parent": "st4004",
+			"children": [],
+			"settings": {
+				"text": "{{stat4_number}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "56",
+					"font-weight": "800",
+					"letter-spacing": "-0.04em",
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				}
+			}
+		},
+		{
+			"id": "sl4004",
+			"name": "text-basic",
+			"parent": "st4004",
+			"children": [],
+			"settings": {
+				"text": "{{stat4_label}}",
+				"_typography": {
+					"font-size": "14",
+					"font-weight": "500",
+					"letter-spacing": "0.05em",
+					"text-transform": "uppercase",
+					"color": {
+						"raw": "#888888"
+					}
+				},
+				"_margin": {
+					"top": "8"
+				}
+			}
+		}
+	]
+}

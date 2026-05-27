@@ -1,0 +1,183 @@
+{
+	"description": "Dark footer with logo, links, and social columns",
+	"variables": [
+		"logo_text",
+		"tagline",
+		"links_html",
+		"social_html"
+	],
+	"elements": [
+		{
+			"id": "sec009",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cnt009"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_padding": {
+					"top": "80",
+					"bottom": "80"
+				}
+			}
+		},
+		{
+			"id": "cnt009",
+			"name": "container",
+			"parent": "sec009",
+			"children": [
+				"fc09a",
+				"fc09b",
+				"fc09c"
+			],
+			"settings": {
+				"_display": "grid",
+				"_gridTemplateColumns": "2fr 1fr 1fr",
+				"_columnGap": "60"
+			}
+		},
+		{
+			"id": "fc09a",
+			"name": "block",
+			"parent": "cnt009",
+			"children": [
+				"fl09a",
+				"ft09a"
+			],
+			"settings": {}
+		},
+		{
+			"id": "fl09a",
+			"name": "heading",
+			"parent": "fc09a",
+			"children": [],
+			"settings": {
+				"text": "{{logo_text}}",
+				"tag": "h3",
+				"_typography": {
+					"font-size": "24",
+					"font-weight": "700",
+					"color": {
+						"raw": "#ffffff"
+					}
+				}
+			}
+		},
+		{
+			"id": "ft09a",
+			"name": "text-basic",
+			"parent": "fc09a",
+			"children": [],
+			"settings": {
+				"text": "{{tagline}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				},
+				"_margin": {
+					"top": "16"
+				}
+			}
+		},
+		{
+			"id": "fc09b",
+			"name": "block",
+			"parent": "cnt009",
+			"children": [
+				"fh09b",
+				"fl09b"
+			],
+			"settings": {}
+		},
+		{
+			"id": "fh09b",
+			"name": "heading",
+			"parent": "fc09b",
+			"children": [],
+			"settings": {
+				"text": "Links",
+				"tag": "h4",
+				"_typography": {
+					"font-size": "16",
+					"font-weight": "600",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_margin": {
+					"bottom": "16"
+				}
+			}
+		},
+		{
+			"id": "fl09b",
+			"name": "text-basic",
+			"parent": "fc09b",
+			"children": [],
+			"settings": {
+				"text": "{{links_html}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "2",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				}
+			}
+		},
+		{
+			"id": "fc09c",
+			"name": "block",
+			"parent": "cnt009",
+			"children": [
+				"fh09c",
+				"fl09c"
+			],
+			"settings": {}
+		},
+		{
+			"id": "fh09c",
+			"name": "heading",
+			"parent": "fc09c",
+			"children": [],
+			"settings": {
+				"text": "Social",
+				"tag": "h4",
+				"_typography": {
+					"font-size": "16",
+					"font-weight": "600",
+					"color": {
+						"raw": "#ffffff"
+					}
+				},
+				"_margin": {
+					"bottom": "16"
+				}
+			}
+		},
+		{
+			"id": "fl09c",
+			"name": "text-basic",
+			"parent": "fc09c",
+			"children": [],
+			"settings": {
+				"text": "{{social_html}}",
+				"_typography": {
+					"font-size": "15",
+					"line-height": "2",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				}
+			}
+		}
+	]
+}

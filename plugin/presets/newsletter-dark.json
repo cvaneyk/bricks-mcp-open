@@ -1,0 +1,162 @@
+{
+	"description": "Dark newsletter signup section with email input and gradient accent",
+	"variables": [
+		"heading",
+		"subtext",
+		"button_text"
+	],
+	"elements": [
+		{
+			"id": "sn8001",
+			"name": "section",
+			"parent": 0,
+			"children": [
+				"cn8001"
+			],
+			"settings": {
+				"_background": {
+					"color": {
+						"raw": "#0a0a0a"
+					}
+				},
+				"_padding": {
+					"top": "100",
+					"bottom": "100"
+				}
+			}
+		},
+		{
+			"id": "cn8001",
+			"name": "container",
+			"parent": "sn8001",
+			"children": [
+				"bn8001"
+			],
+			"settings": {
+				"_direction": "column",
+				"_alignItems": "center"
+			}
+		},
+		{
+			"id": "bn8001",
+			"name": "container",
+			"parent": "cn8001",
+			"children": [
+				"hn8001",
+				"tn8001",
+				"fn8001"
+			],
+			"settings": {
+				"_padding": {
+					"top": "60",
+					"right": "60",
+					"bottom": "60",
+					"left": "60"
+				},
+				"_background": {
+					"color": {
+						"raw": "#141414"
+					}
+				},
+				"_border": {
+					"width": "1",
+					"color": {
+						"raw": "rgba(99,102,241,0.3)"
+					},
+					"style": "solid",
+					"radius": {
+						"top": "20",
+						"right": "20",
+						"bottom": "20",
+						"left": "20"
+					}
+				},
+				"_maxWidth": "640",
+				"_textAlign": "center",
+				"_direction": "column",
+				"_alignItems": "center",
+				"_display": "flex",
+				"_cssCustom": "%root% { background-image:radial-gradient(ellipse at top, rgba(99,102,241,0.1) 0%, transparent 60%); }"
+			}
+		},
+		{
+			"id": "hn8001",
+			"name": "heading",
+			"parent": "bn8001",
+			"children": [],
+			"settings": {
+				"text": "{{heading}}",
+				"tag": "h2",
+				"_typography": {
+					"font-size": "36",
+					"font-weight": "700",
+					"letter-spacing": "-0.03em",
+					"color": {
+						"raw": "#ffffff"
+					}
+				}
+			}
+		},
+		{
+			"id": "tn8001",
+			"name": "text-basic",
+			"parent": "bn8001",
+			"children": [],
+			"settings": {
+				"text": "{{subtext}}",
+				"_typography": {
+					"font-size": "16",
+					"line-height": "1.6",
+					"color": {
+						"raw": "rgba(255,255,255,0.6)"
+					}
+				},
+				"_margin": {
+					"top": "12"
+				}
+			}
+		},
+		{
+			"id": "fn8001",
+			"name": "form",
+			"parent": "bn8001",
+			"children": [
+				"ff8001",
+				"fs8001"
+			],
+			"settings": {
+				"_margin": {
+					"top": "32"
+				},
+				"_width": "100%",
+				"_display": "flex",
+				"_direction": "row",
+				"_columnGap": "12",
+				"_cssCustom": "%root% { max-width:440px; }"
+			}
+		},
+		{
+			"id": "ff8001",
+			"name": "form-field",
+			"parent": "fn8001",
+			"children": [],
+			"settings": {
+				"type": "email",
+				"placeholder": "Enter your email",
+				"label": "",
+				"_width": "100%",
+				"_cssCustom": "%root% input { background:#1a1a1a !important; border:1px solid rgba(255,255,255,0.1) !important; color:#fff !important; padding:14px 20px !important; border-radius:10px !important; font-size:15px; } %root% input::placeholder { color:rgba(255,255,255,0.4); }"
+			}
+		},
+		{
+			"id": "fs8001",
+			"name": "form-submit",
+			"parent": "fn8001",
+			"children": [],
+			"settings": {
+				"submitButtonText": "{{button_text}}",
+				"_cssCustom": "%root% button { background:#6366f1 !important; color:#fff !important; font-weight:600 !important; padding:14px 28px !important; border-radius:10px !important; border:none !important; white-space:nowrap; transition:background 0.2s ease; } %root% button:hover { background:#4f46e5 !important; }"
+			}
+		}
+	]
+}

@@ -1,0 +1,228 @@
+# bricks-mcp
+
+**The most comprehensive open-source MCP server for [Bricks Builder](https://bricksbuilder.io/).**
+
+100+ tools to manage pages, templates, styles, SEO, content, and more — directly from Claude Code, Cursor, Windsurf, or any MCP-compatible AI assistant.
+
+![Tools](https://img.shields.io/badge/tools-100%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Bricks](https://img.shields.io/badge/Bricks_Builder-2.0%2B-orange)
+![MCP](https://img.shields.io/badge/MCP-1.8-purple)
+![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
+
+---
+
+## Architecture
+
+```
+Claude Code / Cursor / AI Assistant
+        ↕ MCP Protocol (stdio)
+   bricks-mcp (Node.js)
+        ↕ REST API (Basic Auth)
+   bricks-api-bridge (WordPress Plugin)
+        ↕ PHP
+   WordPress + Bricks Builder
+```
+
+The MCP server communicates with your WordPress site through the included REST API plugin. Your AI assistant gets full control over Bricks Builder — reading pages, updating elements, managing styles, and building sections.
+
+---
+
+## Quick Start (5 Minutes)
+
+### 1. Install the WordPress Plugin
+
+Download the `bricks-api-bridge` folder from `plugin/` in this repo and upload it to your WordPress site:
+
+```
+wp-content/plugins/bricks-api-bridge/
+```
+
+Activate the plugin in WordPress Admin → Plugins.
+
+### 2. Create an Application Password
+
+In WordPress Admin → Users → Your Profile → Application Passwords:
+- Enter a name (e.g., "MCP Server")
+- Click "Add New Application Password"
+- Copy the generated password
+
+### 3. Install the MCP Server
+
+```bash
+git clone https://github.com/developer2013/bricks-mcp-open.git
+cd bricks-mcp-open
+npm install
+```
+
+### 4. Configure Credentials
+
+Copy `.env.example` to `.env` and fill in your details:
+
+```bash
+cp .env.example .env
+```
+
+```env
+WORDPRESS_URL=https://your-site.com
+WORDPRESS_USER=your-username
+WORDPRESS_APP_PASSWORD=xxxx xxxx xxxx xxxx xxxx xxxx
+```
+
+### 5. Add to Your AI Assistant
+
+**Claude Code** — add to `~/.claude/.mcp.json`:
+```json
+{
+  "mcpServers": {
+    "bricks": {
+      "command": "node",
+      "args": ["/path/to/bricks-mcp/index.js"]
+    }
+  }
+}
+```
+
+**Cursor** — add to `.cursor/mcp.json` in your project.
+
+### 6. Test the Connection
+
+Ask your AI assistant:
+> "Use the bricks_connection_test tool to verify my WordPress connection."
+
+---
+
+## Tool Categories (100+ Tools)
+
+| Category | Tools | Description |
+|----------|-------|-------------|
+| **Pages** | 9 | List, get, update, patch, append, build, clone, search pages |
+| **Scripts & Assets** | 5 | Per-page CSS/JS management, GSAP flag control |
+| **SEO (Page)** | 6 | Page-level SEO meta, schema markup, audit |
+| **Templates** | 8 | Full template CRUD, clone, import, search |
+| **Backup & Snapshots** | 7 | Named snapshots, multi-slot backups, restore |
+| **Global Classes** | 7 | CSS class CRUD, bulk create, usage analysis |
+| **BEM Components** | 3 | Generate, apply, and validate BEM class sets |
+| **Style System** | 10 | Color palette, fonts, CSS variables, breakpoints |
+| **Theme Styles** | 2 | Global theme style read/write |
+| **Presets** | 4 | Section presets: list, instantiate, save, delete |
+| **SEO (Advanced)** | 13 | Auto-fix, bulk update, sitemap, redirects, link check |
+| **WordPress Content** | 8 | Posts, categories, tags CRUD |
+| **Menus** | 5 | Navigation menu management |
+| **Site Management** | 9 | Settings, page creation, validation, cache, stats |
+| **Media** | 3 | Upload, list, edit media files |
+| **Multi-Site** | 3 | Switch between WordPress sites at runtime |
+| **Utilities** | 3 | Connection test, HTML→Bricks converter, batch ops |
+
+---
+
+## Multi-Site Support
+
+Manage multiple WordPress sites from a single MCP server. Copy `sites.json.example` to `sites.json`:
+
+```json
+{
+  "default": "production",
+  "sites": {
+    "production": {
+      "label": "Live Site",
+      "url": "https://your-site.com",
+      "username": "admin",
+      "password": "xxxx xxxx xxxx xxxx xxxx xxxx"
+    },
+    "staging": {
+      "label": "Staging",
+      "url": "https://staging.your-site.com",
+      "username": "admin",
+      "password": "xxxx xxxx xxxx xxxx xxxx xxxx"
+    }
+  }
+}
+```
+
+Switch sites at runtime:
+> "Switch to the staging site."
+
+---
+
+## Usage Examples
+
+### Build a page section
+> "Create a hero section on page 42 with a full-width background, centered heading 'Welcome', a subtitle, and a CTA button."
+
+### Manage styles
+> "Update the color palette — set the primary color to #2563EB and secondary to #7C3AED."
+
+### SEO optimization
+> "Run an SEO audit on all published pages and auto-fix missing meta descriptions."
+
+### Backup before changes
+> "Create a snapshot of page 42 named 'before-redesign', then update the hero section."
+
+---
+
+## Plugin Features
+
+The included WordPress plugin (`bricks-api-bridge`) provides:
+
+- **REST API endpoints** for all Bricks Builder data
+- **Security hardening** — rate limiting, user enumeration protection, security headers
+- **Responsive inference** — automatic mobile/tablet breakpoint generation
+- **Element validation** — catches invalid IDs, broken parent-child links
+- **Auto-fix** — corrects common CSS issues (overflow, grid, container width)
+- **Backup system** — multi-slot backups + named snapshots
+- **Design token import/export** — JSON, ACSS, Tailwind formats
+
+---
+
+## Feature Comparison
+
+| Feature | bricks-mcp | cristianuibar/bricks-mcp | sabiertas/bricks-mcp-server |
+|---------|-----------|--------------------------|----------------------------|
+| **Tools** | **100+** | 11 | 10 |
+| **Multi-Site** | Runtime switching | - | Environment vars |
+| **BEM Support** | Generate + Apply + Validate | - | - |
+| **SEO Tools** | 19 (meta + audit + redirects) | - | - |
+| **Backup System** | Snapshots + Multi-slot | - | - |
+| **Security Hardening** | Rate limit + Headers | - | - |
+| **Responsive Inference** | Auto breakpoints | - | - |
+| **WordPress Content** | Posts + Categories + Tags | - | - |
+| **Batch Operations** | Up to 20 per request | - | - |
+| **Design Tokens** | Import/Export (JSON, ACSS) | - | - |
+| **Auto-Fix** | Overflow, grid, container | - | - |
+| **License** | MIT | GPL-2.0 | MIT |
+
+---
+
+## Requirements
+
+- **Node.js** >= 18.0.0
+- **WordPress** >= 5.6
+- **Bricks Builder** >= 2.0
+- **PHP** >= 7.4
+
+---
+
+## Premium
+
+Looking for more? The premium edition includes **260+ tools** with:
+
+- **AI Build Pipeline** — Build entire pages from a URL in one command
+- **Learning System** — Remembers CSS fixes and improves over time
+- **Math Library** — 33 modules for design tokens, color harmony, spring physics
+- **Visual QA** — Puppeteer screenshots, pixel comparison, accessibility audits
+- **Design Intelligence** — Brand archetypes, competitive benchmarking, typography suggestions
+- **WooCommerce, ACF, Gravity Forms** integrations
+- **Bio-inspired animations** — Levy stagger, density-intensity, quorum sensing
+
+[Contact us for premium access](mailto:info@bricksmcp.com)
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
