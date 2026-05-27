@@ -122,29 +122,39 @@ Or with Bun (faster startup):
    - `WORDPRESS_USER` = `your-username`
    - `WORDPRESS_APP_PASSWORD` = `xxxx xxxx xxxx xxxx xxxx xxxx`
 
-> **Tip:** On iOS, the MCP server runs on your Mac via Claude Code's remote connection. Make sure Claude Code desktop is running and paired with the mobile app.
-
 **Cursor / Windsurf** — add the same config to `.cursor/mcp.json` in your project.
 
 ---
 
 ### Manage Your WordPress Site from Your Phone
 
-Once the MCP server is connected to the Claude Code mobile app, you can do everything from your iPhone or Android — no laptop needed:
+Deploy the MCP server as a **self-hosted MCP environment** on Railway (or any Docker host), then connect it to the Claude Code mobile app. No Mac running in the background needed — the server runs 24/7 in the cloud.
+
+**How it works:**
+```
+iPhone / Android (Claude Code App)
+      ↕ Claude Self-Hosted MCP
+Railway / Docker (MCP Server — always on)
+      ↕ REST API
+WordPress + Bricks Builder
+```
+
+**Setup:**
+1. Deploy the MCP server to Railway using the included `agent-service/Dockerfile`
+2. In [Claude Console](https://console.anthropic.com) → MCP → Create Self-Hosted Environment
+3. Generate an environment key and add it to your Railway deployment
+4. The Claude Code mobile app automatically connects to your self-hosted environment
+
+**What you can do from your phone — no laptop needed:**
 
 ```
 You:  "List all my pages and their SEO scores"
 You:  "Create a new landing page for my dental practice"
 You:  "Update the hero headline on page 42 to 'Welcome to Our Practice'"
 You:  "Run an SEO audit and fix all missing meta descriptions"
-You:  "Take a screenshot of page 42"
-You:  "Add a testimonials section to page 42 using the testimonials-slider preset"
-You:  "Create a snapshot of page 42, then change the color palette to blue"
+You:  "Add a testimonials section using the testimonials-slider preset"
+You:  "Create a snapshot called 'before-redesign', then change the palette"
 ```
-
-The Claude Code app connects to your Mac in the background, which runs the MCP server and communicates with your WordPress site. All 105 tools are available — pages, templates, styles, SEO, backups, presets, media, and more.
-
-**What you can do from your phone:**
 
 | Action | Example Prompt |
 |--------|---------------|
@@ -156,7 +166,7 @@ The Claude Code app connects to your Mac in the background, which runs the MCP s
 | QA checks | *"Check all links on page 42 for broken URLs"* |
 | Template management | *"Clone the header template and modify the navigation"* |
 
-This turns your phone into a full WordPress control center — powered by AI.
+The server runs 24/7 on Railway — your phone is just the control surface. All 105 tools are available anywhere, anytime.
 
 ### 6. Test the Connection
 
