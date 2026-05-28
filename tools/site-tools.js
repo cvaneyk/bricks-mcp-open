@@ -71,7 +71,7 @@ const siteManagementTools = [
 
   {
     name: 'bricks_create_page',
-    description: 'Create a new WordPress page with Bricks Builder data in one call. No need for separate WP page creation + Bricks data push.',
+    description: 'Create a new WordPress page with Bricks Builder data in one call. No need for separate WP page creation + Bricks data push. THEME-FIRST: before generating elements, call bricks_get_theme_styles and bricks_list_global_classes — reuse existing tokens (button styles, utility classes, color palette) instead of inline styling. For buttons prefer settings.style: "primary"|"secondary" over manual _background/_typography. For links use the text-link element, not a styled text-basic.',
     inputSchema: {
       type: 'object',
       properties: {

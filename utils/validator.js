@@ -12,10 +12,29 @@
 const VALID_PATCH_MODES = ['insert', 'replace', 'append', 'delete'];
 
 const VALID_ELEMENT_NAMES = new Set([
-  'section', 'container', 'block', 'heading', 'text-basic', 'text', 'button',
-  'icon', 'image', 'video', 'slider-nested', 'tabs-nested', 'accordion-nested',
-  'accordion', 'nav-menu', 'code', 'template', 'post-title', 'post-content',
-  'pagination', 'form', 'form-field', 'form-submit', 'image-gallery',
+  // Layout
+  'section', 'container', 'block', 'div',
+  // Text
+  'heading', 'text-basic', 'text', 'text-link', 'list',
+  // Buttons / Icons
+  'button', 'icon', 'icon-box', 'social-icons',
+  // Media
+  'image', 'image-gallery', 'video', 'audio', 'svg', 'logo', 'slider', 'slider-nested', 'lottie', 'map',
+  // Tabs / Accordion
+  'tabs', 'tabs-nested', 'accordion', 'accordion-nested',
+  // Navigation
+  'nav-menu', 'nav-nested', 'nav-menu-mobile-toggle', 'breadcrumbs', 'search', 'offcanvas', 'toggle', 'sidebar',
+  // UI
+  'divider', 'alert', 'progress-bar', 'counter', 'countdown',
+  // Code / Embeds
+  'code', 'html', 'shortcode', 'template',
+  // Forms
+  'form', 'form-field', 'form-submit',
+  // Post / Loop
+  'post-title', 'post-content', 'post-excerpt', 'post-meta', 'post-toc',
+  'post-comments', 'post-comments-form', 'post-navigation', 'post-sharing',
+  'post-reading-time', 'post-taxonomy', 'post-author', 'post-related',
+  'post-featured-image', 'pagination', 'posts', 'related-posts',
 ]);
 
 /**
