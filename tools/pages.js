@@ -177,7 +177,7 @@ const pageTools = [
 
   {
     name: 'bricks_patch_page',
-    description: 'Apply partial updates to a page. Only sends changed elements instead of full page data. More efficient than bricks_update_page for small changes. Supports optimistic locking via content_hash. Use content_area to patch header or footer.',
+    description: 'Apply partial updates to a page. Only sends changed elements instead of full page data. More efficient than bricks_update_page for small changes. Automatically creates a backup before writing (plugin-side, cannot be skipped). Supports optimistic locking via content_hash. Use content_area to patch header or footer.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -242,7 +242,7 @@ const pageTools = [
 
   {
     name: 'bricks_append_elements',
-    description: 'Append elements to an existing page without replacing existing content. Elements are added after existing elements. THEME-FIRST: before generating elements, call bricks_get_theme_styles and bricks_list_global_classes — reuse existing tokens (button styles, utility classes, color palette) instead of inline styling. For buttons prefer settings.style: "primary"|"secondary" over manual _background/_typography. For links use the text-link element, not a styled text-basic.',
+    description: 'Append elements to an existing page without replacing existing content. Elements are added after existing elements. Automatically creates a backup before writing (plugin-side, cannot be skipped). THEME-FIRST: before generating elements, call bricks_get_theme_styles and bricks_list_global_classes — reuse existing tokens (button styles, utility classes, color palette) instead of inline styling. For buttons prefer settings.style: "primary"|"secondary" over manual _background/_typography. For links use the text-link element, not a styled text-basic.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -290,7 +290,7 @@ const pageTools = [
 
   {
     name: 'bricks_build_page',
-    description: 'Build a complete page from section presets and/or raw elements in a single request. Combines multiple sections into a full page layout. THEME-FIRST: before generating raw elements, call bricks_get_theme_styles and bricks_list_global_classes — reuse existing tokens (button styles, utility classes, color palette) instead of inline styling. For buttons prefer settings.style: "primary"|"secondary" over manual _background/_typography. For links use the text-link element, not a styled text-basic.',
+    description: 'Build a complete page from section presets and/or raw elements in a single request. Combines multiple sections into a full page layout. Automatically creates a backup before writing (plugin-side, cannot be skipped). THEME-FIRST: before generating raw elements, call bricks_get_theme_styles and bricks_list_global_classes — reuse existing tokens (button styles, utility classes, color palette) instead of inline styling. For buttons prefer settings.style: "primary"|"secondary" over manual _background/_typography. For links use the text-link element, not a styled text-basic.',
     inputSchema: {
       type: 'object',
       properties: {

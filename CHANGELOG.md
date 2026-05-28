@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 (2026-05-28)
+
+### Changed
+- Tool descriptions for `bricks_patch_page`, `bricks_append_elements`, and `bricks_build_page` now explicitly advertise the plugin-side auto-backup guarantee that was previously documented only on `bricks_update_page`. All four destructive write operations create a backup before writing — enforced server-side, cannot be skipped from the MCP/LLM. No behavior change; closes a documentation gap. (h/t [u/justinnealey](https://www.reddit.com/r/BricksBuilder/) for flagging it during the v1.0.1 launch discussion.)
+
 ## 1.0.1 (2026-05-28)
 
 ### Fixed
