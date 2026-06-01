@@ -18,6 +18,7 @@ import { siteManagementTools } from './site-tools.js';
 import { wpContentTools } from './wp-content-tools.js';
 import { menuTools } from './menu-tools.js';
 import { securityTools } from './security.js';
+import { observabilityTools } from './observability.js';
 
 export {
   pageTools,
@@ -44,4 +45,5 @@ export {
   wpContentTools,
   menuTools,
   securityTools,
+  observabilityTools,
 };
