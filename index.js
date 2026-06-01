@@ -24,7 +24,7 @@ import {
   themeStylesTools, batchTools, presetTools, globalClassesTools,
   styleSystemTools, connectionTools, converterTools,
   siteTools, advancedSeoTools, siteManagementTools,
-  wpContentTools, menuTools,
+  wpContentTools, menuTools, securityTools,
 } from './tools/index.js';
 import { setServer as setBatchServer } from './tools/batch.js';
 
@@ -65,6 +65,7 @@ const TOOLS = [
   ...siteManagementTools,
   ...wpContentTools,
   ...menuTools,
+  ...securityTools,
 ];
 
 // O(1) tool lookup via Map (instead of O(n) array.find)

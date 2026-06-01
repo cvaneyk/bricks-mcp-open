@@ -17,6 +17,7 @@ import { advancedSeoTools } from './seo.js';
 import { siteManagementTools } from './site-tools.js';
 import { wpContentTools } from './wp-content-tools.js';
 import { menuTools } from './menu-tools.js';
+import { securityTools } from './security.js';
 
 export {
   pageTools,
@@ -42,4 +43,5 @@ export {
   siteManagementTools,
   wpContentTools,
   menuTools,
+  securityTools,
 };

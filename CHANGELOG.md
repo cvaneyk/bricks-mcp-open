@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.3 (2026-06-01)
+
+### Added
+- **Security audit** — two new read-only tools: `bricks_security_audit` and `bricks_security_inventory`. The audit scores the site 0–100 (A–F) across Bricks-core CVE exposure, bridge route permissions (a self-audit of the bridge's own write surfaces), code-element exposure, platform currency (WordPress core / PHP / plugin updates), configuration hygiene, and access/transport. Findings are returned worst-first with remediation; any open CRITICAL hard-caps the grade to F. It is a posture/exposure report, **not** a malware scanner. Outdated-component detection reads WordPress' own update transients — no external network calls. Plugin-side, behind the `bab_security_audit_enabled` option (default on). Brings the MCP to **107 tools**.
+- New bridge endpoints (admin-only): `GET /security/audit` and `GET /security/inventory/components`.
+
+### Security
+- **Hardened code-surface routes (defense in depth).** The `sign-code` and page-`assets` write endpoints now require `manage_options` instead of `edit_posts`, so signing executable Bricks code or storing raw page CSS/JS is restricted to administrators. Gated by the `bab_harden_code_routes` option (default on); set it to `false` to restore the previous behavior. Structured element writes (`PUT /pages/{id}`) and the GSAP flag remain at `edit_posts`. The `scripts` endpoint already required `manage_options`.
+
+### Changed
+- Plugin version bumped to 1.0.1 (security audit class + route hardening).
+
 ## 1.0.2 (2026-05-28)
 
 ### Changed

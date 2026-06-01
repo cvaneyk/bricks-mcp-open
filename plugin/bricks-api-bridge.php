@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Bricks API Bridge
  * Description: REST API endpoints for Bricks Builder page data
- * Version: 1.0.0
+ * Version: 1.0.1
  * Requires at least: 5.6
  * Requires PHP: 7.4
  * Author: Bricks API Bridge
@@ -17,9 +17,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BRICKS_API_BRIDGE_VERSION', '1.0.0' );
+define( 'BRICKS_API_BRIDGE_VERSION', '1.0.1' );
 define( 'BRICKS_API_BRIDGE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BRICKS_API_BRIDGE_PLUGIN_FILE', __FILE__ );
+
+/**
+ * Capability gate for raw "code surface" writes (sign-code, page assets).
+ *
+ * These endpoints either sign Bricks code elements — a signature is bound to
+ * the site salts and lets a code/PHP/query element execute — or store raw
+ * JS/CSS that renders verbatim for every visitor. Both are administrator-level
+ * concerns, not ordinary content edits. With the hardening flag on (default)
+ * they require `manage_options`; setting the option to `false` restores the
+ * legacy `edit_posts` baseline for an instant, code-free rollback.
+ *
+ * @return bool Whether the current user may write raw code surfaces.
+ */
+function bricks_api_bridge_can_write_code_surface() {
+	$harden = (bool) get_option( 'bab_harden_code_routes', true );
+	return current_user_can( $harden ? 'manage_options' : 'edit_posts' );
+}
 
 /**
  * Fix Apache CGI/FastCGI stripping the Authorization header.
@@ -187,6 +204,14 @@ function bricks_api_bridge_load_includes() {
 	require_once BRICKS_API_BRIDGE_PLUGIN_DIR . 'includes/class-security-hardening.php';
 	$security = new Bricks_API_Bridge_Security_Hardening();
 	$security->init();
+
+	// Security audit (read-only posture report). Feature-flagged: flipping the
+	// option to false unregisters its routes for an instant, code-free rollback.
+	if ( get_option( 'bab_security_audit_enabled', true ) ) {
+		require_once BRICKS_API_BRIDGE_PLUGIN_DIR . 'includes/class-security-audit.php';
+		$security_audit = new Bricks_API_Bridge_Security_Audit();
+		$security_audit->init();
+	}
 }
 
 add_action( 'plugins_loaded', 'bricks_api_bridge_load_includes' );
@@ -971,7 +996,7 @@ function bricks_api_bridge_register_assets_routes() {
 			'methods'             => 'PUT',
 			'callback'            => 'bricks_api_bridge_update_page_assets',
 			'permission_callback' => function () {
-				return current_user_can( 'edit_posts' );
+				return bricks_api_bridge_can_write_code_surface();
 			},
 		),
 	));

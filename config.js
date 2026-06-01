@@ -5,7 +5,7 @@
 
 const config = {
   SERVER_NAME: "bricks-builder",
-  SERVER_VERSION: "1.0.0",
+  SERVER_VERSION: "1.0.3",
 
   // Custom plugin endpoint base path
   WP_API_BASE: '/wp-json/bricks-bridge/v1',
