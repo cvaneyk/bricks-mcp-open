@@ -945,6 +945,20 @@ class Bricks_API_Bridge_REST_Controller {
 						break;
 					}
 				}
+
+				// Signing code elements binds an executable signature to the
+				// site salts — an administrator-level capability, not an
+				// ordinary content edit. Gated by the shared hardening helper
+				// (defaults to manage_options; flag-flip restores edit_posts).
+				if ( false !== strpos( $route, '/sign-code' )
+					&& function_exists( 'bricks_api_bridge_can_write_code_surface' )
+					&& ! bricks_api_bridge_can_write_code_surface() ) {
+					return new WP_Error(
+						'bricks_api_bridge_forbidden',
+						__( 'Signing code requires administrator privileges.', 'bricks-api-bridge' ),
+						array( 'status' => 403 )
+					);
+				}
 			}
 		}
 

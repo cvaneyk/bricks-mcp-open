@@ -24,9 +24,10 @@ import {
   themeStylesTools, batchTools, presetTools, globalClassesTools,
   styleSystemTools, connectionTools, converterTools,
   siteTools, advancedSeoTools, siteManagementTools,
-  wpContentTools, menuTools,
+  wpContentTools, menuTools, securityTools, observabilityTools,
 } from './tools/index.js';
 import { setServer as setBatchServer } from './tools/batch.js';
+import * as callLog from './utils/call-log.js';
 
 // Initialize multi-site manager (loads sites.json or falls back to env)
 initSites();
@@ -65,6 +66,8 @@ const TOOLS = [
   ...siteManagementTools,
   ...wpContentTools,
   ...menuTools,
+  ...securityTools,
+  ...observabilityTools,
 ];
 
 // O(1) tool lookup via Map (instead of O(n) array.find)
@@ -106,9 +109,34 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     };
   }
 
+  // Structured call/diff log (best-effort, never affects the call result).
+  const logging = callLog.isEnabled();
+  const started = Date.now();
+  let before = null;
+  if (logging) {
+    try { before = await callLog.captureBefore(name, args); } catch { /* ignore */ }
+  }
+
   try {
-    return await tool.handler(args);
+    const result = await tool.handler(args);
+    if (logging) {
+      try {
+        const diff = await callLog.finalizeDiff(name, args, before);
+        callLog.logCall({
+          tool: name, args,
+          status: result && result.isError ? 'error' : 'ok',
+          durationMs: Date.now() - started,
+          diff,
+        });
+      } catch { /* logging must never break a call */ }
+    }
+    return result;
   } catch (error) {
+    if (logging) {
+      try {
+        callLog.logCall({ tool: name, args, status: 'error', error: error.message, durationMs: Date.now() - started, diff: null });
+      } catch { /* ignore */ }
+    }
     console.error(`Error in ${name}:`, error);
     return {
       content: [{ type: "text", text: `Error: ${error.message}` }],
