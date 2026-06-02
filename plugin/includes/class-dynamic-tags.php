@@ -76,7 +76,7 @@ class Bricks_API_Bridge_Dynamic_Tags {
 	 * @return string The rendered value or original tag.
 	 */
 	public function render_tag( $tag, $post, $context ) {
-		if ( strpos( $tag, '{bab_var:' ) !== 0 ) {
+		if ( ! is_string( $tag ) || strpos( $tag, '{bab_var:' ) !== 0 ) {
 			return $tag;
 		}
 
@@ -94,7 +94,7 @@ class Bricks_API_Bridge_Dynamic_Tags {
 	 * @return string Content with tags replaced.
 	 */
 	public function render_content( $content, $post, $context ) {
-		if ( false === strpos( $content, '{bab_var:' ) ) {
+		if ( ! is_string( $content ) || false === strpos( $content, '{bab_var:' ) ) {
 			return $content;
 		}
 
