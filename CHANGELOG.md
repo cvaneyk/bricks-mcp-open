@@ -14,6 +14,9 @@
 ### Changed
 - Plugin version bumped to 1.0.1 (security audit class + route hardening).
 
+### Fixed
+- **Plugin 1.0.2 hotfix** — fatal `TypeError` in `class-dynamic-tags.php` that could take down the entire frontend. When an image element used a dynamic-data source inside a nested query loop, Bricks passed the full settings **array** (not a string) through the `bricks/dynamic_data/render_tag` and `render_content` filters; both handlers called `strpos()` on it without a type check. Added an additive `is_string()` guard on both call sites — no behavior change for valid string tags, the previously-fatal array case now passes through. The `bricks-api-bridge.zip` on this release was rebuilt with the fix. ([#3](https://github.com/developer2013/bricks-mcp-open/issues/3), reported + diagnosed by @sawka-tech.)
+
 ## 1.0.2 (2026-05-28)
 
 ### Changed
