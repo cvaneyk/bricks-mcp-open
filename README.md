@@ -239,6 +239,14 @@ Manage multiple WordPress sites from a single MCP server. Copy `sites.json.examp
 Switch sites at runtime:
 > "Switch to the staging site."
 
+**Custom `sites.json` location.** If you collect your MCP servers in one folder and keep site configs elsewhere, set `BRICKS_SITES_PATH` to point at the file — absolute, relative (to the working directory), or `~`-prefixed all work:
+
+```
+BRICKS_SITES_PATH=~/mcp-config/bricks-sites.json
+```
+
+When set, a missing file fails loudly at startup (instead of silently falling back to the `WORDPRESS_*` env vars), so a typo in the path can't connect you to the wrong site. No need to symlink `sites.json` into the server folder.
+
 ---
 
 ## Usage Examples
