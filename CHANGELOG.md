@@ -5,6 +5,9 @@
 ### Added
 - **Custom `sites.json` location** — set the `BRICKS_SITES_PATH` env var to keep your multi-site config outside the server folder (handy if you collect MCP servers in one shared directory). Accepts absolute, relative (to the working directory), or `~`-prefixed paths, and still falls back to the bundled `./sites.json` when unset, so existing setups are unaffected. When the variable **is** set but the file is missing, startup now fails loudly instead of silently falling back to the `WORDPRESS_*` vars — a path typo can no longer quietly connect you to the wrong site. Removes the need to symlink `sites.json` into the repo folder. (h/t the r/BricksBuilder discussion on running the server under DDEV/opencode with a shared MCP-config folder.)
 
+### Changed
+- **Model steering toward native Bricks elements.** The server now sends an MCP `instructions` preamble (injected into the client's system context, so it reaches *any* model on *every* request) telling the model to prefer Bricks' structured path — theme styles, global classes, `settings.style`, native elements like `text-link`/`button` — over freelancing raw `_cssCustom`/inline styling. The same THEME-FIRST guidance now also rides on `bricks_update_page` and `bricks_patch_page`, which previously had none (it was only on create/append/build). Closes the gap where models with weaker tool-calling discipline would inject custom CSS/classes instead of using the tools. (h/t the r/BricksBuilder DDEV/opencode thread.)
+
 ## 1.0.3 (2026-06-01)
 
 ### Added
