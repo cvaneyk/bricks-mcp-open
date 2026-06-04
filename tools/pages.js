@@ -129,7 +129,7 @@ const pageTools = [
 
   {
     name: 'bricks_update_page',
-    description: 'Update the Bricks Builder data for a page. Automatically creates a backup before writing. Validates the JSON structure before saving. Supports optimistic locking via content_hash. Use content_area to write header or footer template data.',
+    description: 'Update the Bricks Builder data for a page. Automatically creates a backup before writing. Validates the JSON structure before saving. Supports optimistic locking via content_hash. Use content_area to write header or footer template data. THEME-FIRST: before generating elements, call bricks_get_theme_styles and bricks_list_global_classes — reuse existing tokens (button styles, utility classes, color palette) instead of inline styling. For buttons prefer settings.style: "primary"|"secondary" over manual _background/_typography. For links use the text-link element, not a styled text-basic. Use _cssCustom only for what settings cannot express.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -177,7 +177,7 @@ const pageTools = [
 
   {
     name: 'bricks_patch_page',
-    description: 'Apply partial updates to a page. Only sends changed elements instead of full page data. More efficient than bricks_update_page for small changes. Automatically creates a backup before writing (plugin-side, cannot be skipped). Supports optimistic locking via content_hash. Use content_area to patch header or footer.',
+    description: 'Apply partial updates to a page. Only sends changed elements instead of full page data. More efficient than bricks_update_page for small changes. Automatically creates a backup before writing (plugin-side, cannot be skipped). Supports optimistic locking via content_hash. Use content_area to patch header or footer. THEME-FIRST: when adding or restyling elements, reuse existing theme tokens and global classes (bricks_get_theme_styles / bricks_list_global_classes) instead of inline styling; prefer settings.style and _typography over _cssCustom, and the text-link/button elements over styled divs.',
     inputSchema: {
       type: 'object',
       properties: {

@@ -87,7 +87,7 @@ const TOOLS_LIST_RESPONSE = Object.freeze({
 // Create server
 const server = new Server(
   { name: config.SERVER_NAME, version: config.SERVER_VERSION },
-  { capabilities: { tools: {} } }
+  { capabilities: { tools: {} }, instructions: config.BUILD_INSTRUCTIONS }
 );
 
 // Pass server reference for progress notifications
