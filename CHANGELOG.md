@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- **Custom `sites.json` location** — set the `BRICKS_SITES_PATH` env var to keep your multi-site config outside the server folder (handy if you collect MCP servers in one shared directory). Accepts absolute, relative (to the working directory), or `~`-prefixed paths, and still falls back to the bundled `./sites.json` when unset, so existing setups are unaffected. When the variable **is** set but the file is missing, startup now fails loudly instead of silently falling back to the `WORDPRESS_*` vars — a path typo can no longer quietly connect you to the wrong site. Removes the need to symlink `sites.json` into the repo folder. (h/t the r/BricksBuilder discussion on running the server under DDEV/opencode with a shared MCP-config folder.)
+
 ## 1.0.3 (2026-06-01)
 
 ### Added

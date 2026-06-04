@@ -4,11 +4,24 @@
  * Backward-compatible: falls back to env vars when no sites.json exists.
  */
 import { readFileSync, statSync } from 'fs';
-import { join, dirname } from 'path';
+import { join, dirname, isAbsolute, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import { homedir } from 'os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const SITES_PATH = join(__dirname, 'sites.json');
+
+// sites.json path: BRICKS_SITES_PATH env override (supports ~, relative, absolute)
+// → falls back to the bundled ./sites.json. Lets users keep configs outside the MCP folder.
+const SITES_OVERRIDE = process.env.BRICKS_SITES_PATH?.trim();
+const SITES_PATH = resolveSitesPath(SITES_OVERRIDE);
+const SITES_PATH_EXPLICIT = !!SITES_OVERRIDE;
+
+function resolveSitesPath(override) {
+  if (!override) return join(__dirname, 'sites.json');
+  let p = override;
+  if (p === '~' || p.startsWith('~/')) p = join(homedir(), p.slice(1));
+  return isAbsolute(p) ? p : resolve(process.cwd(), p);
+}
 
 let sites = {};       // key → { label, url, username, password }
 let activeSiteKey = null;
@@ -33,9 +46,9 @@ function initSites() {
       throw new Error(`Default site "${activeSiteKey}" not found in sites.json`);
     }
 
-    console.error(`SITES: Loaded ${Object.keys(sites).length} site(s) from sites.json (active: ${activeSiteKey})`);
+    console.error(`SITES: Loaded ${Object.keys(sites).length} site(s) from ${SITES_PATH_EXPLICIT ? SITES_PATH : 'sites.json'} (active: ${activeSiteKey})`);
   } catch (err) {
-    if (err.code === 'ENOENT') {
+    if (err.code === 'ENOENT' && !SITES_PATH_EXPLICIT) {
       // No sites.json — fall back to env vars (backward-compatible)
       const url = process.env.WORDPRESS_URL || '';
       const username = process.env.WORDPRESS_USER || '';
@@ -47,6 +60,10 @@ function initSites() {
       };
 
       console.error('SITES: No sites.json found — using environment variables');
+    } else if (err.code === 'ENOENT') {
+      // Explicit BRICKS_SITES_PATH set but file missing — fail loudly, don't silently fall back
+      console.error(`SITES ERROR: BRICKS_SITES_PATH="${SITES_PATH}" but no file exists there`);
+      throw err;
     } else {
       console.error(`SITES ERROR: ${err.message}`);
       throw err;
