@@ -9,7 +9,8 @@
  * https://github.com/developer2013/bricks-mcp-open
  */
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import express from "express";
+import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import {
   ListToolsRequestSchema, CallToolRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
@@ -145,26 +146,44 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   }
 });
 
-// Start the server
-const transport = new StdioServerTransport();
-server.connect(transport)
-  .then(() => {
-    console.error(`${config.SERVER_NAME} connected and listening`);
 
-    // Warm cache in background (non-blocking)
-    if (configValid) {
-      Promise.allSettled([
-        wpGetCached('/theme-styles', TTL.THEME_STYLES),
-        wpGetCached('/global-classes', TTL.GLOBAL_CLASSES),
-        wpGetCached('/presets', TTL.PRESETS),
-        wpGetCached('/color-palette', TTL.COLOR_PALETTE),
-      ]).then(results => {
-        const ok = results.filter(r => r.status === 'fulfilled').length;
-        console.error(`CACHE WARM: ${ok}/${results.length} endpoints prefetched`);
-      });
-    }
-  })
-  .catch(error => {
-    console.error(`Connection error: ${error.message}`);
-    process.exit(1);
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Almacenar los transportes activos por sessionId
+const transports = new Map();
+
+// 1. Endpoint SSE: n8n se conectará aquí para recibir eventos del servidor
+app.get("/sse", async (req, res) => {
+  console.error("Nueva conexión SSE establecida");
+  
+  // El segundo parámetro "/messages" es la ruta donde se enviarán los mensajes POST
+  const transport = new SSEServerTransport("/messages", res);
+  transports.set(transport.sessionId, transport);
+  
+  res.on("close", () => {
+    console.error(`Conexión SSE cerrada para la sesión: ${transport.sessionId}`);
+    transports.delete(transport.sessionId);
   });
+  
+  await server.connect(transport);
+});
+
+// 2. Endpoint de mensajes: n8n enviará peticiones POST aquí
+app.post("/messages", express.json(), async (req, res) => {
+  const sessionId = req.query.sessionId;
+  const transport = transports.get(sessionId);
+  
+  if (transport) {
+    await transport.handlePostMessage(req, res);
+  } else {
+    res.status(404).send("Sesión de transporte no encontrada");
+  }
+});
+
+// Levantar el servidor HTTP
+app.listen(PORT, () => {
+  console.error(`Servidor Bricks MCP escuchando en SSE en http://localhost:${PORT}`);
+  console.error(`- Endpoint SSE: http://localhost:${PORT}/sse`);
+  console.error(`- Endpoint de Mensajes: http://localhost:${PORT}/messages`);
+});
